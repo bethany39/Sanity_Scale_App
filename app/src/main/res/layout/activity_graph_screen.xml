@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFEFEF"
+    tools:context=".GraphScreen"
+    android:id="@+id/graphScreen">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="409dp"
+        android:layout_height="97dp"
+        android:background="#65B1D2" />
+
+    <Button
+        android:id="@+id/graphImage"
+        android:layout_width="326dp"
+        android:layout_height="286dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="199dp"
+        android:background="#FFFFFF"
+        android:text="graph placeholder" />
+
+    <Button
+        android:id="@+id/settingsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginRight="26dp"
+        android:background="#B7B7B7"
+        android:text="Settings" />
+
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="22dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="20dp"
+        android:background="#B7B7B7"
+        android:text="Back" />
+
+
+</RelativeLayout>
