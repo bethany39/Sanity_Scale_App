@@ -31,7 +31,7 @@
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/settingsBtn"
+        android:id="@+id/menuBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -39,8 +39,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="25dp"
         android:layout_marginRight="25dp"
-        android:background="#B7B7B7"
-        android:text="Settings" />
+        android:background="#737989"
+        android:text="Menu"
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/timesViewedThisWeek"

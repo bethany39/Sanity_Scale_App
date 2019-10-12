@@ -25,7 +25,7 @@
         android:text="graph placeholder" />
 
     <Button
-        android:id="@+id/settingsBtn"
+        android:id="@+id/menuBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -35,7 +35,7 @@
         android:layout_marginEnd="26dp"
         android:layout_marginRight="26dp"
         android:background="#B7B7B7"
-        android:text="Settings" />
+        android:text="Menu" />
 
     <Button
         android:id="@+id/backBtn"

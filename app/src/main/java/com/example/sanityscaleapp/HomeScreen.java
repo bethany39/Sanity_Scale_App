@@ -10,7 +10,7 @@ import android.view.View;
 import android.content.Intent;
 
 public class HomeScreen extends AppCompatActivity {
-    Button weeklyAvgBtn, settingsBtn;
+    Button weeklyAvgBtn, menuBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +28,12 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
 
-        settingsBtn=findViewById(R.id.settingsBtn);
-        settingsBtn.setOnClickListener(new OnClickListener() {
+        menuBtn=findViewById(R.id.menuBtn);
+        menuBtn.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(HomeScreen.this, SettingsScreen.class);
+                Intent intent =new Intent(HomeScreen.this, HomeWMenuScreen.class);
                 HomeScreen.this.startActivity(intent);
 
             }

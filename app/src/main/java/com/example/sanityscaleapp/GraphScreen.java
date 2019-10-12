@@ -10,7 +10,7 @@ import android.view.View;
 import android.content.Intent;
 
 public class GraphScreen extends AppCompatActivity {
-    Button backBtn, settingsBtn;
+    Button backBtn, menuBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +28,12 @@ public class GraphScreen extends AppCompatActivity {
             }
         });
 
-        settingsBtn=findViewById(R.id.settingsBtn);
-        settingsBtn.setOnClickListener(new OnClickListener() {
+        menuBtn=findViewById(R.id.menuBtn);
+        menuBtn.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(GraphScreen.this, SettingsScreen2.class);
+                Intent intent =new Intent(GraphScreen.this, HomeWMenuScreen.class);
                 GraphScreen.this.startActivity(intent);
 
             }

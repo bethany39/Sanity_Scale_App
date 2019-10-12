@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingsScreen2"></activity>
+        <activity android:name=".LogoutHome"></activity>
+        <activity android:name=".HomeWMenuScreen" />
+        <activity android:name=".SettingsScreen2" />
         <activity android:name=".SettingsScreen" />
         <activity android:name=".LogInScreen" />
         <activity android:name=".GraphScreen" />
