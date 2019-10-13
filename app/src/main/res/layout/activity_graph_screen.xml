@@ -8,11 +8,27 @@
     tools:context=".GraphScreen"
     android:id="@+id/graphScreen">
 
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_width="68dp"
+        android:layout_height="64dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="17dp"
+        android:background="@drawable/backarrow" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="409dp"
         android:layout_height="97dp"
-        android:background="#65B1D2" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:background="#3B95BD"
+        android:layout_alignParentLeft="true" />
 
     <Button
         android:id="@+id/graphImage"
@@ -26,29 +42,15 @@
 
     <Button
         android:id="@+id/menuBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="57dp"
+        android:layout_height="45dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="26dp"
-        android:layout_marginRight="26dp"
-        android:background="#B7B7B7"
-        android:text="Menu" />
-
-    <Button
-        android:id="@+id/backBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginLeft="22dp"
-        android:layout_marginTop="20dp"
-        android:background="#B7B7B7"
-        android:text="Back" />
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
+        android:background="@drawable/menu" />
 
 
 </RelativeLayout>

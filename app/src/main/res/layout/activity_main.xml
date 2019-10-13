@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#65B1D2"
-    android:orientation="vertical"
-    android:id="@+id/mainScreen">
+    android:background="@drawable/gradientbackground"
+    android:orientation="vertical">
 
 
     <TextView
@@ -27,34 +27,36 @@
 
     <Button
         android:id="@+id/logInBtn"
-        android:layout_width="223dp"
-        android:layout_height="wrap_content"
+        android:layout_width="298dp"
+        android:layout_height="46dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="99dp"
-        android:layout_marginLeft="99dp"
-        android:layout_marginBottom="141dp"
-        android:background="#FFFFFF"
+        android:layout_marginStart="57dp"
+        android:layout_marginLeft="57dp"
+        android:layout_marginBottom="157dp"
+        android:background="@drawable/roundedbtn"
         android:text="Log In"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="#007994" />
+        android:textColor="#007994"
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/signUpBtn"
-        android:layout_width="223dp"
-        android:layout_height="wrap_content"
+        android:layout_width="299dp"
+        android:layout_height="44dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginBottom="56dp"
-        android:background="#FFFFFF"
+        android:layout_marginStart="57dp"
+        android:layout_marginLeft="57dp"
+        android:layout_marginBottom="72dp"
+        android:background="@drawable/roundedbtn"
         android:text="Sign Up"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="#007994" />
+        android:textColor="#007994"
+        android:textSize="30sp" />
 
 </RelativeLayout>
