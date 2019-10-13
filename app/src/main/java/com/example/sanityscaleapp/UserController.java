@@ -16,7 +16,7 @@ public class UserController {
     private IUserController iUserController;
     public static final String base_url = "https://sanityscaleapp/";
     private boolean successfulLogin;
-    public int USERID;
+    public int USER_ID;
     public UserController() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://sanityscaleapi")
                 .addConverterFactory(GsonConverterFactory.create(
@@ -40,7 +40,7 @@ public class UserController {
                 }
 
                 User user = response.body();
-                USERID = user.getUserId();
+                USER_ID = user.getUserId();
                 successfulLogin=true;
                 return;
 
@@ -55,8 +55,8 @@ public class UserController {
     }
 
 
-    public void putUserGoal(){
-        Call<User> call = iUserController.putUserGoal();
+    public void putUserGoal(String goal){
+        Call<User> call = iUserController.patchUserGoal(USER_ID, goal);
 
         call.enqueue(new Callback<User>() {
             @Override
@@ -80,8 +80,8 @@ public class UserController {
 
     }
 
-    public void putUserUnits(int units){
-        Call<User> call = iUserController.putUserUnits(USERID, units);
+    public void patchUserUnits(int units){
+        Call<User> call = iUserController.patchUserUnits(USER_ID, units);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -90,7 +90,7 @@ public class UserController {
                     //should do something for the error handlign
                 }
 
-                User user = response.body();
+                //User user = response.body();
 
                 return;
 

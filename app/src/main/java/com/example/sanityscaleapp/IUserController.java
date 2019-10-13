@@ -16,11 +16,11 @@ public interface IUserController {
     @GET("user")
     Call<User> getUser(@Query("email") String email, @Query("password") String password);
 
-    @PUT("users/goal")
-    Call<User> putUserGoal();
+    @PATCH("users/goal")
+    Call<User> patchUserGoal(@Path("id") int userId, @Body String goal);
 
     @PATCH("users/units/{id}")
-    Call<User> putUserUnits(@Path("id") int userId, @Body int units);
+    Call<User> patchUserUnits(@Path("id") int userId, @Body int units);
 
 
 }
