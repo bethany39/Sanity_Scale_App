@@ -25,7 +25,7 @@
         android:textSize="65sp"
         android:visibility="visible" />
 
-    <Button
+    <EditText
         android:id="@+id/emailBox"
         android:layout_width="306dp"
         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
         android:textColor="#858585"
         android:textSize="36sp" />
 
-    <Button
+    <EditText
         android:id="@+id/passwordBox"
         android:layout_width="308dp"
         android:layout_height="wrap_content"
@@ -61,7 +61,8 @@
         android:textAlignment="textStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="#858585"
-        android:textSize="36sp" />
+        android:textSize="36sp"
+        android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/nextBtn"

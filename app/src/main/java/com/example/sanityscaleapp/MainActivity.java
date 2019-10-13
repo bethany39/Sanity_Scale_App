@@ -9,9 +9,11 @@ import android.view.View.OnClickListener;
 import android.view.View;
 import android.content.Intent;
 
+
 public class MainActivity extends AppCompatActivity {
     Button logInBtn;
-
+    public static final UserController userController = new UserController();
+    public int userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,10 +27,16 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent =new Intent(MainActivity.this, LogInScreen.class);
                 MainActivity.this.startActivity(intent);
 
+
             }
         });
 
     }
+    public void setUserID(int newID){
+        userID=newID;
+    }
+
+
 
 
 }

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.content.Intent;
+import android.widget.EditText;
 
 public class LogInScreen extends AppCompatActivity {
     Button nextBtn, backBtn;
@@ -22,8 +23,16 @@ public class LogInScreen extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(LogInScreen.this, HomeScreen.class);
-                LogInScreen.this.startActivity(intent);
+
+
+                EditText email = (EditText)findViewById(R.id.emailBox);
+                EditText password = (EditText)findViewById(R.id.passwordBox);
+
+                boolean success = MainActivity.userController.getUser(email.getText().toString(), password.getText().toString());
+                if(success) {
+                    Intent intent =new Intent(LogInScreen.this, HomeScreen.class);
+                    LogInScreen.this.startActivity(intent);
+                }
 
             }
         });
