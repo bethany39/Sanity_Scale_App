@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,31 +22,8 @@
         android:background="@drawable/backarrow" />
 
     <Button
-        android:id="@+id/loseBtn"
+        android:id="@+id/kgsBtn"
         android:layout_width="412dp"
-        android:layout_height="79dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="305dp"
-        android:layout_marginEnd="-1dp"
-        android:layout_marginRight="-1dp"
-        android:background="@drawable/profile"
-        android:gravity="start"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#262626"
-        android:textSize="24sp" />
-
-    <Button
-        android:id="@+id/gainBtn"
-        android:layout_width="match_parent"
         android:layout_height="77dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
@@ -54,10 +32,10 @@
         android:layout_alignParentRight="true"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginTop="230dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:background="@drawable/goals"
+        android:layout_marginTop="228dp"
+        android:layout_marginEnd="-1dp"
+        android:layout_marginRight="-1dp"
+        android:background="@drawable/bkgs"
         android:gravity="start"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
@@ -77,24 +55,24 @@
         android:layout_alignParentLeft="true" />
 
     <TextView
-        android:id="@+id/goals"
+        android:id="@+id/changeUnits"
         android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="78dp"
-        android:layout_marginRight="78dp"
-        android:text="Settings"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginRight="80dp"
+        android:text="Change Units"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#FFFFFF"
-        android:textSize="50sp" />
+        android:textSize="36sp" />
 
     <Button
-        android:id="@+id/maintainBtn"
+        android:id="@+id/lbsBtn"
         android:layout_width="match_parent"
-        android:layout_height="79dp"
+        android:layout_height="78dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -102,7 +80,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="151dp"
-        android:background="@drawable/changeunits"
+        android:background="@drawable/lb"
         android:gravity="start"
         android:textAlignment="viewStart"
         android:textAllCaps="false"

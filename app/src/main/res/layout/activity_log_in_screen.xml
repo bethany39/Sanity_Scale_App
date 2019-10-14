@@ -38,7 +38,7 @@
         android:layout_marginBottom="204dp"
         android:background="#FFFFFF"
         android:gravity="start"
-        android:text="Email"
+        android:hint="Email"
         android:textAlignment="textStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="#858585"
@@ -57,12 +57,12 @@
         android:layout_marginBottom="122dp"
         android:background="#FFFFFF"
         android:gravity="start"
-        android:text="Password"
+        android:hint="Password"
+        android:inputType="textPassword"
         android:textAlignment="textStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="#858585"
-        android:textSize="36sp"
-        android:inputType="textPassword"/>
+        android:textSize="36sp" />
 
     <Button
         android:id="@+id/nextBtn"
