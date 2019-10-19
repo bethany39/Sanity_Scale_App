@@ -12,7 +12,8 @@ import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
     Button logInBtn;
-    public static final UserController userController = new UserController();
+    public UserController userController;
+    public WeightsController weightsController;
     public int userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent =new Intent(MainActivity.this, LogInScreen.class);
                 MainActivity.this.startActivity(intent);
 
+//                MainActivity.this.weightsController = new WeightsController(userController.USER_ID);
 
             }
         });
@@ -36,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
         userID=newID;
     }
 
-
+    public int getUserID() {
+        return this.userID;
+    }
 
 
 }

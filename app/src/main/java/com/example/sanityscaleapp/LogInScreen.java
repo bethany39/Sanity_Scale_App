@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 public class LogInScreen extends AppCompatActivity {
     Button nextBtn, backBtn;
-
+    //public final UserController userController = new UserController();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +27,8 @@ public class LogInScreen extends AppCompatActivity {
 
                 EditText email = (EditText)findViewById(R.id.emailBox);
                 EditText password = (EditText)findViewById(R.id.passwordBox);
-
-                boolean success = MainActivity.userController.getUser(email.getText().toString(), password.getText().toString());
+                UserController userController = new UserController();
+                boolean success = userController.getUser(email.getText().toString(), password.getText().toString());
                 if(success) {
                     Intent intent =new Intent(LogInScreen.this, HomeScreen.class);
                     LogInScreen.this.startActivity(intent);

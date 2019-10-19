@@ -13,14 +13,14 @@ import retrofit2.http.Query;
 
 public interface IUserController {
 
-    @GET("user")
+    @GET("users")
     Call<User> getUser(@Query("email") String email, @Query("password") String password);
 
-    @PATCH("users/goal")
-    Call<User> patchUserGoal(@Path("id") int userId, @Body String goal);
+    @PATCH("users/{id}/goal")
+    Call<User> patchUserGoal(@Path("id") int id, @Body String goal);
 
-    @PATCH("users/units/{id}")
-    Call<User> patchUserUnits(@Path("id") int userId, @Body int units);
+    @PATCH("users/{id}/units/")
+    Call<User> patchUserUnits(@Path("id") int id, @Body int units);
 
 
 }

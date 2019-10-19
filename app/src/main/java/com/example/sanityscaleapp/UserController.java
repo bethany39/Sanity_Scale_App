@@ -2,6 +2,8 @@ package com.example.sanityscaleapp;
 
 
 
+import android.util.Log;
+
 import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
@@ -14,11 +16,11 @@ public class UserController {
 
     //private static UserController userController;
     private IUserController iUserController;
-    public static final String base_url = "https://sanityscaleapp/";
-    private boolean successfulLogin;
+    public static final String base_url = "https://sanity-scale-api.herokuapp.com/";
+    private boolean successfulLogin =false;
     public int USER_ID;
     public UserController() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://sanityscaleapi")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(base_url)
                 .addConverterFactory(GsonConverterFactory.create(
                         new GsonBuilder().setPrettyPrinting().create()))
                 .build();
@@ -35,10 +37,12 @@ public class UserController {
             public void onResponse(Call<User> call, Response<User> response) {
                 if(!response.isSuccessful()){
                     successfulLogin=false;
-                    return;
                     //should do something for the error handlign
-                }
+                    Log.d("UserController", "inside if in onResponse");
+                    return;
 
+                }
+                Log.d("UserController", "outside if in onResponse");
                 User user = response.body();
                 USER_ID = user.getUserId();
                 successfulLogin=true;
@@ -49,13 +53,15 @@ public class UserController {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 successfulLogin=false;
+                Log.d("UserController", "inside onFailure");
+
             }
         });
         return successfulLogin;
     }
 
 
-    public void putUserGoal(String goal){
+    public void patchUserGoal(String goal){
         Call<User> call = iUserController.patchUserGoal(USER_ID, goal);
 
         call.enqueue(new Callback<User>() {
