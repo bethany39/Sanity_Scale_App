@@ -55,9 +55,10 @@ public class HomeScreen extends AppCompatActivity {
                         Log.d("WeightsController", "outside if in onResponse");
                         WeeklyAverage avg = response.body();
                         weeklyAverage = avg.getWeeklyAverage();
+                        Intent intent =new Intent(HomeScreen.this, GraphScreen.class);
+                        intent.putExtra("weeklyavg", weeklyAverage);
+                        HomeScreen.this.startActivity(intent);
 
-                        TextView avgWeightTextView = (TextView) findViewById(R.id.AvgWeightTextView);
-                        avgWeightTextView.append(Float.toString(weeklyAverage));
                         //System.out.println(weeklyAverage);
                         //goToHomeScreen();
                         //Intent intent = new Intent(LogInScreen.this, HomeScreen.class);
@@ -71,8 +72,7 @@ public class HomeScreen extends AppCompatActivity {
 
                     }
                 });
-                Intent intent =new Intent(HomeScreen.this, GraphScreen.class);
-                HomeScreen.this.startActivity(intent);
+
 
             }
         });
