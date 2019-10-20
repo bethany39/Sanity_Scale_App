@@ -12,8 +12,8 @@ import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
     Button logInBtn;
-    public UserController userController;
-    public WeightsController weightsController;
+    //public UserController userController;
+    //public WeightsController weightsController;
     public int userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

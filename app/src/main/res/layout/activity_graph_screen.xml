@@ -52,5 +52,14 @@
         android:layout_marginRight="13dp"
         android:background="@drawable/menu" />
 
+    <TextView
+        android:id="@+id/AvgWeightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="152dp"
+        android:text="Weekly Average Weight: " />
+
 
 </RelativeLayout>

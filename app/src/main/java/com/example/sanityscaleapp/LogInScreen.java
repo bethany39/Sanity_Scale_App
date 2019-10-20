@@ -10,10 +10,10 @@ import android.view.View.OnClickListener;
 import android.view.View;
 import android.content.Intent;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.gson.GsonBuilder;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,15 +22,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LogInScreen extends AppCompatActivity {
     Button nextBtn, backBtn;
-
+    private int USERID;
+    private float weeklyAverage;
+    Retrofit retrofit;
     //public final UserController userController = new UserController();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in_screen);
 
+        retrofit = new Retrofit.Builder().baseUrl("https://sanity-scale-api.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create(
+                        new GsonBuilder().setPrettyPrinting().create()))
+                .build();
         nextBtn = findViewById(R.id.nextBtn);
         nextBtn.setOnClickListener(new OnClickListener() {
+
+
 
             @Override
             public void onClick(View v) {
@@ -38,18 +46,15 @@ public class LogInScreen extends AppCompatActivity {
 
                 EditText email = (EditText) findViewById(R.id.emailBox);
                 EditText password = (EditText) findViewById(R.id.passwordBox);
-                Retrofit retrofit = new Retrofit.Builder().baseUrl("https://sanity-scale-api.herokuapp.com/")
-                        .addConverterFactory(GsonConverterFactory.create(
-                                new GsonBuilder().setPrettyPrinting().create()))
-                        .build();
+
                 IUserController iUserController = retrofit.create(IUserController.class);
                 //UserController userController = new UserController();
                 //boolean success = userController.getUser(email.getText().toString(), password.getText().toString(), LogInScreen.this);
-                Call<ResponseBody> call = iUserController.getUser(email.getText().toString(), password.getText().toString());
+                Call<User> call = iUserController.getUser(email.getText().toString(), password.getText().toString());
 
-                call.enqueue(new Callback<ResponseBody>() {
+                call.enqueue(new Callback<User>() {
                     @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    public void onResponse(Call<User> call, Response<User> response) {
                         if(!response.isSuccessful()){
                             //should do something for the error handlign
                             Log.d("UserController", "inside if in onResponse");
@@ -57,14 +62,17 @@ public class LogInScreen extends AppCompatActivity {
 
                         }
                         Log.d("UserController", "outside if in onResponse");
-                        String rb = response.body().toString();
-                        Intent intent = new Intent(LogInScreen.this, HomeScreen.class);
-                        LogInScreen.this.startActivity(intent);
+                        User user = response.body();
+                        USERID = user.getUserId();
+                        //USERID = Integer.parseInt(rb);
+                        goToHomeScreen();
+                        //Intent intent = new Intent(LogInScreen.this, HomeScreen.class);
+                        //LogInScreen.this.startActivity(intent);
 
                     }
 
                     @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    public void onFailure(Call<User> call, Throwable t) {
                         Log.d("UserController", "inside onFailure");
 
                     }
@@ -85,8 +93,45 @@ public class LogInScreen extends AppCompatActivity {
     }
 
     public void goToHomeScreen() {
-        Intent intent = new Intent(LogInScreen.this, HomeScreen.class);
+        //Intent intent = new Intent(LogInScreen.this, HomeScreen.class);
+        Intent intent = new Intent(getBaseContext(), HomeScreen.class);
+        intent.putExtra("USERID", USERID);
         LogInScreen.this.startActivity(intent);
+
+
+//  moved all the below code to HomeScreen but haven't tested it yet
+
+//        IWeightsController iWeightsController = retrofit.create(IWeightsController.class);
+//
+//        Call<WeeklyAverage> weightsCall = iWeightsController.getAverageWeight(USERID);
+//
+//        weightsCall.enqueue(new Callback<WeeklyAverage>() {
+//            @Override
+//            public void onResponse(Call<WeeklyAverage> call, Response<WeeklyAverage> response) {
+//                if(!response.isSuccessful()){
+//                    //should do something for the error handlign
+//                    Log.d("WEightsController", "inside if in onResponse");
+//                    return;
+//
+//                }
+//                Log.d("WeightsController", "outside if in onResponse");
+//                WeeklyAverage avg = response.body();
+//                weeklyAverage = avg.getWeeklyAverage();
+//                //TextView avgWeightTextView =
+//                //System.out.println(weeklyAverage);
+//                //goToHomeScreen();
+//                //Intent intent = new Intent(LogInScreen.this, HomeScreen.class);
+//                //LogInScreen.this.startActivity(intent);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<WeeklyAverage> call, Throwable t) {
+//                Log.d("WeightsController", "inside onFailure");
+//
+//            }
+//        });
+
     }
 
 

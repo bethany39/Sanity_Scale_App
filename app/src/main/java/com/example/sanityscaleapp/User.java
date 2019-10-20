@@ -14,8 +14,8 @@ public class User {
     private int unit;
     @SerializedName("goal") @Expose
     private String goal;
-    @SerializedName("userId") @Expose
-    private int userId;
+    @SerializedName("userid") @Expose
+    private int userid;
 
     public User(String name, String email, String password, int unit, String goal, int id){
         this.name=name;
@@ -23,7 +23,7 @@ public class User {
         this.password=password;
         this.unit=unit;
         this.goal=goal;
-        this.userId=id;
+        this.userid=id;
     }
     public String getEmail() {
         return email;
@@ -42,6 +42,6 @@ public class User {
     }
 
     public int getUserId() {
-        return userId;
+        return userid;
     }
 }
