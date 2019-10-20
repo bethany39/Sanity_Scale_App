@@ -45,11 +45,11 @@ public class LogInScreen extends AppCompatActivity {
                 IUserController iUserController = retrofit.create(IUserController.class);
                 //UserController userController = new UserController();
                 //boolean success = userController.getUser(email.getText().toString(), password.getText().toString(), LogInScreen.this);
-                Call<Response> call = iUserController.getUser(email.getText().toString(), password.getText().toString());
+                Call<ResponseBody> call = iUserController.getUser(email.getText().toString(), password.getText().toString());
 
-                call.enqueue(new Callback<Response>() {
+                call.enqueue(new Callback<ResponseBody>() {
                     @Override
-                    public void onResponse(Call<Response> call, Response<Response> response) {
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if(!response.isSuccessful()){
                             //should do something for the error handlign
                             Log.d("UserController", "inside if in onResponse");
@@ -57,14 +57,14 @@ public class LogInScreen extends AppCompatActivity {
 
                         }
                         Log.d("UserController", "outside if in onResponse");
-                        Response rb = response;
+                        String rb = response.body().toString();
                         Intent intent = new Intent(LogInScreen.this, HomeScreen.class);
                         LogInScreen.this.startActivity(intent);
 
                     }
 
                     @Override
-                    public void onFailure(Call<Response> call, Throwable t) {
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.d("UserController", "inside onFailure");
 
                     }

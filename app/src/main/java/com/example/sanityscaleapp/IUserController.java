@@ -18,7 +18,7 @@ import retrofit2.http.Query;
 public interface IUserController {
 
     @GET("users")
-    Call<Response> getUser(@Query("email") String email, @Query("password") String password);
+    Call<ResponseBody> getUser(@Query("email") String email, @Query("password") String password);
 
     @PATCH("users/{id}/goal")
     Call<User> patchUserGoal(@Path("id") int id, @Body String goal);

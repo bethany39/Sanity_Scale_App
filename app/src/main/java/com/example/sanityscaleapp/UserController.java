@@ -34,11 +34,11 @@ public class UserController {
     //these methods shouldn't be void... should return something else to let the calling code
     //know if it was successful
     public void getUser(String email, String password, Context myContext){
-        Call<Response> call = iUserController.getUser(email, password);
+        Call<ResponseBody> call = iUserController.getUser(email, password);
 
-        call.enqueue(new Callback<Response>() {
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<Response> call, Response<Response> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(!response.isSuccessful()){
                     successfulLogin=false;
                     //should do something for the error handlign
@@ -58,7 +58,7 @@ public class UserController {
             }
 
             @Override
-            public void onFailure(Call<Response> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 successfulLogin=false;
                 Log.d("UserController", "inside onFailure");
 
