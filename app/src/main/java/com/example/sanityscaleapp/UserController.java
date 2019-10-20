@@ -2,10 +2,13 @@ package com.example.sanityscaleapp;
 
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.gson.GsonBuilder;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,6 +22,7 @@ public class UserController {
     public static final String base_url = "https://sanity-scale-api.herokuapp.com/";
     private boolean successfulLogin =false;
     public int USER_ID;
+
     public UserController() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(base_url)
                 .addConverterFactory(GsonConverterFactory.create(
@@ -29,12 +33,12 @@ public class UserController {
     }
     //these methods shouldn't be void... should return something else to let the calling code
     //know if it was successful
-    public boolean getUser(String email, String password){
-        Call<User> call = iUserController.getUser(email, password);
+    public void getUser(String email, String password, Context myContext){
+        Call<Response> call = iUserController.getUser(email, password);
 
-        call.enqueue(new Callback<User>() {
+        call.enqueue(new Callback<Response>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<Response> call, Response<Response> response) {
                 if(!response.isSuccessful()){
                     successfulLogin=false;
                     //should do something for the error handlign
@@ -43,21 +47,24 @@ public class UserController {
 
                 }
                 Log.d("UserController", "outside if in onResponse");
-                User user = response.body();
-                USER_ID = user.getUserId();
+                Response rb = response;
+                //Intent intent = new Intent(myContext, HomeScreen.class);
+                //myContext.startActivity(intent);
+                //User user = response.body();
+                //USER_ID = user.getUserId();
                 successfulLogin=true;
-                return;
+
 
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<Response> call, Throwable t) {
                 successfulLogin=false;
                 Log.d("UserController", "inside onFailure");
 
             }
         });
-        return successfulLogin;
+
     }
 
 
