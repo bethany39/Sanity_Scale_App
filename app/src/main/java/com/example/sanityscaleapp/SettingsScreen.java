@@ -10,7 +10,7 @@ import android.view.View;
 import android.content.Intent;
 
 public class SettingsScreen extends AppCompatActivity {
-    Button backBtn;
+    Button backBtn, changeUnitsBtn,goalsBtn,profileBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,28 @@ public class SettingsScreen extends AppCompatActivity {
 
             }
         });
+        changeUnitsBtn=findViewById(R.id.changeUnitsBtn);
+        changeUnitsBtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(SettingsScreen.this, ChangeUnits.class);
+                SettingsScreen.this.startActivity(intent);
+
+            }
+        });
+
+        goalsBtn=findViewById(R.id.goalsBtn);
+        goalsBtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(SettingsScreen.this, Goals.class);
+                SettingsScreen.this.startActivity(intent);
+
+            }
+        });
+
 
 
     }

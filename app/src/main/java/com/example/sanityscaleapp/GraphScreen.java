@@ -22,6 +22,7 @@ public class GraphScreen extends AppCompatActivity {
 
         TextView avgWeightTextView = findViewById(R.id.AvgWeightTextView);
         avgWeightTextView.append(Float.toString(weeklyAverage));
+
         backBtn=findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new OnClickListener() {
 
@@ -38,7 +39,7 @@ public class GraphScreen extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(GraphScreen.this, HomeWMenuScreen.class);
+                Intent intent =new Intent(GraphScreen.this, GraphWithSideMenu.class);
                 GraphScreen.this.startActivity(intent);
 
             }
