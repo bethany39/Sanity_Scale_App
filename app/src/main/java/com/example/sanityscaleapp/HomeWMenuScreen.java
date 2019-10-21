@@ -37,7 +37,8 @@ public class HomeWMenuScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent =new Intent(HomeWMenuScreen.this, SettingsScreen.class);
+                Intent intent =new Intent(getBaseContext(), SettingsScreen.class);
+                intent.putExtra("USERID", USERID);
                 HomeWMenuScreen.this.startActivity(intent);
 
             }

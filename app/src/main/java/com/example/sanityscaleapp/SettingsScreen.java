@@ -43,9 +43,9 @@ public class SettingsScreen extends AppCompatActivity {
 
             }
         });
-        profileTab=findViewById(R.id.profile);
+        profileTab=findViewById(R.id.profileBtn);
 
-        changeGoalsTab=findViewById(R.id.changeGoals);
+        changeGoalsTab=findViewById(R.id.goalsBtn);
         changeGoalsTab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,13 +64,20 @@ public class SettingsScreen extends AppCompatActivity {
                         Log.d("UserController", "outside if in onResponse");
                         User user = response.body();
                         String goal = user.getGoal();
+                        Intent intent;
                         switch(goal){
                             case "maintain weight":
                                 //in each of these navigate to correct screen with right option selected
+                                intent =new Intent(SettingsScreen.this, Goals.class);
+                                SettingsScreen.this.startActivity(intent);
                                 break;
                             case "gain weight":
+                                intent =new Intent(SettingsScreen.this, GoalsGain.class);
+                                SettingsScreen.this.startActivity(intent);
                                 break;
                             case "lose weight":
+                                intent =new Intent(SettingsScreen.this, GoalsLose.class);
+                                SettingsScreen.this.startActivity(intent);
                                 break;
 
                         }
@@ -88,7 +95,7 @@ public class SettingsScreen extends AppCompatActivity {
 
 
 
-        changeUnitsTab=findViewById(R.id.changeUnits);
+        changeUnitsTab=findViewById(R.id.changeUnitsBtn);
         changeUnitsTab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +114,17 @@ public class SettingsScreen extends AppCompatActivity {
                         Log.d("UserController", "outside if in onResponse");
                         User user = response.body();
                         int unit = user.getUnit();
-
+                        Intent intent;
+                        switch(unit){
+                            case 1:
+                                intent =new Intent(SettingsScreen.this, ChangeUnits.class);
+                                SettingsScreen.this.startActivity(intent);
+                                break;
+                            case 0:
+                                intent =new Intent(SettingsScreen.this, ChangeUnitsKgs.class);
+                                SettingsScreen.this.startActivity(intent);
+                                break;
+                        }
                     }
 
                     @Override
