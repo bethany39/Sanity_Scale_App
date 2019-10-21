@@ -18,7 +18,7 @@ public class ChangeUnits extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_units);
         bluebuttonlb=findViewById(R.id.bluebuttonlb);
-        // bluebuttonkg=findViewById(R.id.bluebuttonkg);
+        bluebuttonkg=findViewById(R.id.bluebuttonkg);
         bluebuttonkg.setVisibility(View.INVISIBLE);
 
 

@@ -11,13 +11,13 @@ public class User {
     @SerializedName("password")
     private String password;
     @SerializedName("unit") @Expose
-    private int unit;
+    private String unit;
     @SerializedName("goal") @Expose
     private String goal;
     @SerializedName("userid") @Expose
     private int userid;
 
-    public User(String name, String email, String password, int unit, String goal, int id){
+    public User(String name, String email, String password, String unit, String goal, int id){
         this.name=name;
         this.email=email;
         this.password=password;
@@ -33,7 +33,7 @@ public class User {
         return password;
     }
 
-    public int getUnit() {
+    public String getUnit() {
         return unit;
     }
 

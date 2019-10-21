@@ -67,7 +67,6 @@ public class SettingsScreen extends AppCompatActivity {
                         Intent intent;
                         switch(goal){
                             case "maintain weight":
-                                //in each of these navigate to correct screen with right option selected
                                 intent =new Intent(SettingsScreen.this, Goals.class);
                                 SettingsScreen.this.startActivity(intent);
                                 break;
@@ -101,8 +100,8 @@ public class SettingsScreen extends AppCompatActivity {
             public void onClick(View v) {
                 IUserController iUserController = retrofit.create(IUserController.class);
 
-                Call<User> call = iUserController.getUserUnits(USERID);
-                call.enqueue(new Callback<User>() {
+                Call<User> unitsCall = iUserController.getUserUnits(USERID);
+                unitsCall.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         if(!response.isSuccessful()){
@@ -111,16 +110,15 @@ public class SettingsScreen extends AppCompatActivity {
                             return;
 
                         }
-                        Log.d("UserController", "outside if in onResponse");
                         User user = response.body();
-                        int unit = user.getUnit();
+                        String unit = user.getUnit();
                         Intent intent;
                         switch(unit){
-                            case 1:
+                            case "pounds":
                                 intent =new Intent(SettingsScreen.this, ChangeUnits.class);
                                 SettingsScreen.this.startActivity(intent);
                                 break;
-                            case 0:
+                            case "kgs":
                                 intent =new Intent(SettingsScreen.this, ChangeUnitsKgs.class);
                                 SettingsScreen.this.startActivity(intent);
                                 break;
