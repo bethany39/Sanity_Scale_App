@@ -57,6 +57,7 @@ public class HomeScreen extends AppCompatActivity {
                         weeklyAverage = avg.getWeeklyAverage();
                         Intent intent =new Intent(HomeScreen.this, GraphScreen.class);
                         intent.putExtra("weeklyavg", weeklyAverage);
+
                         HomeScreen.this.startActivity(intent);
 
                         //System.out.println(weeklyAverage);
@@ -83,6 +84,7 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(HomeScreen.this, HomeWMenuScreen.class);
+                intent.putExtra("USERID", USERID);
                 HomeScreen.this.startActivity(intent);
 
             }

@@ -30,6 +30,15 @@
         android:background="#3B95BD"
         android:layout_alignParentLeft="true" />
 
+    <TextView
+        android:id="@+id/AvgWeightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="152dp"
+        android:text="Weekly Average Weight: " />
+
     <Button
         android:id="@+id/graphImage"
         android:layout_width="326dp"
@@ -52,14 +61,7 @@
         android:layout_marginRight="13dp"
         android:background="@drawable/menu" />
 
-    <TextView
-        android:id="@+id/AvgWeightTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="152dp"
-        android:text="Weekly Average Weight: " />
+
 
 
 </RelativeLayout>

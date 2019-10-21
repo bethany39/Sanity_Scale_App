@@ -20,6 +20,12 @@ public interface IUserController {
     @GET("users")
     Call<User> getUser(@Query("email") String email, @Query("password") String password);
 
+    @GET("users/units/{id}")
+    Call<User> getUserUnits(@Path("id") int id);
+
+    @GET("users/goal/{id}")
+    Call<User> getUserGoal(@Path("id") int id);
+
     @PATCH("users/{id}/goal")
     Call<User> patchUserGoal(@Path("id") int id, @Body String goal);
 
