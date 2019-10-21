@@ -6,18 +6,20 @@ import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.content.Intent;
-
-
-
+import android.widget.ImageView;
 
 
 public class ChangeUnits2 extends AppCompatActivity {
     Button lbsBtn, kgsBtn,backBtn;
+    ImageView bluebuttonlb, bluebuttonkg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_units2);
+        bluebuttonlb=findViewById(R.id.bluebuttonlb);
+        // bluebuttonkg=findViewById(R.id.bluebuttonkg);
+        bluebuttonkg.setVisibility(View.INVISIBLE);
 
 
         kgsBtn=findViewById(R.id.kgsBtn);
@@ -25,8 +27,12 @@ public class ChangeUnits2 extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(ChangeUnits2.this, ChangeUnitsKgs2.class);
-                ChangeUnits2.this.startActivity(intent);
+               // Intent intent =new Intent(ChangeUnits2.this, ChangeUnitsKgs2.class);
+               // ChangeUnits2.this.startActivity(intent);
+                bluebuttonlb.setVisibility(View.INVISIBLE);
+                bluebuttonkg.setVisibility(View.VISIBLE);
+
+
 
             }
         });

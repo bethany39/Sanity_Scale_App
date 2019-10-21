@@ -21,7 +21,7 @@
         android:background="@drawable/backarrow" />
 
     <Button
-        android:id="@+id/profile"
+        android:id="@+id/profileBtn"
         android:layout_width="412dp"
         android:layout_height="79dp"
         android:layout_alignParentStart="true"
@@ -44,7 +44,7 @@
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/changeGoals"
+        android:id="@+id/goalsBtn"
         android:layout_width="match_parent"
         android:layout_height="77dp"
         android:layout_alignParentStart="true"
@@ -77,7 +77,7 @@
         android:layout_alignParentLeft="true" />
 
     <TextView
-        android:id="@+id/goals"
+        android:id="@+id/Settings"
         android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -92,7 +92,7 @@
         android:textSize="50sp" />
 
     <Button
-        android:id="@+id/changeUnits"
+        android:id="@+id/changeUnitsBtn"
         android:layout_width="match_parent"
         android:layout_height="79dp"
         android:layout_alignParentStart="true"
