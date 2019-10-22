@@ -12,10 +12,13 @@ import android.widget.ImageView;
 public class Goals extends AppCompatActivity {
     Button backBtn, gainBtn,loseBtn, maintainBtn;
     ImageView bluebuttonm, bluebuttong,bluebuttonl;
+    private int USERID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        USERID = getIntent().getExtras().getInt("USERID");
+
         setContentView(R.layout.activity_goals);
         //properly setting them to whatever the person clicked...
         bluebuttonm=findViewById(R.id.bluebuttonm);
@@ -72,6 +75,7 @@ public class Goals extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(Goals.this, SettingsScreen.class);
+                intent.putExtra("USERID", USERID);
                 Goals.this.startActivity(intent);
             }
         });

@@ -50,7 +50,8 @@ public class LogInScreen extends AppCompatActivity {
                 IUserController iUserController = retrofit.create(IUserController.class);
                 //UserController userController = new UserController();
                 //boolean success = userController.getUser(email.getText().toString(), password.getText().toString(), LogInScreen.this);
-                Call<User> call = iUserController.getUser(email.getText().toString(), password.getText().toString());
+                //Call<User> call = iUserController.getUser(email.getText().toString(), password.getText().toString());
+                Call<User> call = iUserController.getUser("david@gmail.com", "davidmayes");
 
                 call.enqueue(new Callback<User>() {
                     @Override

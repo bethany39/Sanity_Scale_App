@@ -12,6 +12,7 @@ package com.example.sanityscaleapp;
 public class ChangeUnits extends AppCompatActivity {
     Button lbsBtn, kgsBtn,backBtn;
     ImageView bluebuttonlb, bluebuttonkg;
+    private int USERID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,7 @@ public class ChangeUnits extends AppCompatActivity {
         bluebuttonlb=findViewById(R.id.bluebuttonlb);
         bluebuttonkg=findViewById(R.id.bluebuttonkg);
         bluebuttonkg.setVisibility(View.INVISIBLE);
+        USERID = getIntent().getExtras().getInt("USERID");
 
 
         kgsBtn=findViewById(R.id.kgsBtn);
@@ -54,6 +56,7 @@ public class ChangeUnits extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(ChangeUnits.this, HomeScreen.class);
+                intent.putExtra("USERID", USERID);
                 ChangeUnits.this.startActivity(intent);
 
             }

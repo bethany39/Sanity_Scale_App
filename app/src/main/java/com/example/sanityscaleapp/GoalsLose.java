@@ -13,11 +13,13 @@ import android.content.Intent;
 
 public class GoalsLose extends AppCompatActivity {
     Button backBtn, maintainBtn,gainBtn;
+    private int USERID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goals_lose);
+        USERID = getIntent().getExtras().getInt("USERID");
 
 
         maintainBtn=findViewById(R.id.maintainBtn);
@@ -46,6 +48,8 @@ public class GoalsLose extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(GoalsLose.this, SettingsScreen.class);
+                intent.putExtra("USERID", USERID);
+
                 GoalsLose.this.startActivity(intent);
 
             }
