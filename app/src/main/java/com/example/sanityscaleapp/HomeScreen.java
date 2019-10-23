@@ -22,30 +22,25 @@ public class HomeScreen extends AppCompatActivity {
     Button weeklyAvgBtn, menuBtn;
     private float weeklyAverage;
     private int USERID;
-    private Retrofit retrofit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         USERID = getIntent().getExtras().getInt("USERID");
-        retrofit = new Retrofit.Builder().baseUrl("https://sanity-scale-api.herokuapp.com/")
-                .addConverterFactory(GsonConverterFactory.create(
-                        new GsonBuilder().setPrettyPrinting().create()))
-                .build();
 
         weeklyAvgBtn=findViewById(R.id.weeklyAvgBtn);
         weeklyAvgBtn.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                IWeightsController weightsService = RetrofitApi.getInstance().getWeightsService();
+                Call<Weight> weightsCall = weightsService.getAverageWeight(USERID);
+                //Call<WeeklyAverage> weightsCall = iWeightsController.getAverageWeight(USERID);
 
-                IWeightsController iWeightsController = retrofit.create(IWeightsController.class);
-
-                Call<WeeklyAverage> weightsCall = iWeightsController.getAverageWeight(USERID);
-
-                weightsCall.enqueue(new Callback<WeeklyAverage>() {
+                weightsCall.enqueue(new Callback<Weight>() {
                     @Override
-                    public void onResponse(Call<WeeklyAverage> call, Response<WeeklyAverage> response) {
+                    public void onResponse(Call<Weight> call, Response<Weight> response) {
                         if(!response.isSuccessful()){
                             //should do something for the error handlign
                             Log.d("WEightsController", "inside if in onResponse");
@@ -53,22 +48,18 @@ public class HomeScreen extends AppCompatActivity {
 
                         }
                         Log.d("WeightsController", "outside if in onResponse");
-                        WeeklyAverage avg = response.body();
+                        Weight avg = response.body();
                         weeklyAverage = avg.getWeeklyAverage();
                         Intent intent =new Intent(HomeScreen.this, GraphScreen.class);
                         intent.putExtra("weeklyavg", weeklyAverage);
 
                         HomeScreen.this.startActivity(intent);
 
-                        //System.out.println(weeklyAverage);
-                        //goToHomeScreen();
-                        //Intent intent = new Intent(LogInScreen.this, HomeScreen.class);
-                        //LogInScreen.this.startActivity(intent);
 
                     }
 
                     @Override
-                    public void onFailure(Call<WeeklyAverage> call, Throwable t) {
+                    public void onFailure(Call<Weight> call, Throwable t) {
                         Log.d("WeightsController", "inside onFailure");
 
                     }

@@ -20,7 +20,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SettingsScreen extends AppCompatActivity {
     Button backBtn, changeGoalsTab, changeUnitsTab, profileTab;
-    Retrofit retrofit;
     private int USERID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +27,6 @@ public class SettingsScreen extends AppCompatActivity {
         setContentView(R.layout.activity_settings_screen);
         USERID = getIntent().getExtras().getInt("USERID");
 
-        retrofit = new Retrofit.Builder().baseUrl("https://sanity-scale-api.herokuapp.com/")
-                .addConverterFactory(GsonConverterFactory.create(
-                        new GsonBuilder().setPrettyPrinting().create()))
-                .build();
 
         backBtn=findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new OnClickListener() {
@@ -49,9 +44,10 @@ public class SettingsScreen extends AppCompatActivity {
         changeGoalsTab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                IUserController iUserController = retrofit.create(IUserController.class);
+                ///IUserController iUserController = retrofit.create(IUserController.class);
+                IUserController userService = RetrofitApi.getInstance().getUserService();
 
-                Call<User> call = iUserController.getUserGoal(USERID);
+                Call<User> call = userService.getUserGoal(USERID);
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
@@ -73,13 +69,9 @@ public class SettingsScreen extends AppCompatActivity {
                                 break;
                             case "gain weight":
                                 intent.putExtra("selected", "gain");
-                                //intent =new Intent(SettingsScreen.this, Goals.class);
-                                //SettingsScreen.this.startActivity(intent);
                                 break;
                             case "lose weight":
                                 intent.putExtra("selected", "lose");
-                                //intent =new Intent(SettingsScreen.this, Goals.class);
-                                //SettingsScreen.this.startActivity(intent);
                                 break;
 
                         }
@@ -103,9 +95,10 @@ public class SettingsScreen extends AppCompatActivity {
         changeUnitsTab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                IUserController iUserController = retrofit.create(IUserController.class);
+                //IUserController iUserController = retrofit.create(IUserController.class);
+                IUserController userService = RetrofitApi.getInstance().getUserService();
 
-                Call<User> unitsCall = iUserController.getUserUnits(USERID);
+                Call<User> unitsCall = userService.getUserUnits(USERID);
                 unitsCall.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
@@ -125,7 +118,7 @@ public class SettingsScreen extends AppCompatActivity {
                                 SettingsScreen.this.startActivity(intent);
                                 break;
                             case "kgs":
-                                intent =new Intent(SettingsScreen.this, ChangeUnitsKgs.class);
+                                intent =new Intent(SettingsScreen.this, ChangeUnits.class);
                                 intent.putExtra("USERID", USERID);
                                 SettingsScreen.this.startActivity(intent);
                                 break;

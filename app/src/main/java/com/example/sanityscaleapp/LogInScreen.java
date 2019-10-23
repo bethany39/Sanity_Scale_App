@@ -23,18 +23,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LogInScreen extends AppCompatActivity {
     Button nextBtn, backBtn;
     private int USERID;
-    private float weeklyAverage;
-    Retrofit retrofit;
-    //public final UserController userController = new UserController();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in_screen);
 
-        retrofit = new Retrofit.Builder().baseUrl("https://sanity-scale-api.herokuapp.com/")
-                .addConverterFactory(GsonConverterFactory.create(
-                        new GsonBuilder().setPrettyPrinting().create()))
-                .build();
         nextBtn = findViewById(R.id.nextBtn);
         nextBtn.setOnClickListener(new OnClickListener() {
 
@@ -47,11 +41,11 @@ public class LogInScreen extends AppCompatActivity {
                 EditText email = (EditText) findViewById(R.id.emailBox);
                 EditText password = (EditText) findViewById(R.id.passwordBox);
 
-                IUserController iUserController = retrofit.create(IUserController.class);
+                IUserController userService = RetrofitApi.getInstance().getUserService();
                 //UserController userController = new UserController();
-                //boolean success = userController.getUser(email.getText().toString(), password.getText().toString(), LogInScreen.this);
-                //Call<User> call = iUserController.getUser(email.getText().toString(), password.getText().toString());
-                Call<User> call = iUserController.getUser("david@gmail.com", "davidmayes");
+
+                //Call<User> call = userService.getUser(email.getText().toString(), password.getText().toString());
+                Call<User> call = userService.getUser("david@gmail.com", "davidmayes");
 
                 call.enqueue(new Callback<User>() {
                     @Override
@@ -65,10 +59,7 @@ public class LogInScreen extends AppCompatActivity {
                         Log.d("UserController", "outside if in onResponse");
                         User user = response.body();
                         USERID = user.getUserId();
-                        //USERID = Integer.parseInt(rb);
                         goToHomeScreen();
-                        //Intent intent = new Intent(LogInScreen.this, HomeScreen.class);
-                        //LogInScreen.this.startActivity(intent);
 
                     }
 
@@ -94,44 +85,9 @@ public class LogInScreen extends AppCompatActivity {
     }
 
     public void goToHomeScreen() {
-        //Intent intent = new Intent(LogInScreen.this, HomeScreen.class);
         Intent intent = new Intent(getBaseContext(), HomeScreen.class);
         intent.putExtra("USERID", USERID);
         LogInScreen.this.startActivity(intent);
-
-
-//  moved all the below code to HomeScreen but haven't tested it yet
-
-//        IWeightsController iWeightsController = retrofit.create(IWeightsController.class);
-//
-//        Call<WeeklyAverage> weightsCall = iWeightsController.getAverageWeight(USERID);
-//
-//        weightsCall.enqueue(new Callback<WeeklyAverage>() {
-//            @Override
-//            public void onResponse(Call<WeeklyAverage> call, Response<WeeklyAverage> response) {
-//                if(!response.isSuccessful()){
-//                    //should do something for the error handlign
-//                    Log.d("WEightsController", "inside if in onResponse");
-//                    return;
-//
-//                }
-//                Log.d("WeightsController", "outside if in onResponse");
-//                WeeklyAverage avg = response.body();
-//                weeklyAverage = avg.getWeeklyAverage();
-//                //TextView avgWeightTextView =
-//                //System.out.println(weeklyAverage);
-//                //goToHomeScreen();
-//                //Intent intent = new Intent(LogInScreen.this, HomeScreen.class);
-//                //LogInScreen.this.startActivity(intent);
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<WeeklyAverage> call, Throwable t) {
-//                Log.d("WeightsController", "inside onFailure");
-//
-//            }
-//        });
 
     }
 

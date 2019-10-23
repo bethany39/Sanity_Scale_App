@@ -11,5 +11,5 @@ import retrofit2.http.Query;
 public interface IWeightsController {
 
     @GET("weights/{id}")
-    Call <WeeklyAverage> getAverageWeight(@Path("id") int id);
+    Call <Weight> getAverageWeight(@Path("id") int id);
 }
