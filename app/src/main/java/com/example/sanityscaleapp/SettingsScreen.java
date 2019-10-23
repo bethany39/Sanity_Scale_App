@@ -65,21 +65,26 @@ public class SettingsScreen extends AppCompatActivity {
                         User user = response.body();
                         String goal = user.getGoal();
                         Intent intent;
+                        intent =new Intent(SettingsScreen.this, Goals.class);
+
                         switch(goal){
                             case "maintain weight":
-                                intent =new Intent(SettingsScreen.this, Goals.class);
-                                SettingsScreen.this.startActivity(intent);
+                                intent.putExtra("selected", "maintain");
                                 break;
                             case "gain weight":
-                                intent =new Intent(SettingsScreen.this, GoalsGain.class);
-                                SettingsScreen.this.startActivity(intent);
+                                intent.putExtra("selected", "gain");
+                                //intent =new Intent(SettingsScreen.this, Goals.class);
+                                //SettingsScreen.this.startActivity(intent);
                                 break;
                             case "lose weight":
-                                intent =new Intent(SettingsScreen.this, GoalsLose.class);
-                                SettingsScreen.this.startActivity(intent);
+                                intent.putExtra("selected", "lose");
+                                //intent =new Intent(SettingsScreen.this, Goals.class);
+                                //SettingsScreen.this.startActivity(intent);
                                 break;
 
                         }
+                        SettingsScreen.this.startActivity(intent);
+
                     }
 
                     @Override

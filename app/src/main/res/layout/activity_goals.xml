@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#EFEFEF"
     tools:context=".SettingsScreen2"
-    android:id="@+id/settingsScreen2">
+    android:id="@+id/activityGoals">
 
 
     <Button
