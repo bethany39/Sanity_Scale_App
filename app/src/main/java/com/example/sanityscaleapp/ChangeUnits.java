@@ -13,6 +13,7 @@ public class ChangeUnits extends AppCompatActivity {
     Button lbsBtn, kgsBtn,backBtn;
     ImageView bluebuttonlb, bluebuttonkg;
     private int USERID;
+    private String UNITS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +21,18 @@ public class ChangeUnits extends AppCompatActivity {
         setContentView(R.layout.activity_change_units);
         bluebuttonlb=findViewById(R.id.bluebuttonlb);
         bluebuttonkg=findViewById(R.id.bluebuttonkg);
-        bluebuttonkg.setVisibility(View.INVISIBLE);
+        //bluebuttonkg.setVisibility(View.INVISIBLE);
         USERID = getIntent().getExtras().getInt("USERID");
+        UNITS=getIntent().getExtras().getString("selected");
+
+        if (UNITS.equals("pounds"))
+        {
+            bluebuttonkg.setVisibility(View.INVISIBLE);
+        }
+        else if (UNITS.equals("kgs"))
+        {
+            bluebuttonlb.setVisibility(View.INVISIBLE);
+        }
 
 
         kgsBtn=findViewById(R.id.kgsBtn);

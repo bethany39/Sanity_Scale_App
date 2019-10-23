@@ -118,16 +118,18 @@ public class SettingsScreen extends AppCompatActivity {
                         User user = response.body();
                         String unit = user.getUnit();
                         Intent intent;
+                        intent =new Intent(SettingsScreen.this, ChangeUnits.class);
                         switch(unit){
                             case "pounds":
-                                intent =new Intent(SettingsScreen.this, ChangeUnits.class);
                                 intent.putExtra("USERID", USERID);
-                                SettingsScreen.this.startActivity(intent);
+                                intent.putExtra("selected", "pounds");
+                              //  SettingsScreen.this.startActivity(intent);
                                 break;
                             case "kgs":
-                                intent =new Intent(SettingsScreen.this, ChangeUnitsKgs.class);
+                               // intent =new Intent(SettingsScreen.this, ChangeUnits.class);
                                 intent.putExtra("USERID", USERID);
-                                SettingsScreen.this.startActivity(intent);
+                                intent.putExtra("selected", "kgs");
+                                //SettingsScreen.this.startActivity(intent);
                                 break;
                         }
                     }
