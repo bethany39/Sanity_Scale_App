@@ -27,10 +27,10 @@ public interface IUserController {
     Call<User> getUserGoal(@Path("id") int id);
 
     @PATCH("users/{id}/goal")
-    Call<User> patchUserGoal(@Path("id") int id, @Body String goal);
+    Call<String> patchUserGoal(@Path("id") int id, @Body User goal);
 
-    @PATCH("users/{id}/units/")
-    Call<User> patchUserUnits(@Path("id") int id, @Body int units);
+    @PATCH("users/units/{id}")
+    Call<ResponseBody> patchUserUnits(@Path("id") int id, @Body User unit);
 
 
 }

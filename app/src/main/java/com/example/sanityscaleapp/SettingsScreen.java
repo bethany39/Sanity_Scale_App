@@ -62,7 +62,7 @@ public class SettingsScreen extends AppCompatActivity {
                         String goal = user.getGoal();
                         Intent intent;
                         intent =new Intent(SettingsScreen.this, Goals.class);
-
+                        intent.putExtra("USERID", USERID);
                         switch(goal){
                             case "maintain weight":
                                 intent.putExtra("selected", "maintain");
@@ -111,18 +111,22 @@ public class SettingsScreen extends AppCompatActivity {
                         User user = response.body();
                         String unit = user.getUnit();
                         Intent intent;
+                        intent =new Intent(SettingsScreen.this, ChangeUnits.class);
                         switch(unit){
                             case "pounds":
-                                intent =new Intent(SettingsScreen.this, ChangeUnits.class);
                                 intent.putExtra("USERID", USERID);
-                                SettingsScreen.this.startActivity(intent);
+                                intent.putExtra("selected", "pounds");
+                              //  SettingsScreen.this.startActivity(intent);
                                 break;
                             case "kgs":
-                                intent =new Intent(SettingsScreen.this, ChangeUnits.class);
+                               // intent =new Intent(SettingsScreen.this, ChangeUnits.class);
                                 intent.putExtra("USERID", USERID);
-                                SettingsScreen.this.startActivity(intent);
+                                intent.putExtra("selected", "kgs");
+                                //SettingsScreen.this.startActivity(intent);
                                 break;
                         }
+                        SettingsScreen.this.startActivity(intent);
+
                     }
 
                     @Override
