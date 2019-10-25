@@ -95,10 +95,30 @@ public class ChangeUnits extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // Intent intent =new Intent(ChangeUnits.this, ChangeUnitsKgs.class);
-                // ChangeUnits.this.startActivity(intent);
-                bluebuttonkg.setVisibility(View.INVISIBLE);
-                bluebuttonlb.setVisibility(View.VISIBLE);
+                String userJson = "{'unit': 'pounds'}";
+                Gson gson = new Gson();
+                User userObject = gson.fromJson(userJson, User.class);
+                Call<ResponseBody> changeToLbsCall = userService.patchUserUnits(USERID, userObject);
+                changeToLbsCall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(!response.isSuccessful()) {
+                            //should do something for the error handlign
+                            Log.d("UserController", "inside if in onResponse");
+                            return;
+
+                        }
+                        bluebuttonlb.setVisibility(View.VISIBLE);
+                        bluebuttonkg.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.d("UserController", "inside onFailure");
+
+                    }
+                });
+
 
             }
         });
@@ -108,7 +128,7 @@ public class ChangeUnits extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(ChangeUnits.this, HomeScreen.class);
+                Intent intent =new Intent(ChangeUnits.this, SettingsScreen.class);
                 intent.putExtra("USERID", USERID);
                 ChangeUnits.this.startActivity(intent);
 

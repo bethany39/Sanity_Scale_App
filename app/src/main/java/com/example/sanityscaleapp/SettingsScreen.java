@@ -34,6 +34,7 @@ public class SettingsScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(SettingsScreen.this, HomeScreen.class);
+                intent.putExtra("USERID", USERID);
                 SettingsScreen.this.startActivity(intent);
 
             }
