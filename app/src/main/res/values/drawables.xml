@@ -1,0 +1,5 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <item name="settings" type="drawable">settings.jpg</item>
+    <item name="home" type="drawable">home.jpg</item>
+    <item name="logout" type="drawable">logout.jpg</item>
+</resources>
