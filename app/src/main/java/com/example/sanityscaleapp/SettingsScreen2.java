@@ -4,49 +4,134 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.content.Intent;
 
-public class SettingsScreen2 extends AppCompatActivity {
-    Button backBtn, changeUnitsBtn,profileBtn,goalsBtn;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+public class SettingsScreen2 extends AppCompatActivity {
+    Button backBtn, changeUnitsTab,profileTab, changeGoalsTab;
+    private int USERID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings_screen2);
+        setContentView(R.layout.activity_settings_screen);
+        USERID = getIntent().getExtras().getInt("USERID");
+
 
         backBtn=findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(SettingsScreen2.this, GraphWithSideMenu.class);
+                Intent intent =new Intent(SettingsScreen2.this, GraphScreen.class);
+                intent.putExtra("USERID", USERID);
                 SettingsScreen2.this.startActivity(intent);
 
             }
         });
+        profileTab=findViewById(R.id.profileBtn);
 
-        changeUnitsBtn=findViewById(R.id.changeUnitsBtn);
-        changeUnitsBtn.setOnClickListener(new OnClickListener() {
-
+        changeGoalsTab=findViewById(R.id.goalsBtn);
+        changeGoalsTab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(SettingsScreen2.this, ChangeUnits2.class);
-                SettingsScreen2.this.startActivity(intent);
+                ///IUserController iUserController = retrofit.create(IUserController.class);
+                IUserController userService = RetrofitApi.getInstance().getUserService();
 
+                Call<User> call = userService.getUserGoal(USERID);
+                call.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        if(!response.isSuccessful()){
+                            //should do something for the error handlign
+                            Log.d("UserController", "inside if in onResponse");
+                            return;
+
+                        }
+                        Log.d("UserController", "outside if in onResponse");
+                        User user = response.body();
+                        String goal = user.getGoal();
+                        Intent intent;
+                        intent =new Intent(SettingsScreen2.this, Goals.class);
+                        intent.putExtra("USERID", USERID);
+                        switch(goal){
+                            case "maintain weight":
+                                intent.putExtra("selected", "maintain");
+                                break;
+                            case "gain weight":
+                                intent.putExtra("selected", "gain");
+                                break;
+                            case "lose weight":
+                                intent.putExtra("selected", "lose");
+                                break;
+
+                        }
+                        SettingsScreen2.this.startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        Log.d("UserController", "inside onFailure");
+
+                    }
+                });
             }
         });
 
-        goalsBtn=findViewById(R.id.goalsBtn);
-        goalsBtn.setOnClickListener(new OnClickListener() {
 
+
+
+        changeUnitsTab=findViewById(R.id.changeUnitsBtn);
+        changeUnitsTab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(SettingsScreen2.this, Goals2.class);
-                SettingsScreen2.this.startActivity(intent);
+                //IUserController iUserController = retrofit.create(IUserController.class);
+                IUserController userService = RetrofitApi.getInstance().getUserService();
 
+                Call<User> unitsCall = userService.getUserUnits(USERID);
+                unitsCall.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        if(!response.isSuccessful()){
+                            //should do something for the error handlign
+                            Log.d("UserController", "inside if in onResponse");
+                            return;
+
+                        }
+                        User user = response.body();
+                        String unit = user.getUnit();
+                        Intent intent;
+                        intent =new Intent(SettingsScreen2.this, ChangeUnits.class);
+                        switch(unit){
+                            case "pounds":
+                                intent.putExtra("USERID", USERID);
+                                intent.putExtra("selected", "pounds");
+                                //  SettingsScreen.this.startActivity(intent);
+                                break;
+                            case "kgs":
+                                // intent =new Intent(SettingsScreen.this, ChangeUnits.class);
+                                intent.putExtra("USERID", USERID);
+                                intent.putExtra("selected", "kgs");
+                                //SettingsScreen.this.startActivity(intent);
+                                break;
+                        }
+                        SettingsScreen2.this.startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        Log.d("UserController", "inside onFailure");
+
+                    }
+                });
             }
         });
 

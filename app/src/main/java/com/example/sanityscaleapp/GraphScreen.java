@@ -13,13 +13,14 @@ import android.widget.TextView;
 public class GraphScreen extends AppCompatActivity {
     Button backBtn, menuBtn;
     private float weeklyAverage;
+    private int USERID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_screen);
         weeklyAverage= getIntent().getExtras().getFloat("weeklyavg");
-
+        USERID=getIntent().getExtras().getInt("USERID");
         TextView avgWeightTextView = findViewById(R.id.AvgWeightTextView);
         avgWeightTextView.append(Float.toString(weeklyAverage));
 
@@ -29,6 +30,7 @@ public class GraphScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(GraphScreen.this, HomeScreen.class);
+                intent.putExtra("USERID", USERID);
                 GraphScreen.this.startActivity(intent);
 
             }
@@ -39,7 +41,9 @@ public class GraphScreen extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(GraphScreen.this, GraphWithSideMenu.class);
+                Intent intent =new Intent(GraphScreen.this, SettingsScreen.class);
+                intent.putExtra("USERID", USERID);
+                intent.putExtra("backScreen", "graphScreen");
                 GraphScreen.this.startActivity(intent);
 
             }

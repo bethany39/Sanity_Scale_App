@@ -21,21 +21,29 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SettingsScreen extends AppCompatActivity {
     Button backBtn, changeGoalsTab, changeUnitsTab, profileTab;
     private int USERID;
+    private String backScreen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_screen);
         USERID = getIntent().getExtras().getInt("USERID");
-
+        backScreen = getIntent().getExtras().getString("backScreen");
 
         backBtn=findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(SettingsScreen.this, HomeScreen.class);
-                intent.putExtra("USERID", USERID);
-                SettingsScreen.this.startActivity(intent);
+
+                if(backScreen.equals("homeScreen")) {
+                    Intent intent = new Intent(SettingsScreen.this, HomeScreen.class);
+                    intent.putExtra("USERID", USERID);
+                    SettingsScreen.this.startActivity(intent);
+                } else if(backScreen.equals("graphScreen")) {
+                    Intent intent = new Intent(SettingsScreen.this, GraphScreen.class);
+                    intent.putExtra("USERID", USERID);
+                    SettingsScreen.this.startActivity(intent);
+                }
 
             }
         });
