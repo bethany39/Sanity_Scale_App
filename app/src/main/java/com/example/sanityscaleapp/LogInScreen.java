@@ -1,7 +1,7 @@
 package com.example.sanityscaleapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.test.espresso.idling.CountingIdlingResource;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LogInScreen extends AppCompatActivity {
     Button nextBtn, backBtn;
     private int USERID;
+    CountingIdlingResource IdlingResource = new CountingIdlingResource("LOGIN");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class LogInScreen extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                IdlingResource.increment();
 
 
                 EditText email = (EditText) findViewById(R.id.emailBox);
@@ -44,8 +46,8 @@ public class LogInScreen extends AppCompatActivity {
                 IUserController userService = RetrofitApi.getInstance().getUserService();
                 //UserController userController = new UserController();
 
-                //Call<User> call = userService.getUser(email.getText().toString(), password.getText().toString());
-                Call<User> call = userService.getUser("david@gmail.com", "davidmayes");
+                Call<User> call = userService.getUser(email.getText().toString(), password.getText().toString());
+                //Call<User> call = userService.getUser("david@gmail.com", "davidmayes");
 
                 call.enqueue(new Callback<User>() {
                     @Override
@@ -60,12 +62,14 @@ public class LogInScreen extends AppCompatActivity {
                         User user = response.body();
                         USERID = user.getUserId();
                         goToHomeScreen();
+                        IdlingResource.decrement();
 
                     }
 
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
                         Log.d("UserController", "inside onFailure");
+                        IdlingResource.decrement();
 
                     }
                 });
@@ -89,6 +93,9 @@ public class LogInScreen extends AppCompatActivity {
         intent.putExtra("USERID", USERID);
         LogInScreen.this.startActivity(intent);
 
+    }
+    public CountingIdlingResource getEspressoIdlingResourceForMainActivity() {
+        return IdlingResource;
     }
 
 

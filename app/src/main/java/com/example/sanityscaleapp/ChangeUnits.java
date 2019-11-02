@@ -130,6 +130,7 @@ public class ChangeUnits extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent =new Intent(ChangeUnits.this, SettingsScreen.class);
                 intent.putExtra("USERID", USERID);
+                intent.putExtra("backScreen", "homeScreen");
                 ChangeUnits.this.startActivity(intent);
 
             }

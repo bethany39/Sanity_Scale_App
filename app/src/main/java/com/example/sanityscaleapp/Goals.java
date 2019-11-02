@@ -147,6 +147,7 @@ public class Goals extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent =new Intent(Goals.this, SettingsScreen.class);
                 intent.putExtra("USERID", USERID);
+                intent.putExtra("backScreen", "homeScreen");
                 Goals.this.startActivity(intent);
             }
         });

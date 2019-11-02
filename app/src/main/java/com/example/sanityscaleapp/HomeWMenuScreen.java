@@ -39,6 +39,7 @@ public class HomeWMenuScreen extends AppCompatActivity {
 
                 Intent intent =new Intent(getBaseContext(), SettingsScreen.class);
                 intent.putExtra("USERID", USERID);
+                intent.putExtra("backScreen", "homeScreen");
                 HomeWMenuScreen.this.startActivity(intent);
 
             }
