@@ -1,15 +1,28 @@
 package com.example.sanityscaleapp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.content.Intent;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
+
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
@@ -18,20 +31,49 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HomeScreen extends AppCompatActivity {
-    Button weeklyAvgBtn, menuBtn;
+public class HomeScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    Button weeklyAvgBtn;
     private float weeklyAverage;
     private int USERID;
     private Retrofit retrofit;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle toggle;
+    private NavigationView navigation;
+    // private Toolbar toolbar;
+    // private androidx.appcompat.widget.Toolbar toolbar;
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        USERID = getIntent().getExtras().getInt("USERID");
+
+        Bundle bundle=getIntent().getExtras();
+        if(bundle!=null) {
+            USERID = bundle.getInt("USERID");
+        }
         retrofit = new Retrofit.Builder().baseUrl("https://sanity-scale-api.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create(
                         new GsonBuilder().setPrettyPrinting().create()))
                 .build();
+
+
+      //  toolbar = findViewById(R.id.nav_action);
+       // setSupportActionBar(toolbar);
+        //doesn't like toolbar
+
+        drawerLayout= findViewById(R.id.homeScreen);
+        toggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
+
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
 
         weeklyAvgBtn=findViewById(R.id.weeklyAvgBtn);
         weeklyAvgBtn.setOnClickListener(new OnClickListener() {
@@ -78,19 +120,43 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
 
-        menuBtn=findViewById(R.id.menuBtn);
-        menuBtn.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(HomeScreen.this, HomeWMenuScreen.class);
-                intent.putExtra("USERID", USERID);
-                HomeScreen.this.startActivity(intent);
-
-            }
-        });
 
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(toggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        else {
+            return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.nav_home:
+                System.out.println("here");
+                Intent intent=new Intent(HomeScreen.this,HomeScreen.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_settings:
+                Intent intent2=new Intent(HomeScreen.this,SettingsScreen.class);
+                startActivity(intent2);
+                break;
+            case R.id.nav_logout:
+                Intent intent3=new Intent(HomeScreen.this,LogoutHome.class);
+                startActivity(intent3);
+                break;
+        }
+        return true;
     }
 
 

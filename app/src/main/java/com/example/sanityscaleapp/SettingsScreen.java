@@ -1,15 +1,20 @@
 package com.example.sanityscaleapp;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.content.Intent;
-
+import androidx.appcompat.app.ActionBar;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
@@ -18,37 +23,47 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SettingsScreen extends AppCompatActivity {
-    Button backBtn, changeGoalsTab, changeUnitsTab, profileTab;
+public class SettingsScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+    Button changeGoalsTab, changeUnitsTab, profileTab;
     Retrofit retrofit;
     private int USERID;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle toggle;
+    private NavigationView navigation;
+    private ActionBar actionBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_screen);
-        USERID = getIntent().getExtras().getInt("USERID");
+        Bundle bundle=getIntent().getExtras();
+        if(bundle!=null) {
+            USERID = bundle.getInt("USERID");
+        }
 
         retrofit = new Retrofit.Builder().baseUrl("https://sanity-scale-api.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create(
                         new GsonBuilder().setPrettyPrinting().create()))
                 .build();
 
-        backBtn=findViewById(R.id.backBtn);
-        backBtn.setOnClickListener(new OnClickListener() {
+        drawerLayout= findViewById(R.id.settingsScreen);
+        toggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
 
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(SettingsScreen.this, HomeScreen.class);
-                SettingsScreen.this.startActivity(intent);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
-            }
-        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view2);
+        navigationView.setNavigationItemSelectedListener(this);
+
         profileTab=findViewById(R.id.profileBtn);
 
         changeGoalsTab=findViewById(R.id.goalsBtn);
         changeGoalsTab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 IUserController iUserController = retrofit.create(IUserController.class);
 
                 Call<User> call = iUserController.getUserGoal(USERID);
@@ -67,6 +82,7 @@ public class SettingsScreen extends AppCompatActivity {
                         Intent intent;
                         intent =new Intent(SettingsScreen.this, Goals.class);
 
+                        System.out.println("it's here!!");
                         switch(goal){
                             case "maintain weight":
                                 intent.putExtra("selected", "maintain");
@@ -132,6 +148,7 @@ public class SettingsScreen extends AppCompatActivity {
                                 //SettingsScreen.this.startActivity(intent);
                                 break;
                         }
+                        SettingsScreen.this.startActivity(intent);
                     }
 
                     @Override
@@ -145,5 +162,34 @@ public class SettingsScreen extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(toggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        else {
+            return super.onOptionsItemSelected(item);
+        }
 
+    }
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.nav_home:
+                System.out.println("here");
+                Intent intent=new Intent(SettingsScreen.this,HomeScreen.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_settings:
+                Intent intent2=new Intent(SettingsScreen.this,SettingsScreen.class);
+                startActivity(intent2);
+                break;
+            case R.id.nav_logout:
+                Intent intent3=new Intent(SettingsScreen.this,LogoutHome.class);
+                startActivity(intent3);
+                break;
+        }
+        return true;
+    }
 }

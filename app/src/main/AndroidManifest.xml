@@ -12,15 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GraphWithSideMenu"></activity>
-        <activity android:name=".home_layered_way" />
-        <activity android:name=".Goals2" />
         <activity android:name=".Goals" />
-        <activity android:name=".ChangeUnits2" />
         <activity android:name=".ChangeUnits" />
         <activity android:name=".LogoutHome" />
-        <activity android:name=".HomeWMenuScreen" />
-        <activity android:name=".SettingsScreen2" />
         <activity android:name=".SettingsScreen" />
         <activity android:name=".LogInScreen" />
         <activity android:name=".GraphScreen" />
