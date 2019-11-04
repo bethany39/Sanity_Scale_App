@@ -22,19 +22,23 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigation;
+    private int USERID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_screen);
         weeklyAverage= getIntent().getExtras().getFloat("weeklyavg");
-
+        USERID=getIntent().getExtras().getInt("USERID");
         TextView avgWeightTextView = findViewById(R.id.AvgWeightTextView);
         avgWeightTextView.append(Float.toString(weeklyAverage));
 
 
+
         drawerLayout= findViewById(R.id.graphScreen);
         toggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
+
 
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();

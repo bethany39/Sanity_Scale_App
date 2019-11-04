@@ -25,6 +25,13 @@ public class User {
         this.goal=goal;
         this.userid=id;
     }
+
+    public User(String unit){
+        this.goal=goal;
+    }
+
+    //public User(String goal){}
+
     public String getEmail() {
         return email;
     }

@@ -23,6 +23,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
 public class SettingsScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Button changeGoalsTab, changeUnitsTab, profileTab;
     Retrofit retrofit;
@@ -31,10 +32,12 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_screen);
+
         Bundle bundle=getIntent().getExtras();
        if(bundle!=null) {
             USERID = bundle.getInt("USERID");
@@ -45,8 +48,10 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
                         new GsonBuilder().setPrettyPrinting().create()))
                 .build();
 
+
         drawerLayout= findViewById(R.id.settingsScreen);
         toggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
+
 
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -63,9 +68,12 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
             @Override
             public void onClick(View v) {
 
-                IUserController iUserController = retrofit.create(IUserController.class);
 
-                Call<User> call = iUserController.getUserGoal(USERID);
+                ///IUserController iUserController = retrofit.create(IUserController.class);
+                IUserController userService = RetrofitApi.getInstance().getUserService();
+                EspressoIdlingResource.increment();
+                Call<User> call = userService.getUserGoal(USERID);
+
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
@@ -81,30 +89,32 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
                         Intent intent;
                         intent =new Intent(SettingsScreen.this, Goals.class);
 
+
                         System.out.println("it's here!!");
+
+                        intent.putExtra("USERID", USERID);
+
                         switch(goal){
                             case "maintain weight":
                                 intent.putExtra("selected", "maintain");
                                 break;
                             case "gain weight":
                                 intent.putExtra("selected", "gain");
-                                //intent =new Intent(SettingsScreen.this, Goals.class);
-                                //SettingsScreen.this.startActivity(intent);
                                 break;
                             case "lose weight":
                                 intent.putExtra("selected", "lose");
-                                //intent =new Intent(SettingsScreen.this, Goals.class);
-                                //SettingsScreen.this.startActivity(intent);
                                 break;
 
                         }
                         SettingsScreen.this.startActivity(intent);
+                        EspressoIdlingResource.decrement();
 
                     }
 
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
                         Log.d("UserController", "inside onFailure");
+                        EspressoIdlingResource.decrement();
 
                     }
                 });
@@ -118,9 +128,11 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
         changeUnitsTab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                IUserController iUserController = retrofit.create(IUserController.class);
+                //IUserController iUserController = retrofit.create(IUserController.class);
+                IUserController userService = RetrofitApi.getInstance().getUserService();
+                EspressoIdlingResource.increment();
 
-                Call<User> unitsCall = iUserController.getUserUnits(USERID);
+                Call<User> unitsCall = userService.getUserUnits(USERID);
                 unitsCall.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
@@ -148,11 +160,16 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
                                 break;
                         }
                         SettingsScreen.this.startActivity(intent);
+
+                        EspressoIdlingResource.decrement();
+
+
                     }
 
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
                         Log.d("UserController", "inside onFailure");
+                        EspressoIdlingResource.decrement();
 
                     }
                 });

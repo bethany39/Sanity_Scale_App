@@ -16,6 +16,14 @@ import android.widget.ImageView;
 
 import com.google.android.material.navigation.NavigationView;
 
+import com.google.gson.Gson;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
 
 public class Goals extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button gainBtn,loseBtn, maintainBtn;
@@ -26,12 +34,16 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
     private ActionBarDrawerToggle toggle;
     private NavigationView navigation;
 
+    IUserController userService;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         USERID = getIntent().getExtras().getInt("USERID");
         goal = getIntent().getExtras().getString("selected");
         setContentView(R.layout.activity_goals);
+        userService = RetrofitApi.getInstance().getUserService();
 
         //properly setting them to whatever the person clicked...
         bluebuttonm=findViewById(R.id.bluebuttonm);
@@ -64,7 +76,35 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
 
             @Override
             public void onClick(View v) {
-                selectGain(v);
+                String userJson = "{'goal': 'gain weight'}";
+                Gson gson = new Gson();
+                User userObject = gson.fromJson(userJson, User.class);
+                EspressoIdlingResource.increment();
+
+                Call<ResponseBody> gainCall = userService.patchUserGoal(USERID, userObject);
+                gainCall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(!response.isSuccessful()) {
+                            //should do something for the error handlign
+                            Log.d("UserController", "inside if in onResponse");
+                            return;
+
+                        }
+                        selectGain(findViewById(R.id.activityGoals));
+                        EspressoIdlingResource.decrement();
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.d("UserController", "inside onFailure");
+                        EspressoIdlingResource.decrement();
+
+
+                    }
+                });
+               // selectGain(v);
             }
         });
         loseBtn=findViewById(R.id.loseBtn);
@@ -72,7 +112,35 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
 
             @Override
             public void onClick(View v) {
-                selectLose(v);
+                String userJson = "{'goal': 'lose weight'}";
+                Gson gson = new Gson();
+                User userObject = gson.fromJson(userJson, User.class);
+                EspressoIdlingResource.increment();
+
+                Call<ResponseBody> loseCall = userService.patchUserGoal(USERID, userObject);
+                loseCall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(!response.isSuccessful()) {
+                            //should do something for the error handlign
+                            Log.d("UserController", "inside if in onResponse");
+                            return;
+
+                        }
+                        selectLose(findViewById(R.id.activityGoals));
+                        EspressoIdlingResource.decrement();
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.d("UserController", "inside onFailure");
+                        EspressoIdlingResource.decrement();
+
+
+                    }
+                });
+                //selectLose(v);
 
             }
         });
@@ -82,10 +150,37 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
 
             @Override
             public void onClick(View v) {
-                selectMaintain(v);
+                String userJson = "{'goal': 'maintain weight'}";
+                Gson gson = new Gson();
+                User userObject = gson.fromJson(userJson, User.class);
+                EspressoIdlingResource.increment();
+
+                Call<ResponseBody> maintainCall = userService.patchUserGoal(USERID, userObject);
+                maintainCall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(!response.isSuccessful()) {
+                            //should do something for the error handlign
+                            Log.d("UserController", "inside if in onResponse");
+                            return;
+
+                        }
+                        selectMaintain(findViewById(R.id.activityGoals));
+                        EspressoIdlingResource.decrement();
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.d("UserController", "inside onFailure");
+                        EspressoIdlingResource.decrement();
+
+
+                    }
+                });
+                //selectMaintain(v);
             }
         });
-
 
 
     }
