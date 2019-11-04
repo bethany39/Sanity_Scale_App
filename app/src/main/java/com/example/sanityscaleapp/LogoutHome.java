@@ -54,7 +54,6 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_home:
-                System.out.println("here");
                 Intent intent = new Intent(LogoutHome.this, HomeScreen.class);
                 startActivity(intent);
                 break;

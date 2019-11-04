@@ -23,21 +23,20 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SettingsScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class SettingsScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Button changeGoalsTab, changeUnitsTab, profileTab;
     Retrofit retrofit;
     private int USERID;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
-    private NavigationView navigation;
-    private ActionBar actionBar;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_screen);
         Bundle bundle=getIntent().getExtras();
-        if(bundle!=null) {
+       if(bundle!=null) {
             USERID = bundle.getInt("USERID");
         }
 
@@ -54,7 +53,7 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view2);
+        navigationView=(NavigationView) findViewById(R.id.nav_view2);
         navigationView.setNavigationItemSelectedListener(this);
 
         profileTab=findViewById(R.id.profileBtn);
@@ -177,7 +176,6 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
     public boolean onNavigationItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.nav_home:
-                System.out.println("here");
                 Intent intent=new Intent(SettingsScreen.this,HomeScreen.class);
                 startActivity(intent);
                 break;

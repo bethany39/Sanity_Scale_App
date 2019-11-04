@@ -60,7 +60,6 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
     public boolean onNavigationItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.nav_home:
-                System.out.println("here");
                 Intent intent=new Intent(GraphScreen.this,HomeScreen.class);
                 startActivity(intent);
                 break;
