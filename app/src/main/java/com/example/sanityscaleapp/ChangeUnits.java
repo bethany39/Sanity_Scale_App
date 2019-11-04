@@ -49,7 +49,7 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
         userService = RetrofitApi.getInstance().getUserService();
 
 
-        if (UNITS.equals("pounds"))
+        if (UNITS.equals("lbs"))
         {
             bluebuttonlb.setVisibility(View.VISIBLE);
             bluebuttonkg.setVisibility(View.INVISIBLE);
@@ -126,7 +126,7 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
 
             @Override
             public void onClick(View v) {
-                String userJson = "{'unit': 'pounds'}";
+                String userJson = "{'unit': 'lbs'}";
                 Gson gson = new Gson();
                 User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();
@@ -179,14 +179,17 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
             case R.id.nav_home:
                 System.out.println("here");
                 Intent intent=new Intent(ChangeUnits.this,HomeScreen.class);
+                intent.putExtra("USERID", USERID);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(ChangeUnits.this,SettingsScreen.class);
+                intent2.putExtra("USERID", USERID);
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(ChangeUnits.this,LogoutHome.class);
+                intent3.putExtra("USERID", USERID);
                 startActivity(intent3);
                 break;
         }

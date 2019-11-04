@@ -98,6 +98,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                         weeklyAverage = avg.getWeeklyAverage();
                         Intent intent =new Intent(HomeScreen.this, GraphScreen.class);
                         intent.putExtra("weeklyavg", weeklyAverage);
+                        intent.putExtra("USERID", USERID);
 
                         HomeScreen.this.startActivity(intent);
                         EspressoIdlingResource.decrement();
@@ -141,14 +142,20 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         switch(item.getItemId()){
             case R.id.nav_home:
                 Intent intent=new Intent(HomeScreen.this,HomeScreen.class);
+                intent.putExtra("USERID", USERID);
+
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(HomeScreen.this,SettingsScreen.class);
+                intent2.putExtra("USERID", USERID);
+
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(HomeScreen.this,LogoutHome.class);
+                intent3.putExtra("USERID", USERID);
+
                 startActivity(intent3);
                 break;
         }

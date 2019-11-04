@@ -4,10 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.contrib.DrawerActions;
+import androidx.test.espresso.contrib.NavigationViewActions;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
+import static androidx.test.espresso.contrib.NavigationViewActions.navigateTo;
+import static androidx.test.espresso.contrib.DrawerActions.open;
+import static androidx.test.espresso.contrib.DrawerMatchers.isOpen;
 
 import org.junit.After;
 import org.junit.Before;
@@ -49,8 +54,9 @@ public class SettingsScreenTests {
 
     @Test
     public void allTabsAreShown() {
-        onView(withId(R.id.menuBtn)).check(matches(isDisplayed())).perform(click());
-        onView(withId(R.id.settingsBtn)).check(matches(isDisplayed())).perform(click());
+        onView(withId(R.id.homeScreen)).perform(DrawerActions.open());
+        onView(withId(R.id.homeScreen)).check(matches(isOpen()));
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings));
 
         onView(withId(R.id.changeUnitsBtn)).check(matches(isDisplayed()));
         onView(withId(R.id.goalsBtn)).check(matches(isDisplayed()));
@@ -59,8 +65,12 @@ public class SettingsScreenTests {
 
     @Test
     public void changesSelectedUnits() {
-        onView(withId(R.id.menuBtn)).check(matches(isDisplayed())).perform(click());
-        onView(withId(R.id.settingsBtn)).check(matches(isDisplayed())).perform(click());
+//        onView(withId(R.id.nav_view)).check(matches(isDisplayed())).perform(click());
+//        onView(withId(R.id.nav_settings)).check(matches(isDisplayed())).perform(click());
+
+        onView(withId(R.id.homeScreen)).perform(DrawerActions.open());
+        onView(withId(R.id.homeScreen)).check(matches(isOpen()));
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings));
         onView(withId(R.id.changeUnitsBtn)).check(matches(isDisplayed())).perform(click());
 
         onView(withId(R.id.kgsBtn)).check(matches(isDisplayed())).perform(click());
@@ -75,8 +85,12 @@ public class SettingsScreenTests {
 
     @Test
     public void changesSelectedGoal(){
-        onView(withId(R.id.menuBtn)).check(matches(isDisplayed())).perform(click());
-        onView(withId(R.id.settingsBtn)).check(matches(isDisplayed())).perform(click());
+//        onView(withId(R.id.nav_view)).check(matches(isDisplayed())).perform(click());
+//        onView(withId(R.id.nav_settings)).check(matches(isDisplayed())).perform(click());
+
+        onView(withId(R.id.homeScreen)).perform(DrawerActions.open());
+        onView(withId(R.id.homeScreen)).check(matches(isOpen()));
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings));
         onView(withId(R.id.goalsBtn)).check(matches(isDisplayed())).perform(click());
 
         onView(withId(R.id.maintainBtn)).check(matches(isDisplayed())).perform(click());

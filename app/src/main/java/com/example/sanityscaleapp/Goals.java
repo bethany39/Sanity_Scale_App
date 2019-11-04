@@ -217,14 +217,20 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
             case R.id.nav_home:
                 System.out.println("here");
                 Intent intent=new Intent(Goals.this,HomeScreen.class);
+                intent.putExtra("USERID", USERID);
+
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(Goals.this,SettingsScreen.class);
+                intent2.putExtra("USERID", USERID);
+
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(Goals.this,LogoutHome.class);
+                intent3.putExtra("USERID", USERID);
+
                 startActivity(intent3);
                 break;
         }

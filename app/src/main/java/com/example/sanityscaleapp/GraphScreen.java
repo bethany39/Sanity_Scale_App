@@ -65,14 +65,17 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
         switch(item.getItemId()){
             case R.id.nav_home:
                 Intent intent=new Intent(GraphScreen.this,HomeScreen.class);
+                intent.putExtra("USERID", USERID);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(GraphScreen.this,SettingsScreen.class);
+                intent2.putExtra("USERID", USERID);
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(GraphScreen.this,LogoutHome.class);
+                intent3.putExtra("USERID", USERID);
                 startActivity(intent3);
                 break;
         }

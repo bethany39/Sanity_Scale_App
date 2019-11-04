@@ -1,14 +1,23 @@
 package com.example.sanityscaleapp;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.contrib.DrawerActions;
+import androidx.test.espresso.contrib.NavigationViewActions;
 import androidx.test.espresso.idling.CountingIdlingResource;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
+
+import com.google.android.material.internal.NavigationMenu;
+import static androidx.test.espresso.contrib.NavigationViewActions.navigateTo;
+
+import static androidx.test.espresso.contrib.DrawerActions.open;
+import static androidx.test.espresso.contrib.DrawerMatchers.isOpen;
 
 import org.junit.After;
 import org.junit.Before;
@@ -63,9 +72,14 @@ public class LogInChangeGoal {
             onView(withId(R.id.nextBtn)).perform(click());
 
             onView(withId(R.id.weeklyAvgBtn)).check(matches(isDisplayed()));
-
-            onView(withId(R.id.menuBtn)).check(matches(isDisplayed())).perform(click());
-            onView(withId(R.id.settingsBtn)).check(matches(isDisplayed())).perform(click());
+//            Context appContext = InstrumentationRegistry.getInstrumentation()
+//                    .getTargetContext();
+//            Espresso.openActionBarOverflowOrOptionsMenu(appContext);
+            //onView(withId(R.id.nav_view)).perform(DrawerActions.open());
+            onView(withId(R.id.homeScreen)).perform(DrawerActions.open());
+            onView(withId(R.id.homeScreen)).check(matches(isOpen()));
+            onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings));
+            //onView(withId(R.id.nav_settings)).check(matches(isDisplayed())).perform(click());
             onView(withId(R.id.goalsBtn)).perform(click());
 
             onView(withId(R.id.gainBtn)).perform(click());

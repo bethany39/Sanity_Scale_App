@@ -39,7 +39,7 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
         setContentView(R.layout.activity_settings_screen);
 
         Bundle bundle=getIntent().getExtras();
-       if(bundle!=null) {
+        if(bundle!=null) {
             USERID = bundle.getInt("USERID");
         }
 
@@ -147,9 +147,9 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
                         Intent intent;
                         intent =new Intent(SettingsScreen.this, ChangeUnits.class);
                         switch(unit){
-                            case "pounds":
+                            case "lbs":
                                 intent.putExtra("USERID", USERID);
-                                intent.putExtra("selected", "pounds");
+                                intent.putExtra("selected", "lbs");
                               //  SettingsScreen.this.startActivity(intent);
                                 break;
                             case "kgs":
@@ -194,14 +194,18 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
         switch(item.getItemId()){
             case R.id.nav_home:
                 Intent intent=new Intent(SettingsScreen.this,HomeScreen.class);
+                intent.putExtra("USERID", USERID);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(SettingsScreen.this,SettingsScreen.class);
+                intent2.putExtra("USERID", USERID);
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(SettingsScreen.this,LogoutHome.class);
+                intent3.putExtra("USERID", USERID);
+
                 startActivity(intent3);
                 break;
         }
