@@ -59,6 +59,8 @@ public class ChangeUnits extends AppCompatActivity {
                 String userJson = "{'unit': 'kgs'}";
                 Gson gson = new Gson();
                 User userObject = gson.fromJson(userJson, User.class);
+                EspressoIdlingResource.increment();
+
                 Call<ResponseBody> changeToKgsCall = userService.patchUserUnits(USERID, userObject);
                 changeToKgsCall.enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -77,11 +79,14 @@ public class ChangeUnits extends AppCompatActivity {
                         //System.out.println(response.body());
                         bluebuttonlb.setVisibility(View.INVISIBLE);
                         bluebuttonkg.setVisibility(View.VISIBLE);
+                        EspressoIdlingResource.decrement();
+
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.d("UserController", "inside onFailure");
+                        EspressoIdlingResource.decrement();
 
                     }
                 });
@@ -98,6 +103,8 @@ public class ChangeUnits extends AppCompatActivity {
                 String userJson = "{'unit': 'pounds'}";
                 Gson gson = new Gson();
                 User userObject = gson.fromJson(userJson, User.class);
+                EspressoIdlingResource.increment();
+
                 Call<ResponseBody> changeToLbsCall = userService.patchUserUnits(USERID, userObject);
                 changeToLbsCall.enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -110,11 +117,15 @@ public class ChangeUnits extends AppCompatActivity {
                         }
                         bluebuttonlb.setVisibility(View.VISIBLE);
                         bluebuttonkg.setVisibility(View.INVISIBLE);
+                        EspressoIdlingResource.decrement();
+
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.d("UserController", "inside onFailure");
+                        EspressoIdlingResource.decrement();
+
 
                     }
                 });

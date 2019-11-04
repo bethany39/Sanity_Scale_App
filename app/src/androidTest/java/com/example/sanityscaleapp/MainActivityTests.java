@@ -1,10 +1,12 @@
 package com.example.sanityscaleapp;
 
 import androidx.test.espresso.intent.rule.IntentsTestRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import org.junit.Test;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -17,10 +19,11 @@ import static androidx.test.espresso.ViewAction.*;
 import static androidx.test.espresso.action.ViewActions.click;
 
 import static org.junit.Assert.*;
+@RunWith(AndroidJUnit4.class)
 
 public class MainActivityTests {
     @Rule
-    public ActivityTestRule<LogInScreen> activityActivityTestRule = new IntentsTestRule<>(LogInScreen.class);
+    public ActivityTestRule<MainActivity> activityActivityTestRule = new IntentsTestRule<>(MainActivity.class);
 
     @Test
     public void logIn() {

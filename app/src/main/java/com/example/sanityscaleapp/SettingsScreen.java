@@ -55,7 +55,7 @@ public class SettingsScreen extends AppCompatActivity {
             public void onClick(View v) {
                 ///IUserController iUserController = retrofit.create(IUserController.class);
                 IUserController userService = RetrofitApi.getInstance().getUserService();
-
+                EspressoIdlingResource.increment();
                 Call<User> call = userService.getUserGoal(USERID);
                 call.enqueue(new Callback<User>() {
                     @Override
@@ -85,12 +85,14 @@ public class SettingsScreen extends AppCompatActivity {
 
                         }
                         SettingsScreen.this.startActivity(intent);
+                        EspressoIdlingResource.decrement();
 
                     }
 
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
                         Log.d("UserController", "inside onFailure");
+                        EspressoIdlingResource.decrement();
 
                     }
                 });
@@ -106,6 +108,7 @@ public class SettingsScreen extends AppCompatActivity {
             public void onClick(View v) {
                 //IUserController iUserController = retrofit.create(IUserController.class);
                 IUserController userService = RetrofitApi.getInstance().getUserService();
+                EspressoIdlingResource.increment();
 
                 Call<User> unitsCall = userService.getUserUnits(USERID);
                 unitsCall.enqueue(new Callback<User>() {
@@ -135,12 +138,14 @@ public class SettingsScreen extends AppCompatActivity {
                                 break;
                         }
                         SettingsScreen.this.startActivity(intent);
+                        EspressoIdlingResource.decrement();
 
                     }
 
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
                         Log.d("UserController", "inside onFailure");
+                        EspressoIdlingResource.decrement();
 
                     }
                 });

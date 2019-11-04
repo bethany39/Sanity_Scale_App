@@ -37,8 +37,8 @@ public class LogInScreen extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                IdlingResource.increment();
-
+                //IdlingResource.increment();
+                EspressoIdlingResource.increment();
 
                 EditText email = (EditText) findViewById(R.id.emailBox);
                 EditText password = (EditText) findViewById(R.id.passwordBox);
@@ -62,14 +62,15 @@ public class LogInScreen extends AppCompatActivity {
                         User user = response.body();
                         USERID = user.getUserId();
                         goToHomeScreen();
-                        IdlingResource.decrement();
-
+                        //IdlingResource.decrement();
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
                         Log.d("UserController", "inside onFailure");
-                        IdlingResource.decrement();
+                        //IdlingResource.decrement();
+                        EspressoIdlingResource.decrement();
 
                     }
                 });

@@ -55,6 +55,8 @@ public class Goals extends AppCompatActivity {
                 String userJson = "{'goal': 'gain weight'}";
                 Gson gson = new Gson();
                 User userObject = gson.fromJson(userJson, User.class);
+                EspressoIdlingResource.increment();
+
                 Call<ResponseBody> gainCall = userService.patchUserGoal(USERID, userObject);
                 gainCall.enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -66,11 +68,15 @@ public class Goals extends AppCompatActivity {
 
                         }
                         selectGain(findViewById(R.id.activityGoals));
+                        EspressoIdlingResource.decrement();
+
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.d("UserController", "inside onFailure");
+                        EspressoIdlingResource.decrement();
+
 
                     }
                 });
@@ -85,6 +91,8 @@ public class Goals extends AppCompatActivity {
                 String userJson = "{'goal': 'lose weight'}";
                 Gson gson = new Gson();
                 User userObject = gson.fromJson(userJson, User.class);
+                EspressoIdlingResource.increment();
+
                 Call<ResponseBody> loseCall = userService.patchUserGoal(USERID, userObject);
                 loseCall.enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -96,11 +104,15 @@ public class Goals extends AppCompatActivity {
 
                         }
                         selectLose(findViewById(R.id.activityGoals));
+                        EspressoIdlingResource.decrement();
+
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.d("UserController", "inside onFailure");
+                        EspressoIdlingResource.decrement();
+
 
                     }
                 });
@@ -117,6 +129,8 @@ public class Goals extends AppCompatActivity {
                 String userJson = "{'goal': 'maintain weight'}";
                 Gson gson = new Gson();
                 User userObject = gson.fromJson(userJson, User.class);
+                EspressoIdlingResource.increment();
+
                 Call<ResponseBody> maintainCall = userService.patchUserGoal(USERID, userObject);
                 maintainCall.enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -128,11 +142,15 @@ public class Goals extends AppCompatActivity {
 
                         }
                         selectMaintain(findViewById(R.id.activityGoals));
+                        EspressoIdlingResource.decrement();
+
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.d("UserController", "inside onFailure");
+                        EspressoIdlingResource.decrement();
+
 
                     }
                 });

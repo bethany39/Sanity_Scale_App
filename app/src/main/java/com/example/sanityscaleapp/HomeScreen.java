@@ -34,9 +34,9 @@ public class HomeScreen extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                EspressoIdlingResource.increment();
                 IWeightsController weightsService = RetrofitApi.getInstance().getWeightsService();
                 Call<Weight> weightsCall = weightsService.getAverageWeight(USERID);
-                //Call<WeeklyAverage> weightsCall = iWeightsController.getAverageWeight(USERID);
 
                 weightsCall.enqueue(new Callback<Weight>() {
                     @Override
@@ -54,6 +54,7 @@ public class HomeScreen extends AppCompatActivity {
                         intent.putExtra("weeklyavg", weeklyAverage);
 
                         HomeScreen.this.startActivity(intent);
+                        EspressoIdlingResource.decrement();
 
 
                     }
@@ -61,6 +62,7 @@ public class HomeScreen extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<Weight> call, Throwable t) {
                         Log.d("WeightsController", "inside onFailure");
+                        EspressoIdlingResource.decrement();
 
                     }
                 });
