@@ -22,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LogInScreen extends AppCompatActivity {
     Button nextBtn, backBtn;
+    TextView errorMessage;
     private int USERID;
     CountingIdlingResource IdlingResource = new CountingIdlingResource("LOGIN");
 
@@ -29,7 +30,7 @@ public class LogInScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in_screen);
-
+        errorMessage = findViewById(R.id.logInError);
         nextBtn = findViewById(R.id.nextBtn);
         nextBtn.setOnClickListener(new OnClickListener() {
 
@@ -40,14 +41,12 @@ public class LogInScreen extends AppCompatActivity {
                 //IdlingResource.increment();
                 EspressoIdlingResource.increment();
 
-                EditText email = (EditText) findViewById(R.id.emailBox);
-                EditText password = (EditText) findViewById(R.id.passwordBox);
+                EditText email = findViewById(R.id.emailBox);
+                EditText password = findViewById(R.id.passwordBox);
 
                 IUserController userService = RetrofitApi.getInstance().getUserService();
-                //UserController userController = new UserController();
 
                 Call<User> call = userService.getUser(email.getText().toString(), password.getText().toString());
-                //Call<User> call = userService.getUser("david@gmail.com", "davidmayes");
 
                 call.enqueue(new Callback<User>() {
                     @Override
@@ -55,6 +54,8 @@ public class LogInScreen extends AppCompatActivity {
                         if(!response.isSuccessful()){
                             //should do something for the error handlign
                             Log.d("UserController", "inside if in onResponse");
+                            errorMessage.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
+                            EspressoIdlingResource.decrement();
                             return;
 
                         }
@@ -62,15 +63,14 @@ public class LogInScreen extends AppCompatActivity {
                         User user = response.body();
                         USERID = user.getUserId();
                         goToHomeScreen();
-                        //IdlingResource.decrement();
+                        errorMessage.setVisibility(findViewById(R.id.logInScreen).INVISIBLE);
                         EspressoIdlingResource.decrement();
                     }
 
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
                         Log.d("UserController", "inside onFailure");
-                        //IdlingResource.decrement();
-                        EspressoIdlingResource.decrement();
+
 
                     }
                 });
