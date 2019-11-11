@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.google.gson.GsonBuilder;
 
+import java.util.UUID;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,7 +25,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LogInScreen extends AppCompatActivity {
     Button nextBtn, backBtn;
     TextView errorMessage;
-    private int USERID;
+ //   private int USERID;
+    private String SESSIONID;
     CountingIdlingResource IdlingResource = new CountingIdlingResource("LOGIN");
 
     @Override
@@ -48,6 +51,7 @@ public class LogInScreen extends AppCompatActivity {
 
                 Call<User> call = userService.getUser(email.getText().toString(), password.getText().toString());
 
+
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
@@ -61,7 +65,10 @@ public class LogInScreen extends AppCompatActivity {
                         }
                         Log.d("UserController", "outside if in onResponse");
                         User user = response.body();
-                        USERID = user.getUserId();
+                     //   USERID = user.getUserId();
+                     //   SESSIONID= UUID.randomUUID().toString();
+                        SESSIONID=user.getSessionId();
+
                         goToHomeScreen();
                         errorMessage.setVisibility(findViewById(R.id.logInScreen).INVISIBLE);
                         EspressoIdlingResource.decrement();
@@ -91,7 +98,8 @@ public class LogInScreen extends AppCompatActivity {
 
     public void goToHomeScreen() {
         Intent intent = new Intent(getBaseContext(), HomeScreen.class);
-        intent.putExtra("USERID", USERID);
+     //   intent.putExtra("USERID", USERID);
+        intent.putExtra("SESSIONID",SESSIONID);
         LogInScreen.this.startActivity(intent);
 
     }

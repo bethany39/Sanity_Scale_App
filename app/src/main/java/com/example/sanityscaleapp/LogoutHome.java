@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.view.View.OnClickListener;
@@ -15,16 +16,28 @@ import android.content.Intent;
 
 import com.google.android.material.navigation.NavigationView;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.http.Path;
+
 public class LogoutHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigation;
+    Button yesBtn,noBtn;
+    private String SESSIONID;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logout_home);
+
+        Bundle bundle=getIntent().getExtras();
+        if(bundle!=null) {
+            SESSIONID=bundle.getString("SESSIONID");
+        }
 
         drawerLayout = findViewById(R.id.logoutScreen);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -37,7 +50,30 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view4);
         navigationView.setNavigationItemSelectedListener(this);
 
-    }
+        yesBtn=findViewById(R.id.yesBtn);
+        yesBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //attempting to delete the session id from the database--it doesn't have end points set up, though
+                IUserController deleteTheId = RetrofitApi.getInstance().getUserService();
+                Call<Void> idDeletion = deleteTheId.deleteSid(SESSIONID);
+              //don't know if I have to add the other part because it is void...
+
+                Intent intent=new Intent(LogoutHome.this, MainActivity.class);
+                LogoutHome.this.startActivity(intent);
+            }
+         });
+
+        noBtn=findViewById(R.id.noBtn);
+        noBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(LogoutHome.this, HomeScreen.class);
+                LogoutHome.this.startActivity(intent);
+            }
+        });
+
+        }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

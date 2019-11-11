@@ -10,6 +10,6 @@ import retrofit2.http.Query;
 
 public interface IWeightsController {
 
-    @GET("weights/{id}")
-    Call <Weight> getAverageWeight(@Path("id") int id);
+    @GET("weights/{sid}")
+    Call <Weight> getAverageWeight(@Path("sid") String id);
 }

@@ -16,6 +16,7 @@ public class User {
     private String goal;
     @SerializedName("userid") @Expose
     private int userid;
+    private String sessionid;
 
     public User(String name, String email, String password, String unit, String goal, int id){
         this.name=name;
@@ -51,4 +52,6 @@ public class User {
     public int getUserId() {
         return userid;
     }
+
+    public String getSessionId() { return sessionid; }
 }

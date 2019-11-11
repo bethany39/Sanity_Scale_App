@@ -28,7 +28,8 @@ import retrofit2.Response;
 public class Goals extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button gainBtn,loseBtn, maintainBtn;
     ImageView bluebuttonm, bluebuttong,bluebuttonl;
-    private int USERID;
+  //  private int USERID;
+    private String SESSIONID;
     private String goal;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
@@ -40,7 +41,8 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        USERID = getIntent().getExtras().getInt("USERID");
+    //    USERID = getIntent().getExtras().getInt("USERID");
+        SESSIONID=getIntent().getExtras().getString("SESSIONID");
         goal = getIntent().getExtras().getString("selected");
         setContentView(R.layout.activity_goals);
         userService = RetrofitApi.getInstance().getUserService();
@@ -81,7 +83,8 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
                 User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();
 
-                Call<ResponseBody> gainCall = userService.patchUserGoal(USERID, userObject);
+        //        Call<ResponseBody> gainCall = userService.patchUserGoal(USERID, userObject);
+                Call<ResponseBody> gainCall = userService.patchUserGoal(SESSIONID, userObject);
                 gainCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -117,7 +120,8 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
                 User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();
 
-                Call<ResponseBody> loseCall = userService.patchUserGoal(USERID, userObject);
+        //        Call<ResponseBody> loseCall = userService.patchUserGoal(USERID, userObject);
+                Call<ResponseBody> loseCall = userService.patchUserGoal(SESSIONID, userObject);
                 loseCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -155,7 +159,8 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
                 User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();
 
-                Call<ResponseBody> maintainCall = userService.patchUserGoal(USERID, userObject);
+        //        Call<ResponseBody> maintainCall = userService.patchUserGoal(USERID, userObject);
+                Call<ResponseBody> maintainCall = userService.patchUserGoal(SESSIONID, userObject);
                 maintainCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -217,19 +222,22 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
             case R.id.nav_home:
                 System.out.println("here");
                 Intent intent=new Intent(Goals.this,HomeScreen.class);
-                intent.putExtra("USERID", USERID);
+            //    intent.putExtra("USERID", USERID);
+                intent.putExtra("SESSIONID", SESSIONID);
 
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(Goals.this,SettingsScreen.class);
-                intent2.putExtra("USERID", USERID);
+            //    intent2.putExtra("USERID", USERID);
+                intent2.putExtra("SESSIONID", SESSIONID);
 
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(Goals.this,LogoutHome.class);
-                intent3.putExtra("USERID", USERID);
+            //    intent3.putExtra("USERID", USERID);
+                intent3.putExtra("SESSIONID", SESSIONID);
 
                 startActivity(intent3);
                 break;

@@ -34,7 +34,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HomeScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Button weeklyAvgBtn;
     private float weeklyAverage;
-    private int USERID;
+   // private int USERID;
+    private String SESSIONID;
 
     private Retrofit retrofit;
     private DrawerLayout drawerLayout;
@@ -53,7 +54,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null) {
-            USERID = bundle.getInt("USERID");
+         //   USERID = bundle.getInt("USERID");
+            SESSIONID=bundle.getString("SESSIONID");
         }
         retrofit = new Retrofit.Builder().baseUrl("https://sanity-scale-api.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create(
@@ -82,14 +84,15 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             public void onClick(View v) {
                 EspressoIdlingResource.increment();
                 IWeightsController weightsService = RetrofitApi.getInstance().getWeightsService();
-                Call<Weight> weightsCall = weightsService.getAverageWeight(USERID);
+         //       Call<Weight> weightsCall = weightsService.getAverageWeight(USERID);
+                Call<Weight> weightsCall = weightsService.getAverageWeight(SESSIONID);
 
                 weightsCall.enqueue(new Callback<Weight>() {
                     @Override
                     public void onResponse(Call<Weight> call, Response<Weight> response) {
                         if(!response.isSuccessful()){
                             //should do something for the error handlign
-                            Log.d("WEightsController", "inside if in onResponse");
+                            Log.d("WeightsController", "inside if in onResponse");
                             return;
 
                         }
@@ -98,7 +101,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                         weeklyAverage = avg.getWeeklyAverage();
                         Intent intent =new Intent(HomeScreen.this, GraphScreen.class);
                         intent.putExtra("weeklyavg", weeklyAverage);
-                        intent.putExtra("USERID", USERID);
+                    //    intent.putExtra("USERID", USERID);
+                        intent.putExtra("SESSIONID",SESSIONID);
 
                         HomeScreen.this.startActivity(intent);
                         EspressoIdlingResource.decrement();
@@ -142,19 +146,21 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         switch(item.getItemId()){
             case R.id.nav_home:
                 Intent intent=new Intent(HomeScreen.this,HomeScreen.class);
-                intent.putExtra("USERID", USERID);
-
+            //    intent.putExtra("USERID", USERID);
+                intent.putExtra("SESSIONID", SESSIONID);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(HomeScreen.this,SettingsScreen.class);
-                intent2.putExtra("USERID", USERID);
+            //    intent.putExtra("USERID", USERID);
+                intent2.putExtra("SESSIONID", SESSIONID);
 
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(HomeScreen.this,LogoutHome.class);
-                intent3.putExtra("USERID", USERID);
+            //    intent.putExtra("USERID", USERID);
+                intent3.putExtra("SESSIONID", SESSIONID);
 
                 startActivity(intent3);
                 break;

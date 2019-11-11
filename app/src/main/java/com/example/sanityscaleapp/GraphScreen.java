@@ -22,7 +22,8 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigation;
-    private int USERID;
+  //  private int USERID;
+    private String SESSIONID;
 
 
     @Override
@@ -30,7 +31,8 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_screen);
         weeklyAverage= getIntent().getExtras().getFloat("weeklyavg");
-        USERID=getIntent().getExtras().getInt("USERID");
+    //    USERID=getIntent().getExtras().getInt("USERID");
+        SESSIONID=getIntent().getExtras().getString("SESSIONID");
         TextView avgWeightTextView = findViewById(R.id.AvgWeightTextView);
         avgWeightTextView.append(Float.toString(weeklyAverage));
 
@@ -65,17 +67,20 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
         switch(item.getItemId()){
             case R.id.nav_home:
                 Intent intent=new Intent(GraphScreen.this,HomeScreen.class);
-                intent.putExtra("USERID", USERID);
+            //    intent.putExtra("USERID", USERID);
+                intent.putExtra("SESSIONID",SESSIONID);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(GraphScreen.this,SettingsScreen.class);
-                intent2.putExtra("USERID", USERID);
+            //    intent2.putExtra("USERID", USERID);
+                intent2.putExtra("SESSIONID",SESSIONID);
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(GraphScreen.this,LogoutHome.class);
-                intent3.putExtra("USERID", USERID);
+            //    intent3.putExtra("USERID", USERID);
+                intent3.putExtra("SESSOINID",SESSIONID);
                 startActivity(intent3);
                 break;
         }

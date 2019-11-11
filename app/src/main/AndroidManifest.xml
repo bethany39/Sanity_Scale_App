@@ -12,6 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SignUpMessage"></activity>
+        <activity android:name=".SignUpGoals" />
+        <activity android:name=".SignUpUnits" />
+        <activity android:name=".SignUpIntro" />
+        <activity android:name=".SignUpHome" />
         <activity android:name=".Goals" />
         <activity android:name=".ChangeUnits" />
         <activity android:name=".LogoutHome" />

@@ -24,7 +24,8 @@ import retrofit2.Response;
 public class ChangeUnits extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button lbsBtn, kgsBtn;
     ImageView bluebuttonlb, bluebuttonkg;
-    private int USERID;
+   // private int USERID;
+    private String SESSIONID;
     private String UNITS;
 
     private DrawerLayout drawerLayout;
@@ -43,7 +44,8 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
 
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null) {
-            USERID = bundle.getInt("USERID");
+        //    USERID = bundle.getInt("USERID");
+            SESSIONID=bundle.getString("SESSIONID");
             UNITS = bundle.getString("selected");
         }
         userService = RetrofitApi.getInstance().getUserService();
@@ -87,7 +89,8 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
                 User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();
 
-                Call<ResponseBody> changeToKgsCall = userService.patchUserUnits(USERID, userObject);
+         //       Call<ResponseBody> changeToKgsCall = userService.patchUserUnits(USERID, userObject);
+                Call<ResponseBody> changeToKgsCall = userService.patchUserUnits(SESSIONID, userObject);
                 changeToKgsCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -131,7 +134,9 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
                 User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();
 
-                Call<ResponseBody> changeToLbsCall = userService.patchUserUnits(USERID, userObject);
+        //        Call<ResponseBody> changeToLbsCall = userService.patchUserUnits(USERID, userObject);
+                  Call<ResponseBody> changeToLbsCall = userService.patchUserUnits(SESSIONID, userObject);
+
                 changeToLbsCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -179,17 +184,20 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
             case R.id.nav_home:
                 System.out.println("here");
                 Intent intent=new Intent(ChangeUnits.this,HomeScreen.class);
-                intent.putExtra("USERID", USERID);
+            //    intent.putExtra("USERID", USERID);
+                intent.putExtra("SESSIONID", SESSIONID);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(ChangeUnits.this,SettingsScreen.class);
-                intent2.putExtra("USERID", USERID);
+            //    intent2.putExtra("USERID", USERID);
+                intent2.putExtra("SESSIONID", SESSIONID);
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(ChangeUnits.this,LogoutHome.class);
-                intent3.putExtra("USERID", USERID);
+            //    intent3.putExtra("USERID", USERID);
+                intent3.putExtra("SESSIONID", SESSIONID);
                 startActivity(intent3);
                 break;
         }
