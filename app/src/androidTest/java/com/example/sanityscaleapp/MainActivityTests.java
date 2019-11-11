@@ -1,9 +1,12 @@
 package com.example.sanityscaleapp;
 
+import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -25,18 +28,22 @@ public class MainActivityTests {
     @Rule
     public ActivityTestRule<MainActivity> activityActivityTestRule = new IntentsTestRule<>(MainActivity.class);
 
+
     @Test
     public void logIn() {
         onView(withId(R.id.logInBtn)).check(matches(isDisplayed())).perform(click());
         onView(withId(R.id.emailBox)).check(matches(isDisplayed()));
         onView(withId(R.id.passwordBox)).check(matches(isDisplayed()));
     }
-    /*
-    @Test
-    public void signUp() {
-        onView(withId(R.id.signUpBtn)).check(matches(isDisplayed())).perform(click());
-        //This is where we'd look for what's on the next screen (no extra stuff bc no API calls)
-    }
-     */
+
+//    @Test
+//    public void signUp() {
+//        onView(withId(R.id.signUpBtn)).check(matches(isDisplayed())).perform(click());
+//        //This is where we'd look for what's on the next screen (no extra stuff bc no API calls)
+//    }
+
+
+
+
 
 }

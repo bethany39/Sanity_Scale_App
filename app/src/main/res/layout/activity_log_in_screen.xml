@@ -88,4 +88,16 @@
         android:layout_marginTop="21dp"
         android:background="@drawable/backarrow" />
 
+    <TextView
+        android:id="@+id/logInError"
+        android:layout_width="306dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/emailBox"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="27dp"
+        android:text="The email or password you entered is incorrect."
+        android:textColor="#F44336"
+        android:textSize="20sp"
+        android:visibility="invisible" />
+
 </RelativeLayout>
