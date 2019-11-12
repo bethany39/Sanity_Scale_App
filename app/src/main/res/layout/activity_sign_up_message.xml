@@ -15,9 +15,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="49dp"
-        android:layout_marginLeft="49dp"
-        android:layout_marginBottom="215dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginBottom="169dp"
         android:background="@drawable/roundedbtn"
         android:text="Log In"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
@@ -35,13 +35,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="191dp"
+        android:layout_marginTop="116dp"
         android:layout_marginEnd="3dp"
         android:text="Your account has been created."
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="#FFFFFF"
         android:textSize="50sp"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="3dp" />
 
 </RelativeLayout>

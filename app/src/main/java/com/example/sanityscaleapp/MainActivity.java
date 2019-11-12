@@ -11,7 +11,7 @@ import android.content.Intent;
 
 
 public class MainActivity extends AppCompatActivity {
-    Button logInBtn;
+    Button logInBtn,signUpBtn;
     //public UserController userController;
     //public WeightsController weightsController;
     public int userID;
@@ -30,6 +30,16 @@ public class MainActivity extends AppCompatActivity {
 
 //                MainActivity.this.weightsController = new WeightsController(userController.USER_ID);
 
+            }
+        });
+
+        signUpBtn=findViewById(R.id.signUpBtn);
+        signUpBtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(MainActivity.this, SignUpHome.class);
+                MainActivity.this.startActivity(intent);
             }
         });
 

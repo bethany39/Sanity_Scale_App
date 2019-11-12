@@ -61,7 +61,6 @@
         android:background="#FFFFFF"
         android:gravity="start"
         android:hint="Confirm Email"
-        android:inputType="textPassword"
         android:textAlignment="textStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="#858585"
@@ -81,29 +80,10 @@
         android:background="#FFFFFF"
         android:gravity="start"
         android:hint="Email Address"
-        android:inputType="textPassword"
         android:textAlignment="textStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="#858585"
         android:textSize="36sp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="480dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="113dp"
-        android:text="Sign Up"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="#FFFFFF"
-        android:textSize="65sp"
-        android:visibility="visible" />
 
     <EditText
         android:id="@+id/emailBox"
