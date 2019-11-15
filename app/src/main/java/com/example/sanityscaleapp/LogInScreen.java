@@ -16,6 +16,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.UUID;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,7 +51,7 @@ public class LogInScreen extends AppCompatActivity {
                 IUserController userService = RetrofitApi.getInstance().getUserService();
 
                 Call<User> call = userService.getUser(email.getText().toString(), password.getText().toString());
-
+              //   Call<okhttp3.ResponseBody> call=userService.postEmail(email.getText().toString(),password.getText().toString());
 
                 call.enqueue(new Callback<User>() {
                     @Override
@@ -58,6 +59,7 @@ public class LogInScreen extends AppCompatActivity {
                         if(!response.isSuccessful()){
                             //should do something for the error handlign
                             Log.d("UserController", "inside if in onResponse");
+                            System.out.println("the response is"+response);
                             errorMessage.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
                             EspressoIdlingResource.decrement();
                             return;
@@ -65,6 +67,7 @@ public class LogInScreen extends AppCompatActivity {
                         }
                         Log.d("UserController", "outside if in onResponse");
                         User user = response.body();
+                        System.out.println("the response body is "+user);
                      //   USERID = user.getUserId();
                      //   SESSIONID= UUID.randomUUID().toString();
                         SESSIONID=user.getSessionId();

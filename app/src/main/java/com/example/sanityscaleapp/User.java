@@ -16,6 +16,7 @@ public class User {
     private String goal;
     @SerializedName("userid") @Expose
     private int userid;
+    @SerializedName("sessionid")
     private String sessionid;
 
     public User(String name, String email, String password, String unit, String goal, int id){
@@ -27,6 +28,15 @@ public class User {
         this.userid=id;
     }
 
+    public User(String email, String password, String firstname, String goal, String units)
+    {
+        this.email=email;
+        this.password=password;
+        this.name=firstname;
+        this.goal=goal;
+        this.unit=units;
+
+    }
     public User(String unit){
         this.goal=goal;
     }

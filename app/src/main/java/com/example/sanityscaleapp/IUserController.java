@@ -10,6 +10,7 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.PATCH;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.DELETE;
 import retrofit2.http.Path;
@@ -19,8 +20,9 @@ import retrofit2.http.Query;
 public interface IUserController {
 
     @GET("users")
-    Call<User> getUser(@Query("email") String email, @Query("password") String password);
+    Call<User> getUser(@Body  String email, @Body String password);
 
+ //     Call<User> getUser(@Path("email")String email, @Path("password") String password);
 //    @GET("users/units/{id}")
 //    Call<User> getUserUnits(@Path("id") int id);
 
@@ -32,6 +34,9 @@ public interface IUserController {
 
   //  @PATCH("users/units/{id}")
   //  Call<ResponseBody> patchUserUnits(@Path("id") int id, @Body User unit);
+
+ //   @POST("users/sessionid") //what???
+  //  Call<ResponseBody> postEmail(@Body String email, @Body String password);
 
     @PATCH("user/units/{sid}")
     Call<ResponseBody> patchUserUnits(@Path("sid") String sid, @Body User unit);
@@ -47,6 +52,9 @@ public interface IUserController {
 
     @DELETE("users/{sid}") //can't be users/{sid}
     Call<Void> deleteSid(@Path("sid")String sid);
+
+    @POST("users")
+    Call<ResponseBody> createUser(@Body User user);
 
 
 

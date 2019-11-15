@@ -9,11 +9,25 @@ import android.widget.Button;
 
 public class SignUpMessage extends AppCompatActivity {
     Button loginBtn;
+    String name, email, password, units, goals;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_message);
+       // Bundle bundle=getIntent().getExtras();
+       // if(bundle!=null) {
+          //  name=bundle.getString("name");
+          //  email=bundle.getString("email");
+          //  password=bundle.getString("password");
+           // units=bundle.getString("units");
+          //  goals=bundle.getString("goals");
+
+          //  User newUser=new User(email,password,name,goals,units);
+
+
+
+        //}
 
         loginBtn = findViewById(R.id.loginBtn);
         loginBtn.setOnClickListener(new View.OnClickListener() {
