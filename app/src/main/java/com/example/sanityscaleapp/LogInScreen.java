@@ -49,47 +49,49 @@ public class LogInScreen extends AppCompatActivity {
                 EditText password = findViewById(R.id.passwordBox);
 
                 IUserController userService = RetrofitApi.getInstance().getUserService();
-                User userToSend = new User(email.getText().toString(), password.getText().toString());
-                //Gson gson = new Gson();
+               
+                    User userToSend = new User(email.getText().toString(), password.getText().toString());
 
-                //User userObject = gson.fromJson(userToSend, User.class);
+                    //Gson gson = new Gson();
 
-                Call<User> call = userService.getUser(userToSend);
+                    //User userObject = gson.fromJson(userToSend, User.class);
+
+                    Call<User> call = userService.getUser(userToSend);
 
 
+                    call.enqueue(new Callback<User>() {
+                        @Override
+                        public void onResponse(Call<User> call, Response<User> response) {
+                            if (!response.isSuccessful()) {
+                                //should do something for the error handlign
+                                Log.d("UserController", "inside if in onResponse");
+                                System.out.println("the response is" + response);
+                                errorMessage.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
+                                EspressoIdlingResource.decrement();
+                                return;
 
-                call.enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        if(!response.isSuccessful()){
-                            //should do something for the error handlign
-                            Log.d("UserController", "inside if in onResponse");
-                            System.out.println("the response is"+response);
-                            errorMessage.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
+                            }
+                            Log.d("UserController", "outside if in onResponse");
+                            User user = response.body();
+                            System.out.println("the response body is " + user);
+                            //   USERID = user.getUserId();
+                            //   SESSIONID= UUID.randomUUID().toString();
+                            SESSIONID = user.getSessionId();
+
+                            goToHomeScreen();
+                            errorMessage.setVisibility(findViewById(R.id.logInScreen).INVISIBLE);
                             EspressoIdlingResource.decrement();
-                            return;
+                        }
+
+                        @Override
+                        public void onFailure(Call<User> call, Throwable t) {
+                            Log.d("UserController", "inside onFailure");
+
 
                         }
-                        Log.d("UserController", "outside if in onResponse");
-                        User user = response.body();
-                        System.out.println("the response body is "+user);
-                     //   USERID = user.getUserId();
-                     //   SESSIONID= UUID.randomUUID().toString();
-                        SESSIONID=user.getSessionId();
+                    });
+                }
 
-                        goToHomeScreen();
-                        errorMessage.setVisibility(findViewById(R.id.logInScreen).INVISIBLE);
-                        EspressoIdlingResource.decrement();
-                    }
-
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        Log.d("UserController", "inside onFailure");
-
-
-                    }
-                });
-            }
         });
 
         backBtn = findViewById(R.id.backBtn);
