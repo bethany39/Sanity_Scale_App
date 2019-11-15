@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.UUID;
@@ -41,15 +42,18 @@ public class LogInScreen extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                //IdlingResource.increment();
                 EspressoIdlingResource.increment();
 
                 EditText email = findViewById(R.id.emailBox);
                 EditText password = findViewById(R.id.passwordBox);
 
                 IUserController userService = RetrofitApi.getInstance().getUserService();
+                User userToSend = new User(email.getText().toString(), password.getText().toString());
+                //Gson gson = new Gson();
 
-                Call<User> call = userService.getUser(email.getText().toString(), password.getText().toString());
+               //User userObject = gson.fromJson(userToSend, User.class);
+
+                Call<User> call = userService.getUser(userToSend);
 
 
                 call.enqueue(new Callback<User>() {
