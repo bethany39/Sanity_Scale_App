@@ -42,20 +42,20 @@ public interface IUserController {
  //   @POST("users/sessionid") //what???
   //  Call<ResponseBody> postEmail(@Body String email, @Body String password);
 
-    @PATCH("user/units/{sid}")
-    Call<ResponseBody> patchUserUnits(@Path("sid") String sid, @Body User unit);
+    @PATCH("user/units")
+    Call<ResponseBody> patchUserUnits(@Body String sid, @Body User unit);
 
-    @GET("users/units/{sid}")
-    Call<User> getUserUnits(@Path("sid") String sid);
+    @GET("users/units")
+    Call<User> getUserUnits(@Body String sid);
 
-    @GET("users/goal/{sid}")
-    Call<User> getUserGoal(@Path("sid") String sid);
+    @GET("users/goal")
+    Call<User> getUserGoal(@Body String sid);
 
-    @PATCH("users/goal/{sid}")
-    Call<ResponseBody> patchUserGoal(@Path("sid") String sid, @Body User goal);
+    @PATCH("users/goal")
+    Call<ResponseBody> patchUserGoal(@Body String sid, @Body User goal);
 
-    @DELETE("users/{sid}") //can't be users/{sid}
-    Call<Void> deleteSid(@Path("sid")String sid);
+    @DELETE("users") //can't be users/{sid}
+    Call<Void> deleteSid(@Body String sid);
 
     @POST("users")
     Call<ResponseBody> createUser(@Body User user);

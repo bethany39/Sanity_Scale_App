@@ -49,7 +49,7 @@ public class LogInScreen extends AppCompatActivity {
                 EditText password = findViewById(R.id.passwordBox);
 
                 IUserController userService = RetrofitApi.getInstance().getUserService();
-               
+
                     User userToSend = new User(email.getText().toString(), password.getText().toString());
 
                     //Gson gson = new Gson();
@@ -77,6 +77,7 @@ public class LogInScreen extends AppCompatActivity {
                             //   USERID = user.getUserId();
                             //   SESSIONID= UUID.randomUUID().toString();
                             SESSIONID = user.getSessionId();
+                            System.out.println("session id is "+SESSIONID);
 
                             goToHomeScreen();
                             errorMessage.setVisibility(findViewById(R.id.logInScreen).INVISIBLE);
