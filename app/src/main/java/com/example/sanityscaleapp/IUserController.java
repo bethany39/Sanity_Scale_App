@@ -19,8 +19,9 @@ import retrofit2.http.Query;
 
 public interface IUserController {
 
-    @GET("users")
-    Call<User> getUser(@Body  String email, @Body String password);
+
+   // @GET("users")
+  //  Call<User> getUser(@Body  String email, @Body String password);
 
  //     Call<User> getUser(@Path("email")String email, @Path("password") String password);
 //    @GET("users/units/{id}")
@@ -34,6 +35,9 @@ public interface IUserController {
 
   //  @PATCH("users/units/{id}")
   //  Call<ResponseBody> patchUserUnits(@Path("id") int id, @Body User unit);
+
+    @POST("users/sessionid")
+    Call<User> getUser(@Body User user);
 
  //   @POST("users/sessionid") //what???
   //  Call<ResponseBody> postEmail(@Body String email, @Body String password);
