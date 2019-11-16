@@ -73,11 +73,11 @@ public class LogInScreen extends AppCompatActivity {
                             }
                             Log.d("UserController", "outside if in onResponse");
                             User user = response.body();
-                            System.out.println("the response body is " + user);
+
                             //   USERID = user.getUserId();
                             //   SESSIONID= UUID.randomUUID().toString();
                             SESSIONID = user.getSessionId();
-                            System.out.println("session id is "+SESSIONID);
+
 
                             goToHomeScreen();
                             errorMessage.setVisibility(findViewById(R.id.logInScreen).INVISIBLE);

@@ -42,7 +42,7 @@ public interface IUserController {
  //   @POST("users/sessionid") //what???
   //  Call<ResponseBody> postEmail(@Body String email, @Body String password);
 
-    @PATCH("user/units")
+    @PATCH("users/units")
     Call<ResponseBody> patchUserUnits(@Body String sid, @Body User unit);
 
     @GET("users/units")

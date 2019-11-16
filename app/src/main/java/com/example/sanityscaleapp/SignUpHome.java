@@ -41,9 +41,12 @@ public class SignUpHome extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignUpHome.this, SignUpIntro.class);
-                intent.putExtra("name",name.getText().toString());
-                intent.putExtra("email",email.getText().toString());
-                intent.putExtra("password",password.getText().toString());
+                if(email!=null && name!=null && password!=null) {
+                    intent.putExtra("name", name.getText().toString());
+                    intent.putExtra("email", email.getText().toString());
+                    intent.putExtra("password", password.getText().toString());
+
+                }
                 SignUpHome.this.startActivity(intent);
 
             }

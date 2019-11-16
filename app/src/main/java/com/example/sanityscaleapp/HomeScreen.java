@@ -54,7 +54,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null) {
-         //   USERID = bundle.getInt("USERID");
             SESSIONID=bundle.getString("SESSIONID");
         }
         retrofit = new Retrofit.Builder().baseUrl("https://sanity-scale-api.herokuapp.com/")

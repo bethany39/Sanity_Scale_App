@@ -55,9 +55,9 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
             @Override
             public void onClick(View v) {
                 //attempting to delete the session id from the database--it doesn't have end points set up, though
-                IUserController deleteTheId = RetrofitApi.getInstance().getUserService();
-                Call<Void> idDeletion = deleteTheId.deleteSid(SESSIONID);
-              //don't know if I have to add the other part because it is void...
+             //   IUserController deleteTheId = RetrofitApi.getInstance().getUserService();
+                //Call<Void> idDeletion = deleteTheId.deleteSid(SESSIONID);
+
 
                 Intent intent=new Intent(LogoutHome.this, MainActivity.class);
                 LogoutHome.this.startActivity(intent);
