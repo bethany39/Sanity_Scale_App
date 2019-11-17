@@ -71,7 +71,7 @@ public class SignUpGoals extends AppCompatActivity {
     public void createUser(String email, String password, String firstname, String goal, String units){
         IUserController userService=RetrofitApi.getInstance().getUserService();
         User newUser=new User(email,password,firstname,goal,units);
-        Call<okhttp3.ResponseBody> call =userService.createUser(newUser);
+        Call<ResponseBody> call =userService.createUser(newUser);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

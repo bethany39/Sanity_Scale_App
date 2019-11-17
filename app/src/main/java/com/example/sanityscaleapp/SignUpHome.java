@@ -17,12 +17,11 @@ public class SignUpHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_home);
 
-         name = findViewById(R.id.nameBox);
-         email=findViewById(R.id.emailBox);
-         email2=findViewById(R.id.confirmemailbox);
-         password = findViewById(R.id.passwordBox);
-         password2=findViewById(R.id.confirmpassword);
-
+        name = findViewById(R.id.nameBox);
+        email=findViewById(R.id.emailbox_signup);
+        email2=findViewById(R.id.confirmemailbox);
+        password = findViewById(R.id.passwordbox_signup);
+        password2=findViewById(R.id.confirmpassword);
 
         backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +39,8 @@ public class SignUpHome extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+
+
                 Intent intent = new Intent(SignUpHome.this, SignUpIntro.class);
                 if(email!=null && name!=null && password!=null) {
                     intent.putExtra("name", name.getText().toString());

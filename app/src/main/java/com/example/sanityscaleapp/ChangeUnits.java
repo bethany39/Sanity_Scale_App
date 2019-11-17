@@ -84,7 +84,7 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
                // Intent intent =new Intent(ChangeUnits.this, ChangeUnitsKgs.class);
                // ChangeUnits.this.startActivity(intent);
 
-                String userJson = "{'unit': 'kgs'}";
+                String userJson = "{'units': 'kgs'}";
                 Gson gson = new Gson();
                 User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();
@@ -129,7 +129,7 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
 
             @Override
             public void onClick(View v) {
-                String userJson = "{'unit': 'lbs'}";
+                String userJson = "{'units': 'lbs'}";
                 Gson gson = new Gson();
                 User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();

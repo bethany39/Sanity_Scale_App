@@ -28,7 +28,7 @@
         android:textSize="36sp" />
 
     <EditText
-        android:id="@+id/passwordbox"
+        android:id="@+id/passwordbox_signup"
         android:layout_width="308dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -67,7 +67,7 @@
         android:textSize="36sp" />
 
     <EditText
-        android:id="@+id/emailbox"
+        android:id="@+id/emailbox_signup"
         android:layout_width="308dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
