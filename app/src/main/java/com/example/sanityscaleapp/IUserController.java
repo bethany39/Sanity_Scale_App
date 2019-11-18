@@ -46,16 +46,16 @@ public interface IUserController {
   //  Call<ResponseBody> postEmail(@Body String email, @Body String password);
 
     @PATCH("users/units")
-    Call<ResponseBody> patchUserUnits(@Body String sid, @Body User unit);
+    Call<ResponseBody> patchUserUnits(@Body User user);
 
     @GET("users/units")
-    Call<User> getUserUnits(@Body String sid);
+    Call<User> getUserUnits(@Query("sessionid") String sid);
 
     @GET("users/goal")
-    Call<User> getUserGoal(@Body String sid);
+    Call<User> getUserGoal(@Query("sessionid") String sid);
 
     @PATCH("users/goal")
-    Call<ResponseBody> patchUserGoal(@Body String sid, @Body User goal);
+    Call<ResponseBody> patchUserGoal(@Body User user);
 
     @DELETE("users/logout")
     Call<ResponseBody> deleteSid(@Query("sessionid") String sid);

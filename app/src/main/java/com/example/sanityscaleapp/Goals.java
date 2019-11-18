@@ -78,13 +78,15 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
 
             @Override
             public void onClick(View v) {
-                String userJson = "{'goal': 'gain weight'}";
-                Gson gson = new Gson();
-                User userObject = gson.fromJson(userJson, User.class);
+               // String userJson = "{'goal': 'gain weight'}";
+               // Gson gson = new Gson();
+               // User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();
 
-        //        Call<ResponseBody> gainCall = userService.patchUserGoal(USERID, userObject);
-                Call<ResponseBody> gainCall = userService.patchUserGoal(SESSIONID, userObject);
+                User userToSend = new User("gain weight", null, SESSIONID);
+
+                Call<ResponseBody> gainCall = userService.patchUserGoal(userToSend);
+                //Call<ResponseBody> gainCall = userService.patchUserGoal(SESSIONID, userObject);
                 gainCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -115,13 +117,16 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
 
             @Override
             public void onClick(View v) {
-                String userJson = "{'goal': 'lose weight'}";
-                Gson gson = new Gson();
-                User userObject = gson.fromJson(userJson, User.class);
+//                String userJson = "{'goal': 'lose weight'}";
+//                Gson gson = new Gson();
+//                User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();
+                User userToSend = new User("lose weight", null, SESSIONID);
+
+                Call<ResponseBody> loseCall = userService.patchUserGoal(userToSend);
 
         //        Call<ResponseBody> loseCall = userService.patchUserGoal(USERID, userObject);
-                Call<ResponseBody> loseCall = userService.patchUserGoal(SESSIONID, userObject);
+                //Call<ResponseBody> loseCall = userService.patchUserGoal(SESSIONID, userObject);
                 loseCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -154,13 +159,16 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
 
             @Override
             public void onClick(View v) {
-                String userJson = "{'goal': 'maintain weight'}";
-                Gson gson = new Gson();
-                User userObject = gson.fromJson(userJson, User.class);
+//                String userJson = "{'goal': 'maintain weight'}";
+//                Gson gson = new Gson();
+//                User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();
+                User userToSend = new User("maintain weight", null, SESSIONID);
+
+                Call<ResponseBody> maintainCall = userService.patchUserGoal(userToSend);
 
         //        Call<ResponseBody> maintainCall = userService.patchUserGoal(USERID, userObject);
-                Call<ResponseBody> maintainCall = userService.patchUserGoal(SESSIONID, userObject);
+                //Call<ResponseBody> maintainCall = userService.patchUserGoal(SESSIONID, userObject);
                 maintainCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

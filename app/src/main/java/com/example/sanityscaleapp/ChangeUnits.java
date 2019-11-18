@@ -84,13 +84,15 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
                // Intent intent =new Intent(ChangeUnits.this, ChangeUnitsKgs.class);
                // ChangeUnits.this.startActivity(intent);
 
-                String userJson = "{'units': 'kgs'}";
-                Gson gson = new Gson();
-                User userObject = gson.fromJson(userJson, User.class);
+//                String userJson = "{'units': 'kgs'}";
+//                Gson gson = new Gson();
+//                User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();
+                User userToSend = new User(null, "kgs", SESSIONID);
 
+                Call<ResponseBody> changeToKgsCall = userService.patchUserUnits(userToSend);
          //       Call<ResponseBody> changeToKgsCall = userService.patchUserUnits(USERID, userObject);
-                Call<ResponseBody> changeToKgsCall = userService.patchUserUnits(SESSIONID, userObject);
+                //Call<ResponseBody> changeToKgsCall = userService.patchUserUnits(SESSIONID, userObject);
                 changeToKgsCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -129,13 +131,13 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
 
             @Override
             public void onClick(View v) {
-                String userJson = "{'units': 'lbs'}";
-                Gson gson = new Gson();
-                User userObject = gson.fromJson(userJson, User.class);
-                EspressoIdlingResource.increment();
 
+                EspressoIdlingResource.increment();
+                User userToSend = new User(null, "lbs", SESSIONID);
+
+                Call<ResponseBody> changeToLbsCall = userService.patchUserUnits(userToSend);
         //        Call<ResponseBody> changeToLbsCall = userService.patchUserUnits(USERID, userObject);
-                  Call<ResponseBody> changeToLbsCall = userService.patchUserUnits(SESSIONID, userObject);
+                //Call<ResponseBody> changeToLbsCall = userService.patchUserUnits(SESSIONID, userObject);
 
                 changeToLbsCall.enqueue(new Callback<ResponseBody>() {
                     @Override

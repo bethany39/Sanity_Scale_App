@@ -42,7 +42,7 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null) {
          //   USERID = bundle.getInt("USERID");
-            SESSIONID=bundle.getString("SESSSIONID");
+            SESSIONID=bundle.getString("SESSIONID");
         }
 
         retrofit = new Retrofit.Builder().baseUrl("https://sanity-scale-api.herokuapp.com/")

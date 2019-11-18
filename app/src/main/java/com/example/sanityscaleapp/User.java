@@ -41,11 +41,11 @@ public class User {
 
     }
 
-//    public User(String goal, String units, String sid){
-//        this.goal=goal;
-//        this.unit=units;
-//        this.sessionid=sid;
-//    }
+    public User(String goal, String units, String sid){
+        this.goal=goal;
+        this.unit=units;
+        this.sessionid=sid;
+    }
     public User(String unit){
         this.goal=goal;
     }
