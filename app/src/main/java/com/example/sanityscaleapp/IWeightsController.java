@@ -12,5 +12,5 @@ import retrofit2.http.Body;
 public interface IWeightsController {
 
     @GET("weights")
-    Call <Weight> getAverageWeight(@Body String sid);
+    Call <Weight> getAverageWeight(@Query("sessionid") String sid);
 }

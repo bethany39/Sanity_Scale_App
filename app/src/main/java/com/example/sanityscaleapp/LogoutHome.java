@@ -16,6 +16,7 @@ import android.content.Intent;
 
 import com.google.android.material.navigation.NavigationView;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,13 +55,7 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
         yesBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //attempting to delete the session id from the database--it doesn't have end points set up, though
-             //   IUserController deleteTheId = RetrofitApi.getInstance().getUserService();
-                //Call<Void> idDeletion = deleteTheId.deleteSid(SESSIONID);
-
-
-                Intent intent=new Intent(LogoutHome.this, MainActivity.class);
-                LogoutHome.this.startActivity(intent);
+                logout();
             }
          });
 
@@ -85,7 +80,6 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
 
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -103,5 +97,37 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
                 break;
         }
         return true;
+    }
+
+    public void logout(){
+        EspressoIdlingResource.increment();
+        IUserController userService = RetrofitApi.getInstance().getUserService();
+        //SessionId sid = new SessionId(SESSIONID);
+        //Call<ResponseBody> logout = userService.deleteSid(sid);
+        Call<ResponseBody> logout = userService.deleteSid(SESSIONID);
+
+        logout.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (!response.isSuccessful()) {
+                    //should do something for the error handlign
+                    Log.d("UserController", "inside if in onResponse");
+                    EspressoIdlingResource.decrement();
+                    return;
+
+                }
+                Log.d("UserController", "outside if in onResponse");
+                EspressoIdlingResource.decrement();
+                Intent intent=new Intent(LogoutHome.this, MainActivity.class);
+                LogoutHome.this.startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("UserController", "inside onFailure");
+            }
+        });
+
+
     }
 }

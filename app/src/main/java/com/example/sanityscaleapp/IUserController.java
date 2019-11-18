@@ -54,8 +54,8 @@ public interface IUserController {
     @PATCH("users/goal")
     Call<ResponseBody> patchUserGoal(@Body String sid, @Body User goal);
 
-    @DELETE("users") //can't be users/{sid}
-    Call<Void> deleteSid(@Body String sid);
+    @DELETE("users/logout")
+    Call<ResponseBody> deleteSid(@Query("sessionid") String sid);
 
     @POST("users")
     Call<ResponseBody> createUser(@Body User user);
