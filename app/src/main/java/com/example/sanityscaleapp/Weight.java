@@ -11,12 +11,18 @@ public class Weight {
     @SerializedName("weeklyaverage") @Expose
     private float weeklyAverage;
 
+    @SerializedName("sessionid")
+    private String sessionid;
+
 
     public Weight(float weight, float weeklyAverage) {
         this.weight=weight;
         this.weeklyAverage=weeklyAverage;
     }
 
+    public Weight(String sid){
+        this.sessionid=sid;
+    }
     public float getWeight() {
         return weight;
     }

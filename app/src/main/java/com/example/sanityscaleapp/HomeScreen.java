@@ -83,7 +83,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             public void onClick(View v) {
                 EspressoIdlingResource.increment();
                 IWeightsController weightsService = RetrofitApi.getInstance().getWeightsService();
-         //       Call<Weight> weightsCall = weightsService.getAverageWeight(USERID);
+               // SessionId sid = new SessionId(SESSIONID);
+                //Call<Weight> weightsCall = weightsService.getAverageWeight(sid);
                 Call<Weight> weightsCall = weightsService.getAverageWeight(SESSIONID);
 
                 weightsCall.enqueue(new Callback<Weight>() {

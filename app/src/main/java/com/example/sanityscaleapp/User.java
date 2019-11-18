@@ -40,6 +40,12 @@ public class User {
         this.unit=units;
 
     }
+
+//    public User(String goal, String units, String sid){
+//        this.goal=goal;
+//        this.unit=units;
+//        this.sessionid=sid;
+//    }
     public User(String unit){
         this.goal=goal;
     }
