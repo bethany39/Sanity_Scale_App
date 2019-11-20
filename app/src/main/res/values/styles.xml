@@ -5,6 +5,7 @@
         <item name="colorPrimary">#3FA3CE</item>
         <item name="colorPrimaryDark">#DADADA</item>
         <item name="colorAccent">#898383</item>
+        <item name="android:textSize">20dp</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

@@ -3,13 +3,16 @@
 
     <item android:id="@+id/nav_home"
         android:icon="@android:drawable/btn_star_big_off"
-        android:title="Home"/>
+        android:title="Home"
+        android:textSize="30dp"/>
 
     <item android:id="@+id/nav_settings"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:title="Settings"/>
+        android:title="Settings"
+        android:textSize="30dp"/>
 
     <item android:id="@+id/nav_logout"
         android:icon="@android:drawable/ic_lock_power_off"
-        android:title="Logout"/>
+        android:title="Logout"
+        android:textSize="30dp"/>
 </menu>
