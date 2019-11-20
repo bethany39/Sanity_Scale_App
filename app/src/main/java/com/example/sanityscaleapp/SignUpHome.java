@@ -18,7 +18,7 @@ public class SignUpHome extends AppCompatActivity {
     Button backBtn,nextBtn;
     EditText name, email, email2, password, password2;
     TextView errorMessage,errorMessage2,errorMessage3,errorMessage4,errorMessage5;
-    String test="false";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,25 +53,23 @@ public class SignUpHome extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignUpHome.this, SignUpIntro.class);
+
                 if (email.getText().toString().equals("") || name.getText().toString().equals("") || password.getText().toString().equals("") || email2.getText().toString().equals("") || password2.getText().toString().equals("")) {
                     System.out.println("Correctly checks for empty boxes");
                     errorMessage4.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
                 }
                 //if(email!=null && name!=null && password!=null) {
                 else{
-                    intent.putExtra("name", name.getText().toString());
-                    intent.putExtra("email", email.getText().toString());
-                    intent.putExtra("password", password.getText().toString());
+
 
                     IUserController userService = RetrofitApi.getInstance().getUserService();
 
-                    Call<User> call = userService.getEmail(email.getText().toString());
+                    Call<APIResponse> call = userService.getEmail(email.getText().toString());
 
 
-                    call.enqueue(new Callback<User>() {
+                    call.enqueue(new Callback<APIResponse>() {
                         @Override
-                        public void onResponse(Call<User> call, Response<User> response) {
+                        public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                             if (!response.isSuccessful()) {
                                 //should do something for the error handlign
                                 Log.d("UserController", "inside if in onResponse");
@@ -80,25 +78,47 @@ public class SignUpHome extends AppCompatActivity {
                                 return;
                             }
                             Log.d("UserController", "outside if in onResponse");
-                           //User user = response.body();
-                           // errorMessage5.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
-                            test="true";
-                            System.out.println("test "+test);
+                            Boolean emailTest = response.body().getMessage();
+
+                            if (emailTest == true) {
+                                errorMessage5.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
+                            } else {
+                                Intent intent = new Intent(SignUpHome.this, SignUpIntro.class);
+                                intent.putExtra("name", name.getText().toString());
+                                intent.putExtra("email", email.getText().toString());
+                                intent.putExtra("password", password.getText().toString());
+
+
+                                if (!email.getText().toString().equals(email2.getText().toString()) && !password.getText().toString().equals(password2.getText().toString())) {
+                                    System.out.println("email and pass don't match");
+                                    errorMessage3.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
+                                } else if (!email.getText().toString().equals(email2.getText().toString())) {
+                                    System.out.println("emails don't match");
+                                    errorMessage.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
+                                } else if (!password.getText().toString().equals(password2.getText().toString())) {
+                                    System.out.println("passwords don't match");
+                                    errorMessage2.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
+                                }
+
+
+                                if (email.getText().toString().equals(email2.getText().toString()) && password.getText().toString().equals(password2.getText().toString())) {
+
+
+                                    SignUpHome.this.startActivity(intent);
+
+                                }
+
+                            }
                         }
 
                         @Override
-                        public void onFailure(Call<User> call, Throwable t) {
+                        public void onFailure(Call<APIResponse> call, Throwable t) {
                             Log.d("UserController", "inside onFailure");
                         }
                     });
 
-                    System.out.println("test here is "+test); //it doesn't print this :/
-                    if (test.equals("true"))
-                    {
-                        System.out.println("here");
-                        errorMessage5.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
-                    }
-                    else {
+
+                 /*   else {
                         if (!email.getText().toString().equals(email2.getText().toString()) && !password.getText().toString().equals(password2.getText().toString())) {
                             System.out.println("email and pass don't match");
                             errorMessage3.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
@@ -115,7 +135,7 @@ public class SignUpHome extends AppCompatActivity {
                             System.out.println("everything works, yay");
                             SignUpHome.this.startActivity(intent);
                         }
-                    }
+                    }*/
                 }
 
 

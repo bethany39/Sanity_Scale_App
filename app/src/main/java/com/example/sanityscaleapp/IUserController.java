@@ -40,7 +40,7 @@ public interface IUserController {
     Call<User> getUser(@Body User user);
 
     @GET("users/email")
-    Call<User> getEmail(@Query("email") String email);
+    Call<APIResponse> getEmail(@Query("email") String email);
 
  //   @POST("users/sessionid") //what???
   //  Call<ResponseBody> postEmail(@Body String email, @Body String password);
