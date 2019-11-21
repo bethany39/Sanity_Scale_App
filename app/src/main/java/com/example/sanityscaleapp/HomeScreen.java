@@ -34,6 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HomeScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Button weeklyAvgBtn;
     private float weeklyAverage;
+    private int numTimesWeighed;
    // private int USERID;
     private String SESSIONID;
 
@@ -75,6 +76,11 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        //do something similar below to call to get numTimesWeighed
+        numTimesWeighed=0; //replacing 0 with actual num
+     //   findViewById(R.id.number)
+        //not sure how to replace the textview
 
         weeklyAvgBtn=findViewById(R.id.weeklyAvgBtn);
         weeklyAvgBtn.setOnClickListener(new OnClickListener() {
