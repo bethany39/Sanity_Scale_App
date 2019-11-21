@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradientbackground"
+    tools:context=".SignUpIntro1">
+
+    <Button
+        android:id="@+id/nextBtn"
+        android:layout_width="82dp"
+        android:layout_height="38dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="51dp"
+        android:layout_marginRight="51dp"
+        android:layout_marginBottom="39dp"
+        android:background="@drawable/next"
+        tools:layout_editor_absoluteX="288dp"
+        tools:layout_editor_absoluteY="655dp" />
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="334dp"
+        android:layout_height="429dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="51dp"
+        android:layout_marginLeft="51dp"
+        android:layout_marginTop="115dp"
+        android:text="Welcome to Sanity Scale, the smartphone scale + app that lets you track your weight without losing your mind!"
+        android:textColor="#000000"
+        android:textSize="36sp" />
+
+</RelativeLayout>

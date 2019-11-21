@@ -83,7 +83,7 @@ public class SignUpHome extends AppCompatActivity {
                             if (emailTest == true) {
                                 errorMessage5.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
                             } else {
-                                Intent intent = new Intent(SignUpHome.this, SignUpIntro.class);
+                                Intent intent = new Intent(SignUpHome.this, SignUpIntro1.class);
                                 intent.putExtra("name", name.getText().toString());
                                 intent.putExtra("email", email.getText().toString());
                                 intent.putExtra("password", password.getText().toString());
