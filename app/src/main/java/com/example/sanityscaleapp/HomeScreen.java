@@ -77,10 +77,18 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        //do something similar below to call to get numTimesWeighed
-        numTimesWeighed=0; //replacing 0 with actual num
-     //   findViewById(R.id.number)
-        //not sure how to replace the textview
+        numTimesWeighed=1; //replacing 0 with actual num
+
+        TextView numTimesWeighedTextView = findViewById(R.id.numberTextView);
+        numTimesWeighedTextView.append(Integer.toString(numTimesWeighed));
+        TextView timesTextView=findViewById(R.id.text2);
+        if(numTimesWeighed==1){
+            timesTextView.append("time this week");
+        }
+        else {
+            timesTextView.append("times this week");
+        }
+
 
         weeklyAvgBtn=findViewById(R.id.weeklyAvgBtn);
         weeklyAvgBtn.setOnClickListener(new OnClickListener() {
