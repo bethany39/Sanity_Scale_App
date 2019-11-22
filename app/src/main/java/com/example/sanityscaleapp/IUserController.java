@@ -19,31 +19,14 @@ import retrofit2.http.Query;
 
 public interface IUserController {
 
-
-   // @GET("users")
-  //  Call<User> getUser(@Body  String email, @Body String password);
-
- //     Call<User> getUser(@Path("email")String email, @Path("password") String password);
-//    @GET("users/units/{id}")
-//    Call<User> getUserUnits(@Path("id") int id);
-
-//    @GET("users/goal/{id}")
- //   Call<User> getUserGoal(@Path("id") int id);
-
- //   @PATCH("users/goal/{id}")
- //   Call<ResponseBody> patchUserGoal(@Path("id") int id, @Body User goal);
-
-  //  @PATCH("users/units/{id}")
-  //  Call<ResponseBody> patchUserUnits(@Path("id") int id, @Body User unit);
-
     @POST("users/sessionid")
     Call<User> getUser(@Body User user);
 
     @GET("users/email")
     Call<APIResponse> getEmail(@Query("email") String email);
 
- //   @POST("users/sessionid") //what???
-  //  Call<ResponseBody> postEmail(@Body String email, @Body String password);
+    @GET("users/timesweighed")
+    Call<User> getNumTimesWeighed(@Query("timesweighed") String sid);
 
     @PATCH("users/units")
     Call<ResponseBody> patchUserUnits(@Body User user);

@@ -34,7 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HomeScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Button weeklyAvgBtn;
     private float weeklyAverage;
-    private int numTimesWeighed;
+    private int numTimes;
    // private int USERID;
     private String SESSIONID;
 
@@ -77,17 +77,45 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        numTimesWeighed=1; //replacing 0 with actual num
+        IUserController userService=RetrofitApi.getInstance().getUserService();
+        Call<User> numTimesCall=userService.getNumTimesWeighed(SESSIONID);
 
-        TextView numTimesWeighedTextView = findViewById(R.id.numberTextView);
-        numTimesWeighedTextView.append(Integer.toString(numTimesWeighed));
-        TextView timesTextView=findViewById(R.id.text2);
-        if(numTimesWeighed==1){
-            timesTextView.append("time this week");
-        }
-        else {
-            timesTextView.append("times this week");
-        }
+        numTimesCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(!response.isSuccessful()){
+                    //should do something for the error handlign
+                    Log.d("IUserController", "inside if in onResponse");
+                    return;
+
+                }
+                Log.d("IUserController", "outside if in onResponse");
+                User user = response.body();
+                numTimes = user.getTimesWeighed();
+                TextView numTimesWeighedTextView = findViewById(R.id.numberTextView);
+                numTimesWeighedTextView.append(Integer.toString(numTimes));
+                TextView timesTextView=findViewById(R.id.text2);
+                if(numTimes==1){
+                    timesTextView.append("time this week");
+                }
+                else {
+                    timesTextView.append("times this week");
+                }
+
+                EspressoIdlingResource.decrement();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.d("IUserController", "inside onFailure");
+                EspressoIdlingResource.decrement();
+
+            }
+        });
+
+
 
 
         weeklyAvgBtn=findViewById(R.id.weeklyAvgBtn);
