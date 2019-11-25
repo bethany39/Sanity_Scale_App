@@ -37,6 +37,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     private int numTimes;
    // private int USERID;
     private String SESSIONID;
+    TextView avgError;
 
     private Retrofit retrofit;
     private DrawerLayout drawerLayout;
@@ -76,9 +77,12 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        avgError=findViewById(R.id.error);
+
 
         IUserController userService=RetrofitApi.getInstance().getUserService();
         Call<User> numTimesCall=userService.getNumTimesWeighed(SESSIONID);
+
 
         numTimesCall.enqueue(new Callback<User>() {
             @Override
@@ -101,7 +105,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                 else {
                     timesTextView.append("times this week");
                 }
-
                 EspressoIdlingResource.decrement();
 
 
@@ -119,53 +122,59 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
 
         weeklyAvgBtn=findViewById(R.id.weeklyAvgBtn);
-        weeklyAvgBtn.setOnClickListener(new OnClickListener() {
+        weeklyAvgBtn.setAlpha(0.5f);
 
-            @Override
-            public void onClick(View v) {
-                EspressoIdlingResource.increment();
-                IWeightsController weightsService = RetrofitApi.getInstance().getWeightsService();
-               // SessionId sid = new SessionId(SESSIONID);
-                //Call<Weight> weightsCall = weightsService.getAverageWeight(sid);
-                Call<Weight> weightsCall = weightsService.getAverageWeight(SESSIONID);
+            weeklyAvgBtn.setOnClickListener(new OnClickListener() {
 
-                weightsCall.enqueue(new Callback<Weight>() {
-                    @Override
-                    public void onResponse(Call<Weight> call, Response<Weight> response) {
-                        if(!response.isSuccessful()){
-                            //should do something for the error handlign
-                            Log.d("WeightsController", "inside if in onResponse");
-                            return;
+                @Override
+                public void onClick(View v) {
 
-                        }
-                        Log.d("WeightsController", "outside if in onResponse");
-                        Weight avg = response.body();
-                        weeklyAverage = avg.getWeeklyAverage();
-                        Intent intent =new Intent(HomeScreen.this, GraphScreen.class);
-                        intent.putExtra("weeklyavg", weeklyAverage);
-                    //    intent.putExtra("USERID", USERID);
-                        intent.putExtra("SESSIONID",SESSIONID);
-
-                        HomeScreen.this.startActivity(intent);
-                        EspressoIdlingResource.decrement();
-
-
+                    if (numTimes< 7) {
+                        avgError.setVisibility(View.VISIBLE);
                     }
 
-                    @Override
-                    public void onFailure(Call<Weight> call, Throwable t) {
-                        Log.d("WeightsController", "inside onFailure");
-                        EspressoIdlingResource.decrement();
+                    else {
+                        weeklyAvgBtn.setAlpha(1f);
 
+
+                        EspressoIdlingResource.increment();
+                        IWeightsController weightsService = RetrofitApi.getInstance().getWeightsService();
+                        Call<Weight> weightsCall = weightsService.getAverageWeight(SESSIONID);
+
+                        weightsCall.enqueue(new Callback<Weight>() {
+                            @Override
+                            public void onResponse(Call<Weight> call, Response<Weight> response) {
+                                if (!response.isSuccessful()) {
+                                    //should do something for the error handlign
+                                    Log.d("WeightsController", "inside if in onResponse");
+                                    return;
+
+                                }
+                                Log.d("WeightsController", "outside if in onResponse");
+                                Weight avg = response.body();
+                                weeklyAverage = avg.getWeeklyAverage();
+                                Intent intent = new Intent(HomeScreen.this, GraphScreen.class);
+                                intent.putExtra("weeklyavg", weeklyAverage);
+                                //    intent.putExtra("USERID", USERID);
+                                intent.putExtra("SESSIONID", SESSIONID);
+
+                                HomeScreen.this.startActivity(intent);
+                                EspressoIdlingResource.decrement();
+
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<Weight> call, Throwable t) {
+                                Log.d("WeightsController", "inside onFailure");
+                                EspressoIdlingResource.decrement();
+
+                            }
+                        });
                     }
-                });
 
-
-            }
-        });
-
-
-
+                }
+            });
     }
 
 
