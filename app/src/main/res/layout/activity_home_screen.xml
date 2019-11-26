@@ -88,20 +88,6 @@
       android:textColor="#000000"
       android:textSize="150sp" />
 
-  <TextView
-      android:id="@+id/error"
-      android:layout_width="383dp"
-      android:layout_height="82dp"
-      android:layout_alignParentEnd="true"
-      android:layout_alignParentRight="true"
-      android:layout_alignParentBottom="true"
-      android:layout_marginEnd="5dp"
-      android:layout_marginRight="5dp"
-      android:layout_marginBottom="112dp"
-      android:text="You have to use your scale at least 7 times in order to"
-      android:textColor="#F44336"
-      android:visibility="invisible" />
-
 </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView

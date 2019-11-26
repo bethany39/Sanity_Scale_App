@@ -64,12 +64,12 @@ public class SignUpHome extends AppCompatActivity {
 
                     IUserController userService = RetrofitApi.getInstance().getUserService();
 
-                    Call<APIResponse> call = userService.getEmail(email.getText().toString());
+                    Call<BooleanAPIResponse> call = userService.getEmail(email.getText().toString());
 
 
-                    call.enqueue(new Callback<APIResponse>() {
+                    call.enqueue(new Callback<BooleanAPIResponse>() {
                         @Override
-                        public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                        public void onResponse(Call<BooleanAPIResponse> call, Response<BooleanAPIResponse> response) {
                             if (!response.isSuccessful()) {
                                 //should do something for the error handlign
                                 Log.d("UserController", "inside if in onResponse");
@@ -112,7 +112,7 @@ public class SignUpHome extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<APIResponse> call, Throwable t) {
+                        public void onFailure(Call<BooleanAPIResponse> call, Throwable t) {
                             Log.d("UserController", "inside onFailure");
                         }
                     });

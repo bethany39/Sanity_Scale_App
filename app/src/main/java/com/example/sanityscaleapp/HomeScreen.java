@@ -35,6 +35,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     Button weeklyAvgBtn;
     private float weeklyAverage;
     private int numTimes;
+    private boolean averageIsVisible;
    // private int USERID;
     private String SESSIONID;
     TextView avgError;
@@ -77,12 +78,12 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        avgError=findViewById(R.id.error);
-
+        //avgError=findViewById(R.id.error);
 
         IUserController userService=RetrofitApi.getInstance().getUserService();
         Call<User> numTimesCall=userService.getNumTimesWeighed(SESSIONID);
 
+        EspressoIdlingResource.increment();
 
         numTimesCall.enqueue(new Callback<User>() {
             @Override
@@ -119,8 +120,38 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         });
 
 
+        Call<User> weeklyAvgActiveCall =userService.canSeeWeight(SESSIONID);
+        EspressoIdlingResource.increment();
+
+        weeklyAvgActiveCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(!response.isSuccessful()){
+                    //should do something for the error handlign
+                    return;
+
+                }
+                User user = response.body();
+                averageIsVisible = user.getCanSeeWeight();
+                if(averageIsVisible){
+                    setWeeklyAverageActive();
+                }else {
+                    setWeeklyAverageInactive();
+                }
+
+                EspressoIdlingResource.decrement();
 
 
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                EspressoIdlingResource.decrement();
+
+            }
+        });
+
+        //make all of this method of setWeeklyAverageActive
         weeklyAvgBtn=findViewById(R.id.weeklyAvgBtn);
         weeklyAvgBtn.setAlpha(0.5f);
 
@@ -190,8 +221,73 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     }
 
 
+    public void setWeeklyAverageActive(){
 
-    @SuppressWarnings("StatementWithEmptyBody")
+        weeklyAvgBtn=findViewById(R.id.weeklyAvgBtn);
+        weeklyAvgBtn.setAlpha(1f);
+
+        weeklyAvgBtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                    weeklyAvgBtn.setAlpha(1f);
+
+                    EspressoIdlingResource.increment();
+                    IWeightsController weightsService = RetrofitApi.getInstance().getWeightsService();
+                    Call<Weight> weightsCall = weightsService.getAverageWeight(SESSIONID);
+
+                    weightsCall.enqueue(new Callback<Weight>() {
+                        @Override
+                        public void onResponse(Call<Weight> call, Response<Weight> response) {
+                            if (!response.isSuccessful()) {
+                                //should do something for the error handlign
+                                Log.d("WeightsController", "inside if in onResponse");
+                                return;
+
+                            }
+                            Log.d("WeightsController", "outside if in onResponse");
+                            Weight avg = response.body();
+                            weeklyAverage = avg.getWeeklyAverage();
+                            Intent intent = new Intent(HomeScreen.this, GraphScreen.class);
+                            intent.putExtra("weeklyavg", weeklyAverage);
+                            //    intent.putExtra("USERID", USERID);
+                            intent.putExtra("SESSIONID", SESSIONID);
+
+                            HomeScreen.this.startActivity(intent);
+                            EspressoIdlingResource.decrement();
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<Weight> call, Throwable t) {
+                            Log.d("WeightsController", "inside onFailure");
+                            EspressoIdlingResource.decrement();
+
+                        }
+                    });
+                }
+
+
+        });
+    }
+
+    public void setWeeklyAverageInactive(){
+        weeklyAvgBtn=findViewById(R.id.weeklyAvgBtn);
+        weeklyAvgBtn.setAlpha(0.5f);
+
+        weeklyAvgBtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //do nothing
+            }
+
+
+        });
+
+    }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item){
         switch(item.getItemId()){

@@ -27,6 +27,9 @@ public class User {
     @SerializedName("timesweighed")
     private int numTimes;
 
+    @SerializedName("canseeweight")
+    private boolean canSeeWeight;
+
 
     public User(String email, String password) {
         this.email=email;
@@ -76,4 +79,6 @@ public class User {
     public String getSessionId() { return sessionid; }
 
     public int getTimesWeighed() {return numTimes; }
+
+    public boolean getCanSeeWeight(){ return canSeeWeight; }
 }

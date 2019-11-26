@@ -63,7 +63,9 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
         noBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                //put in sessionid
                 Intent intent=new Intent(LogoutHome.this, HomeScreen.class);
+                intent.putExtra("SESSIONID", SESSIONID);
                 LogoutHome.this.startActivity(intent);
             }
         });
@@ -117,14 +119,18 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
 
                 }
                 Log.d("UserController", "outside if in onResponse");
-                EspressoIdlingResource.decrement();
                 Intent intent=new Intent(LogoutHome.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 LogoutHome.this.startActivity(intent);
+                EspressoIdlingResource.decrement();
+
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d("UserController", "inside onFailure");
+                EspressoIdlingResource.decrement();
+
             }
         });
 
