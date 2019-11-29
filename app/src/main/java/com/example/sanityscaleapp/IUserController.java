@@ -9,6 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.DELETE;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 
@@ -38,12 +39,14 @@ public interface IUserController {
     @PATCH("users/units")
     Call<ResponseBody> patchUserUnits(@Body User user);
 
+    @PATCH("users/setLastChecked")
+    Call<ResponseBody> setLastChecked(@Query("sessionid") String sid);
+
     @DELETE("users/logout")
     Call<ResponseBody> deleteSid(@Query("sessionid") String sid);
 
     @POST("users")
     Call<ResponseBody> createUser(@Body User user);
-
 
 
 }
