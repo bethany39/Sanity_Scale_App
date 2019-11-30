@@ -12,6 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/weightGraph"
+        android:layout_width="326dp"
+        android:layout_height="286dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="91dp"
+        android:background="#FFFFFF" />
 
     <TextView
         android:id="@+id/AvgWeightTextView"
@@ -22,15 +30,6 @@
         android:layout_marginTop="152dp"
         android:text="Weekly Average Weight: " />
 
-    <Button
-        android:id="@+id/graphImage"
-        android:layout_width="326dp"
-        android:layout_height="286dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="91dp"
-        android:background="#FFFFFF"
-        android:text="graph placeholder" />
 
 </RelativeLayout>
 

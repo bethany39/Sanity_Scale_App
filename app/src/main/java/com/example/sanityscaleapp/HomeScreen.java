@@ -4,23 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.content.Intent;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toolbar;
-
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.GsonBuilder;
@@ -37,7 +31,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     private float weeklyAverage;
     private int numTimes;
     private boolean averageIsVisible;
-   // private int USERID;
     private String SESSIONID;
     TextView avgError;
     private IUserController userService;
@@ -59,7 +52,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         if(bundle!=null) {
             SESSIONID=bundle.getString("SESSIONID");
         }
-        retrofit = new Retrofit.Builder().baseUrl("https://sanity-scale-api.herokuapp.com/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://sanity-scale-api.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create(
                         new GsonBuilder().setPrettyPrinting().create()))
                 .build();

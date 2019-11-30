@@ -12,22 +12,13 @@ import android.content.Intent;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.util.UUID;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LogInScreen extends AppCompatActivity {
     Button nextBtn, backBtn;
     TextView errorMessage;
- //   private int USERID;
     private String SESSIONID;
     CountingIdlingResource IdlingResource = new CountingIdlingResource("LOGIN");
 
@@ -50,11 +41,8 @@ public class LogInScreen extends AppCompatActivity {
 
                 IUserController userService = RetrofitApi.getInstance().getUserService();
 
-                    User userToSend = new User(email.getText().toString(), password.getText().toString());
-
-                    //Gson gson = new Gson();
-
-                    //User userObject = gson.fromJson(userToSend, User.class);
+                    User userToSend = new User(email.getText().toString().toLowerCase(), password.getText().toString());
+                    //User userToSend = new User("david@gmail.com", "davidmayes");
 
                     Call<User> call = userService.getUser(userToSend);
 
@@ -63,7 +51,6 @@ public class LogInScreen extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
                             if (!response.isSuccessful()) {
-                                //should do something for the error handlign
                                 Log.d("UserController", "inside if in onResponse");
                                 System.out.println("the response is" + response);
                                 errorMessage.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
@@ -73,11 +60,7 @@ public class LogInScreen extends AppCompatActivity {
                             }
                             Log.d("UserController", "outside if in onResponse");
                             User user = response.body();
-
-                            //   USERID = user.getUserId();
-                            //   SESSIONID= UUID.randomUUID().toString();
                             SESSIONID = user.getSessionId();
-
 
                             goToHomeScreen();
                             errorMessage.setVisibility(findViewById(R.id.logInScreen).INVISIBLE);
@@ -109,7 +92,6 @@ public class LogInScreen extends AppCompatActivity {
 
     public void goToHomeScreen() {
         Intent intent = new Intent(getBaseContext(), HomeScreen.class);
-     //   intent.putExtra("USERID", USERID);
         intent.putExtra("SESSIONID",SESSIONID);
         LogInScreen.this.startActivity(intent);
 
