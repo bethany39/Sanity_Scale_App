@@ -32,6 +32,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     private int numTimes;
     private boolean averageIsVisible;
     private String SESSIONID;
+    private String UNITS;
     TextView avgError;
     private IUserController userService;
 
@@ -51,6 +52,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null) {
             SESSIONID=bundle.getString("SESSIONID");
+          //  UNITS=bundle.getString("UNITS");
         }
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://sanity-scale-api.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create(
@@ -71,7 +73,45 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        avgError=findViewById(R.id.errorMessage);
+
         //avgError=findViewById(R.id.error);
+
+        userService=RetrofitApi.getInstance().getUserService();
+        Call<User> unitsCall=userService.getUserUnits(SESSIONID);
+
+        EspressoIdlingResource.increment();
+
+        unitsCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(!response.isSuccessful()){
+                    //should do something for the error handlign
+                    Log.d("IUserController", "inside if in onResponse");
+                    return;
+
+                }
+                Log.d("IUserController", "outside if in onResponse");
+                User user = response.body();
+                UNITS = user.getUnit();
+                EspressoIdlingResource.decrement();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.d("IUserController", "inside onFailure");
+                EspressoIdlingResource.decrement();
+
+            }
+        });
+
+
+
+
+
+
 
         userService=RetrofitApi.getInstance().getUserService();
         Call<User> numTimesCall=userService.getNumTimesWeighed(SESSIONID);
@@ -236,20 +276,17 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         switch(item.getItemId()){
             case R.id.nav_home:
                 Intent intent=new Intent(HomeScreen.this,HomeScreen.class);
-            //    intent.putExtra("USERID", USERID);
                 intent.putExtra("SESSIONID", SESSIONID);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(HomeScreen.this,SettingsScreen.class);
-            //    intent.putExtra("USERID", USERID);
                 intent2.putExtra("SESSIONID", SESSIONID);
 
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(HomeScreen.this,LogoutHome.class);
-            //    intent.putExtra("USERID", USERID);
                 intent3.putExtra("SESSIONID", SESSIONID);
 
                 startActivity(intent3);
@@ -257,6 +294,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         }
         return true;
     }
+
+
 
     public void setWeeklyAverageActive(){
 
@@ -277,7 +316,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if (!response.isSuccessful()) {
-                            //should do something for the error handlign
+                            //should do something for the error handling
                             Log.d("WeightsController", "inside if in onResponse");
                             return;
 
@@ -302,7 +341,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                     @Override
                     public void onResponse(Call<Weight> call, Response<Weight> response) {
                         if (!response.isSuccessful()) {
-                            //should do something for the error handlign
+                            //should do something for the error handling
                             Log.d("WeightsController", "inside if in onResponse");
                             return;
 
@@ -310,9 +349,10 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                         Log.d("WeightsController", "outside if in onResponse");
                         Weight avg = response.body();
                         weeklyAverage = avg.getWeeklyAverage();
+
                         Intent intent = new Intent(HomeScreen.this, GraphScreen.class);
                         intent.putExtra("weeklyavg", weeklyAverage);
-                        //    intent.putExtra("USERID", USERID);
+                        intent.putExtra("UNITS",UNITS);
                         intent.putExtra("SESSIONID", SESSIONID);
 
                         HomeScreen.this.startActivity(intent);
@@ -341,7 +381,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
             @Override
             public void onClick(View v) {
-                //do nothing
+                //say error message
+                avgError.setVisibility(View.VISIBLE);
             }
 
 

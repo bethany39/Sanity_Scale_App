@@ -33,6 +33,7 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
     private ActionBarDrawerToggle toggle;
     private NavigationView navigation;
     private String SESSIONID;
+    private String UNITS;
     private LineChart mpLineChart;
 
     @Override
@@ -41,10 +42,13 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
         setContentView(R.layout.activity_graph_screen);
         weeklyAverage= getIntent().getExtras().getFloat("weeklyavg");
         SESSIONID=getIntent().getExtras().getString("SESSIONID");
+        UNITS = getIntent().getExtras().getString("UNITS");
 
         mpLineChart = findViewById(R.id.weightGraph);
         TextView avgWeightTextView = findViewById(R.id.AvgWeightTextView);
         avgWeightTextView.append(Float.toString(weeklyAverage));
+        avgWeightTextView.append(" "+UNITS);
+
 
 
 
