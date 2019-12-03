@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.widget.TextView;
@@ -24,9 +25,19 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class GraphScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.ParseException;
+
+
+public class GraphScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private float weeklyAverage;
     private DrawerLayout drawerLayout;
@@ -35,6 +46,8 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
     private String SESSIONID;
     private String UNITS;
     private LineChart mpLineChart;
+    private IWeightsController weightsController;
+    private List<Weight> weightsDisplayed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +87,9 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
             In order to plot the weekly average on the graph, it will likely have to be in a different LineDataSet so that it can be differentiated
             and have different styles applied than the regular plotted points.
          */
-        setData();
+
+        String defaultTimeRange = "1month";
+        setData(defaultTimeRange);
 
         XAxis xAxis = mpLineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -89,8 +104,64 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
 
     }
 
-    private void setData(){
+
+    /* TODOS:
+
+        MAKE SURE GRAPH TRANSLATES FROM LBS TO KGS IF NEEDED
+
+        Check if sorting of entries can be done on sqlalchemy side?
+
+        Actually get the weights from the API into the graph
+
+        Figure out how to make the X axis what we want it to be
+
+
+     */
+    private void setData(String timerange) {
+        weightsController=RetrofitApi.getInstance().getWeightsService();
+        Call<List<Weight>> unitsCall=weightsController.getWeights(SESSIONID, timerange);
+
+        EspressoIdlingResource.increment();
+
+        unitsCall.enqueue(new Callback<List<Weight>>() {
+            @Override
+            public void onResponse(Call<List<Weight>> call, Response<List<Weight>> response) {
+                if(!response.isSuccessful()){
+                    //should do something for the error handlign
+                    return;
+
+                }
+
+                weightsDisplayed = response.body();
+                SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+                ArrayList<Weight> realWeights = new ArrayList<Weight>();
+                for(Weight w : weightsDisplayed){
+                    Date date;
+
+                    try {
+                        date = format.parse(w.getDateString());
+                        System.out.println(date);
+                        realWeights.add(new Weight(w.getWeight(), date));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Collections.sort(realWeights, new Weight.WeightComparator());
+                EspressoIdlingResource.decrement();
+            }
+
+            @Override
+            public void onFailure(Call<List<Weight>> call, Throwable t) {
+                EspressoIdlingResource.decrement();
+            }
+        });
+
+
+
+        //weightsDisplayed.sort();
         ArrayList<Entry> values = new ArrayList<>();
+
+
         values.add(new Entry(0, 123));
         values.add(new Entry(1, 124));
         values.add(new Entry(2, 125));
@@ -148,4 +219,10 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
         return true;
     }
 
+//    @Override
+//    public int compareTo(MyObject o) {
+//        if (getDateTime() == null || o.getDateTime() == null)
+//            return 0;
+//        return getDateTime().compareTo(o.getDateTime());
+//    }
 }
