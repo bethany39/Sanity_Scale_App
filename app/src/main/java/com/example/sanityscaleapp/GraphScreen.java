@@ -114,7 +114,7 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
 
             @Override
             public void onClick(View v) {
-                getWeightTimes("onemonth");
+                getWeights("1month");
             }
 
             });
@@ -124,7 +124,7 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
 
             @Override
             public void onClick(View v) {
-                getWeightTimes("threemonths");
+                getWeights("3months");
             }
 
         });
@@ -134,27 +134,27 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
 
             @Override
             public void onClick(View v) {
-                getWeightTimes("alltime");
+                getWeights("alltime");
             }
 
         });
 
         //should we include 4 months btn right away?
-        fourmonthsBtn=findViewById(R.id.fourmonthsBtn);
-        fourmonthsBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                getWeightTimes("fourmonths");
-            }
-
-        });
-
-
+//        fourmonthsBtn=findViewById(R.id.fourmonthsBtn);
+//        fourmonthsBtn.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                getWeights("fourmonths");
+//            }
+//
+//        });
 
 
 
-        setData();
+
+
+        getWeights("1month");
 
         XAxis xAxis = mpLineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -166,6 +166,8 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
         yAxis.setDrawGridLines(false);
         mpLineChart.getAxisRight().setEnabled(false);
         mpLineChart.getAxisRight().setDrawGridLines(false);
+        mpLineChart.getDescription().setEnabled(false);
+        mpLineChart.getLegend().setTextSize(14f);
 
 
     }
@@ -226,6 +228,10 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
 
         LineDataSet weightsDataSet = new LineDataSet(values, "weights");
         LineDataSet weeklyAvgSet = new LineDataSet(weeklyAvgPoint, "weeklyAverage");
+        weeklyAvgSet.setColor(R.color.weeklyAverage);
+        weeklyAvgSet.setCircleColor(R.color.weeklyAverage);
+        weeklyAvgSet.setCircleHoleRadius(0);
+        weeklyAvgSet.setCircleHoleColor(Color.TRANSPARENT);
 
         weightsDataSet.setColor(Color.BLACK);
         weightsDataSet.setCircleColor(Color.BLACK);
@@ -325,36 +331,36 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
 //        return realWeights;
 //    }
 
-    public void getWeightTimes(String time){
-        IWeightsController weightsService = RetrofitApi.getInstance().getWeightsService();
-        Call<Weight> weightsCall = weightsService.getAverageWeight(SESSIONID,time);
-        //default time is 4 months
-
-        weightsCall.enqueue(new Callback<Weight>() {
-            @Override
-            public void onResponse(Call<Weight> call, Response<Weight> response) {
-                if (!response.isSuccessful()) {
-                    //should do something for the error handling
-                    Log.d("WeightsController", "inside if in onResponse");
-                    return;
-
-                }
-                Log.d("WeightsController", "outside if in onResponse");
-                Weight avg = response.body();
-                weeklyAverage = avg.getWeeklyAverage();
-
-
-                EspressoIdlingResource.decrement();
-
-            }
-
-            @Override
-            public void onFailure(Call<Weight> call, Throwable t) {
-                Log.d("WeightsController", "inside onFailure");
-                EspressoIdlingResource.decrement();
-
-            }
-        });
-    }
+//    public void getWeightTimes(String time){
+//        IWeightsController weightsService = RetrofitApi.getInstance().getWeightsService();
+//        Call<Weight> weightsCall = weightsService.getAverageWeight(SESSIONID,time);
+//        //default time is 4 months
+//
+//        weightsCall.enqueue(new Callback<Weight>() {
+//            @Override
+//            public void onResponse(Call<Weight> call, Response<Weight> response) {
+//                if (!response.isSuccessful()) {
+//                    //should do something for the error handling
+//                    Log.d("WeightsController", "inside if in onResponse");
+//                    return;
+//
+//                }
+//                Log.d("WeightsController", "outside if in onResponse");
+//                Weight avg = response.body();
+//                weeklyAverage = avg.getWeeklyAverage();
+//
+//
+//                EspressoIdlingResource.decrement();
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Weight> call, Throwable t) {
+//                Log.d("WeightsController", "inside onFailure");
+//                EspressoIdlingResource.decrement();
+//
+//            }
+//        });
+//    }
 
 }
