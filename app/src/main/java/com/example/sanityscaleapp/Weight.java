@@ -37,7 +37,6 @@ public class Weight {
     public Weight(String sid){
         this.sessionid=sid;
     }
-
     public float getWeight() {
         return weight;
     }

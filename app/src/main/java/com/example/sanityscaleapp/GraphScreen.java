@@ -11,8 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.view.View;
 import android.widget.TextView;
-
+import android.widget.Button;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -28,6 +29,11 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,6 +57,7 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
     private String SESSIONID;
     private String UNITS;
     private LineChart mpLineChart;
+    private Button onemonthBtn, threemonthsBtn, alltimeBtn, fourmonthsBtn;
     private IWeightsController weightsController;
     private List<Weight> weightsDisplayed;
 
@@ -101,6 +108,53 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
 
         String defaultTimeRange = "alltime";
         getWeights(defaultTimeRange);
+
+        onemonthBtn=findViewById(R.id.onemonthBtn);
+        onemonthBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                getWeightTimes("onemonth");
+            }
+
+            });
+
+        threemonthsBtn=findViewById(R.id.threemonthsBtn);
+        threemonthsBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                getWeightTimes("threemonths");
+            }
+
+        });
+
+        alltimeBtn=findViewById(R.id.alltimeBtn);
+        alltimeBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                getWeightTimes("alltime");
+            }
+
+        });
+
+        //should we include 4 months btn right away?
+        fourmonthsBtn=findViewById(R.id.fourmonthsBtn);
+        fourmonthsBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                getWeightTimes("fourmonths");
+            }
+
+        });
+
+
+
+
+
+        setData();
 
         XAxis xAxis = mpLineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -270,5 +324,37 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
 //        //Collections.sort(realWeights, new Weight.WeightComparator());
 //        return realWeights;
 //    }
+
+    public void getWeightTimes(String time){
+        IWeightsController weightsService = RetrofitApi.getInstance().getWeightsService();
+        Call<Weight> weightsCall = weightsService.getAverageWeight(SESSIONID,time);
+        //default time is 4 months
+
+        weightsCall.enqueue(new Callback<Weight>() {
+            @Override
+            public void onResponse(Call<Weight> call, Response<Weight> response) {
+                if (!response.isSuccessful()) {
+                    //should do something for the error handling
+                    Log.d("WeightsController", "inside if in onResponse");
+                    return;
+
+                }
+                Log.d("WeightsController", "outside if in onResponse");
+                Weight avg = response.body();
+                weeklyAverage = avg.getWeeklyAverage();
+
+
+                EspressoIdlingResource.decrement();
+
+            }
+
+            @Override
+            public void onFailure(Call<Weight> call, Throwable t) {
+                Log.d("WeightsController", "inside onFailure");
+                EspressoIdlingResource.decrement();
+
+            }
+        });
+    }
 
 }
