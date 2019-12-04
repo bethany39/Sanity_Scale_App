@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class User {
     @SerializedName("firstname")
     @Expose
-    private String name;
+    private String firstname;
     @SerializedName("email")
     @Expose
     private String email;
@@ -41,7 +41,7 @@ public class User {
     {
         this.email=email;
         this.password=password;
-        this.name=firstname;
+        this.firstname=firstname;
         this.goal=goal;
         this.unit=units;
 
@@ -59,6 +59,8 @@ public class User {
     public String getEmail() {
         return email;
     }
+
+    public String getFirstName() { return firstname; }
 
     public String getPassword() {
         return password;

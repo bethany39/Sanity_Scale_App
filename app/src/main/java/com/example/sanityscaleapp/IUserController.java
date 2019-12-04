@@ -21,6 +21,9 @@ public interface IUserController {
     @GET("users/email")
     Call<BooleanAPIResponse> getEmail(@Query("email") String email);
 
+    @GET("users/firstname")
+    Call<User> getFirstName(@Query("sessionid") String sid);
+
     @GET("users/timesweighed")
     Call<User> getNumTimesWeighed(@Query("sessionid") String sid);
 

@@ -33,6 +33,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     private boolean averageIsVisible;
     private String SESSIONID;
     private String UNITS;
+    private String firstName;
     TextView avgError;
     private IUserController userService;
 
@@ -40,6 +41,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigation;
+    private TextView nav_user;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -72,6 +74,41 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
 
         NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view);
+        View hView=navigationView.getHeaderView(0);
+         nav_user=(TextView) hView.findViewById(R.id.nameTxt);
+
+        userService=RetrofitApi.getInstance().getUserService();
+        Call<User> firstNameCall=userService.getFirstName(SESSIONID);
+
+        EspressoIdlingResource.increment();
+
+        firstNameCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(!response.isSuccessful()){
+                    //should do something for the error handlign
+                    Log.d("IUserController", "inside if in onResponse");
+                    return;
+
+                }
+                Log.d("IUserController", "outside if in onResponse");
+                User user = response.body();
+                firstName = user.getFirstName();
+                nav_user.setText(firstName);
+                System.out.println("first name is "+firstName);
+                EspressoIdlingResource.decrement();
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.d("IUserController", "inside onFailure");
+                EspressoIdlingResource.decrement();
+
+            }
+        });
+
+
         navigationView.setNavigationItemSelectedListener(this);
 
         avgError=findViewById(R.id.errorMessage);
