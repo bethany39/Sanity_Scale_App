@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -36,10 +37,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
 
+import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
+
 
 public class GraphScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private float weeklyAverage;
+    private float weeklyAverageInLbs;
+    private float weeklyAverageInKgs;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigation;
@@ -53,13 +58,19 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_screen);
-        weeklyAverage= getIntent().getExtras().getFloat("weeklyavg");
+        weeklyAverageInLbs= getIntent().getExtras().getFloat("weeklyavg");
         SESSIONID=getIntent().getExtras().getString("SESSIONID");
         UNITS = getIntent().getExtras().getString("UNITS");
 
         mpLineChart = findViewById(R.id.weightGraph);
         TextView avgWeightTextView = findViewById(R.id.AvgWeightTextView);
-        avgWeightTextView.append(Float.toString(weeklyAverage));
+        if(UNITS.equals("kgs")){
+            weeklyAverageInKgs=(float)(weeklyAverageInLbs*0.454);
+            avgWeightTextView.append(Float.toString(weeklyAverageInKgs));
+
+        } else {
+            avgWeightTextView.append(Float.toString(weeklyAverageInLbs));
+        }
         avgWeightTextView.append(" "+UNITS);
 
 
@@ -77,7 +88,7 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
         navigationView.setNavigationItemSelectedListener(this);
 
         /*
-            will have this call to set it with "fallback" range, and then for the various time buttons,
+            will have this call to set it with "default" range, and then for the various time buttons,
             the on click listeners will have later calls to setdata with new parameters based on their time range.
 
             Both this call and the button listeners will need to have api calls attached to get the correct data from the db.
@@ -88,16 +99,17 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
             and have different styles applied than the regular plotted points.
          */
 
-        String defaultTimeRange = "1month";
-        setData(defaultTimeRange);
+        String defaultTimeRange = "alltime";
+        getWeights(defaultTimeRange);
 
         XAxis xAxis = mpLineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        YAxis yAxis = mpLineChart.getAxisLeft();
         mpLineChart.setDrawGridBackground(false);
-        mpLineChart.getXAxis().disableGridDashedLine();
-        mpLineChart.getXAxis().setDrawGridLines(false);
-        mpLineChart.getAxisLeft().disableGridDashedLine();
-        mpLineChart.getAxisLeft().setDrawGridLines(false);
+        xAxis.disableGridDashedLine();
+        xAxis.setDrawGridLines(false);
+        yAxis.disableGridDashedLine();
+        yAxis.setDrawGridLines(false);
         mpLineChart.getAxisRight().setEnabled(false);
         mpLineChart.getAxisRight().setDrawGridLines(false);
 
@@ -107,79 +119,69 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
 
     /* TODOS:
 
-        MAKE SURE GRAPH TRANSLATES FROM LBS TO KGS IF NEEDED
+        xxMAKE SURE GRAPH TRANSLATES FROM LBS TO KGS IF NEEDED
 
-        Check if sorting of entries can be done on sqlalchemy side?
+        xxActually get the weights from the API into the graph
 
-        Actually get the weights from the API into the graph
+        xxCheck if sorting of entries can be done on sqlalchemy side?
 
         Figure out how to make the X axis what we want it to be
 
+        xxFigure out how to plot on x axis according to how far away the dates are
+
+        Plot weekly average
 
      */
-    private void setData(String timerange) {
-        weightsController=RetrofitApi.getInstance().getWeightsService();
-        Call<List<Weight>> unitsCall=weightsController.getWeights(SESSIONID, timerange);
+    private void setData(List<Weight> weightsToDisplay) {
+        ArrayList<Entry> values = new ArrayList<>();
+        ArrayList<Entry> weeklyAvgPoint = new ArrayList<>();
 
-        EspressoIdlingResource.increment();
+        long difference;
+        float daysBetween;
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        Date laterDate;
 
-        unitsCall.enqueue(new Callback<List<Weight>>() {
-            @Override
-            public void onResponse(Call<List<Weight>> call, Response<List<Weight>> response) {
-                if(!response.isSuccessful()){
-                    //should do something for the error handlign
-                    return;
+        for(int i = 0; i < weightsToDisplay.size(); i++){
+            try {
+                Weight currentWeight = weightsToDisplay.get(i);
+                Date date0 = format.parse(weightsToDisplay.get(0).getDateString());
+                laterDate = format.parse(currentWeight.getDateString());
+                difference = laterDate.getTime() - date0.getTime();
+                daysBetween = (difference / (1000*60*60*24));
+                float weight = currentWeight.getWeight();
 
+                if(UNITS.equals("kgs")){
+                    weight = (float) (weight*0.454);
                 }
 
-                weightsDisplayed = response.body();
-                SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
-                ArrayList<Weight> realWeights = new ArrayList<Weight>();
-                for(Weight w : weightsDisplayed){
-                    Date date;
-
-                    try {
-                        date = format.parse(w.getDateString());
-                        System.out.println(date);
-                        realWeights.add(new Weight(w.getWeight(), date));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                values.add(new Entry(daysBetween, weight));
+                //this will need to change/be dynamic
+                if(i == weightsToDisplay.size()-1){
+                    if(UNITS.equals("kgs")){
+                        weeklyAvgPoint.add(new Entry(i-3, weeklyAverageInKgs));
+                    } else {
+                        weeklyAvgPoint.add(new Entry(i-3, weeklyAverageInLbs));
                     }
                 }
-                Collections.sort(realWeights, new Weight.WeightComparator());
-                EspressoIdlingResource.decrement();
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
 
-            @Override
-            public void onFailure(Call<List<Weight>> call, Throwable t) {
-                EspressoIdlingResource.decrement();
-            }
-        });
+        }
 
 
+        LineDataSet weightsDataSet = new LineDataSet(values, "weights");
+        LineDataSet weeklyAvgSet = new LineDataSet(weeklyAvgPoint, "weeklyAverage");
 
-        //weightsDisplayed.sort();
-        ArrayList<Entry> values = new ArrayList<>();
+        weightsDataSet.setColor(Color.BLACK);
+        weightsDataSet.setCircleColor(Color.BLACK);
+        weightsDataSet.setDrawValues(false);
+        weightsDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
 
-
-        values.add(new Entry(0, 123));
-        values.add(new Entry(1, 124));
-        values.add(new Entry(2, 125));
-        values.add(new Entry(3, 126));
-        values.add(new Entry(4, 124));
-        values.add(new Entry(5, 121));
-        values.add(new Entry(6, 122));
-
-
-        LineDataSet lds = new LineDataSet(values, "weights");
-
-        lds.setColor(Color.BLACK);
-        lds.setCircleColor(Color.BLACK);
-        lds.setDrawValues(false);
-        lds.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-        dataSets.add(lds);
-        LineData data = new LineData(dataSets);
+        List<ILineDataSet> weightDataSets = new ArrayList<ILineDataSet>();
+        weightDataSets.add(weightsDataSet);
+        weightDataSets.add(weeklyAvgSet);
+        LineData data = new LineData(weightDataSets);
         mpLineChart.setData(data);
         mpLineChart.invalidate();
     }
@@ -219,10 +221,54 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
         return true;
     }
 
-//    @Override
-//    public int compareTo(MyObject o) {
-//        if (getDateTime() == null || o.getDateTime() == null)
-//            return 0;
-//        return getDateTime().compareTo(o.getDateTime());
+    private void getWeights(String timerange){
+        weightsController=RetrofitApi.getInstance().getWeightsService();
+        Call<List<Weight>> unitsCall=weightsController.getWeights(SESSIONID, timerange);
+
+        EspressoIdlingResource.increment();
+
+        unitsCall.enqueue(new Callback<List<Weight>>() {
+            @Override
+            public void onResponse(Call<List<Weight>> call, Response<List<Weight>> response) {
+                if(!response.isSuccessful()){
+                    return;
+                }
+
+                weightsDisplayed = response.body();
+                setData(weightsDisplayed);
+                EspressoIdlingResource.decrement();
+            }
+
+            @Override
+            public void onFailure(Call<List<Weight>> call, Throwable t) {
+                EspressoIdlingResource.decrement();
+            }
+        });
+    }
+
+// don't need this method anymore bc sorting done on API side (but keeping til we're more confident it works)
+
+//    private ArrayList<Weight> formatWeights(List<Weight> weights){
+//        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+//        ArrayList<Weight> realWeights = new ArrayList<Weight>();
+//        int xCo = 0;
+//        for(int i = 1; i < realWeights.size(); i++){
+//            Date date;
+//
+//            try {
+//                date = format.parse(realWeights.get(i).getDateString());
+//                float weight = realWeights.get(i).getWeight();
+//                if(UNITS.equals("kgs")){
+//                    weight = (float) (weight*0.454);
+//                }
+//                System.out.println(date);
+//                realWeights.add(new Weight(weight, date));
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        //Collections.sort(realWeights, new Weight.WeightComparator());
+//        return realWeights;
 //    }
+
 }
