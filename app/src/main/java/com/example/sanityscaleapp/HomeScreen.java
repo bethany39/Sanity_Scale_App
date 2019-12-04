@@ -41,6 +41,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     private ActionBarDrawerToggle toggle;
     private NavigationView navigation;
 
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 
     @Override
@@ -335,7 +336,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
                 EspressoIdlingResource.increment();
                 IWeightsController weightsService = RetrofitApi.getInstance().getWeightsService();
-                Call<Weight> weightsCall = weightsService.getAverageWeight(SESSIONID);
+                Call<Weight> weightsCall = weightsService.getAverageWeight(SESSIONID,"4months");
+                //default time is 4 months
 
                 weightsCall.enqueue(new Callback<Weight>() {
                     @Override

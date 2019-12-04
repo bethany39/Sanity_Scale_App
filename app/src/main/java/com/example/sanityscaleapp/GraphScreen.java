@@ -8,10 +8,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.view.View;
 import android.widget.TextView;
-
+import android.widget.Button;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -26,6 +28,10 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class GraphScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private float weeklyAverage;
@@ -35,6 +41,7 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
     private String SESSIONID;
     private String UNITS;
     private LineChart mpLineChart;
+    private Button onemonthBtn, threemonthsBtn, alltimeBtn, fourmonthsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +81,52 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
             In order to plot the weekly average on the graph, it will likely have to be in a different LineDataSet so that it can be differentiated
             and have different styles applied than the regular plotted points.
          */
+
+        onemonthBtn=findViewById(R.id.onemonthBtn);
+        onemonthBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                getWeightTimes("onemonth");
+            }
+
+            });
+
+        threemonthsBtn=findViewById(R.id.threemonthsBtn);
+        threemonthsBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                getWeightTimes("threemonths");
+            }
+
+        });
+
+        alltimeBtn=findViewById(R.id.alltimeBtn);
+        alltimeBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                getWeightTimes("alltime");
+            }
+
+        });
+
+        //should we include 4 months btn right away?
+        fourmonthsBtn=findViewById(R.id.fourmonthsBtn);
+        fourmonthsBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                getWeightTimes("fourmonths");
+            }
+
+        });
+
+
+
+
+
         setData();
 
         XAxis xAxis = mpLineChart.getXAxis();
@@ -146,6 +199,38 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
                 break;
         }
         return true;
+    }
+
+    public void getWeightTimes(String time){
+        IWeightsController weightsService = RetrofitApi.getInstance().getWeightsService();
+        Call<Weight> weightsCall = weightsService.getAverageWeight(SESSIONID,time);
+        //default time is 4 months
+
+        weightsCall.enqueue(new Callback<Weight>() {
+            @Override
+            public void onResponse(Call<Weight> call, Response<Weight> response) {
+                if (!response.isSuccessful()) {
+                    //should do something for the error handling
+                    Log.d("WeightsController", "inside if in onResponse");
+                    return;
+
+                }
+                Log.d("WeightsController", "outside if in onResponse");
+                Weight avg = response.body();
+                weeklyAverage = avg.getWeeklyAverage();
+
+
+                EspressoIdlingResource.decrement();
+
+            }
+
+            @Override
+            public void onFailure(Call<Weight> call, Throwable t) {
+                Log.d("WeightsController", "inside onFailure");
+                EspressoIdlingResource.decrement();
+
+            }
+        });
     }
 
 }

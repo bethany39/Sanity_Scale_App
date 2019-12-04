@@ -14,6 +14,8 @@ public class Weight {
     @SerializedName("sessionid")
     private String sessionid;
 
+    @SerializedName("timeperiod")
+    private String timeperiod;
 
     public Weight(float weight, float weeklyAverage) {
         this.weight=weight;
