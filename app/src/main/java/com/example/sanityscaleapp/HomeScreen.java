@@ -373,7 +373,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
                 EspressoIdlingResource.increment();
                 IWeightsController weightsService = RetrofitApi.getInstance().getWeightsService();
-                Call<Weight> weightsCall = weightsService.getAverageWeight(SESSIONID,"4months");
+                Call<Weight> weightsCall = weightsService.getAverageWeight(SESSIONID);
                 //default time is 4 months
 
                 weightsCall.enqueue(new Callback<Weight>() {

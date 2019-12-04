@@ -4,5 +4,5 @@
     <color name="colorPrimaryDark">#DADADA</color>
     <color name="colorAccent">#FFFFFF</color>
     <color name="buttonBlue">#65B1D2</color>
-
+    <color name="weeklyAverage">#31367e</color>
 </resources>
