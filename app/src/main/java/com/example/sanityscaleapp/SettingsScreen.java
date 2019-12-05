@@ -27,7 +27,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SettingsScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Button changeGoalsTab, changeUnitsTab, profileTab;
     Retrofit retrofit;
- //   private int USERID;
     private String SESSIONID;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
@@ -41,7 +40,6 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
 
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null) {
-         //   USERID = bundle.getInt("USERID");
             SESSIONID=bundle.getString("SESSIONID");
         }
 
@@ -69,19 +67,15 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
         changeGoalsTab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                ///IUserController iUserController = retrofit.create(IUserController.class);
                 IUserController userService = RetrofitApi.getInstance().getUserService();
                 EspressoIdlingResource.increment();
-        //        Call<User> call = userService.getUserGoal(USERID);
                 Call<User> call = userService.getUserGoal(SESSIONID);
 
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         if(!response.isSuccessful()){
-                            //should do something for the error handlign
+                            //should do something for the error handling
                             Log.d("UserController", "inside if in onResponse");
                             return;
 
@@ -91,11 +85,6 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
                         String goal = user.getGoal();
                         Intent intent;
                         intent =new Intent(SettingsScreen.this, Goals.class);
-
-
-                        System.out.println("it's here!!");
-
-                    //    intent.putExtra("USERID", USERID);
                         intent.putExtra("SESSIONID",SESSIONID);
 
                         switch(goal){
@@ -132,11 +121,8 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
         changeUnitsTab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //IUserController iUserController = retrofit.create(IUserController.class);
                 IUserController userService = RetrofitApi.getInstance().getUserService();
                 EspressoIdlingResource.increment();
-
-        //        Call<User> unitsCall = userService.getUserUnits(USERID);
                 Call<User> unitsCall = userService.getUserUnits(SESSIONID);
                 unitsCall.enqueue(new Callback<User>() {
                     @Override
@@ -145,7 +131,6 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
                             //should do something for the error handlign
                             Log.d("UserController", "inside if in onResponse");
                             return;
-
                         }
                         User user = response.body();
                         String unit = user.getUnit();
@@ -153,24 +138,17 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
                         intent =new Intent(SettingsScreen.this, ChangeUnits.class);
                         switch(unit){
                             case "lbs":
-                            //    intent.putExtra("USERID", USERID);
                                 intent.putExtra("SESSIONID", SESSIONID);
                                 intent.putExtra("selected", "lbs");
-                              //  SettingsScreen.this.startActivity(intent);
                                 break;
                             case "kgs":
-                               // intent =new Intent(SettingsScreen.this, ChangeUnits.class);
-                               // intent.putExtra("USERID", USERID);
                                 intent.putExtra("SESSIONID", SESSIONID);
                                 intent.putExtra("selected", "kgs");
-                                //SettingsScreen.this.startActivity(intent);
                                 break;
                         }
                         SettingsScreen.this.startActivity(intent);
 
                         EspressoIdlingResource.decrement();
-
-
                     }
 
                     @Override
@@ -201,19 +179,16 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
         switch(item.getItemId()){
             case R.id.nav_home:
                 Intent intent=new Intent(SettingsScreen.this,HomeScreen.class);
-            //    intent.putExtra("USERID", USERID);
                 intent.putExtra("SESSIONID", SESSIONID);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(SettingsScreen.this,SettingsScreen.class);
-            //    intent2.putExtra("USERID", USERID);
                 intent2.putExtra("SESSIONID", SESSIONID);
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(SettingsScreen.this,LogoutHome.class);
-            //    intent3.putExtra("USERID", USERID);
                 intent3.putExtra("SESSIONID", SESSIONID);
 
                 startActivity(intent3);

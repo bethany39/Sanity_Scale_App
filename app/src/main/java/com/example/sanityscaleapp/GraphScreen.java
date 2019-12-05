@@ -57,7 +57,7 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
     private String SESSIONID;
     private String UNITS;
     private LineChart mpLineChart;
-    private Button onemonthBtn, threemonthsBtn, alltimeBtn, fourmonthsBtn;
+    private Button onemonthBtn, threemonthsBtn, alltimeBtn;
     private IWeightsController weightsController;
     private List<Weight> weightsDisplayed;
 
@@ -139,20 +139,6 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
 
         });
 
-        //should we include 4 months btn right away?
-//        fourmonthsBtn=findViewById(R.id.fourmonthsBtn);
-//        fourmonthsBtn.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                getWeights("fourmonths");
-//            }
-//
-//        });
-
-
-
-
 
         getWeights("1month");
 
@@ -173,21 +159,6 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
     }
 
 
-    /* TODOS:
-
-        xxMAKE SURE GRAPH TRANSLATES FROM LBS TO KGS IF NEEDED
-
-        xxActually get the weights from the API into the graph
-
-        xxCheck if sorting of entries can be done on sqlalchemy side?
-
-        Figure out how to make the X axis what we want it to be
-
-        xxFigure out how to plot on x axis according to how far away the dates are
-
-        Plot weekly average
-
-     */
     private void setData(List<Weight> weightsToDisplay) {
         ArrayList<Entry> values = new ArrayList<>();
         ArrayList<Entry> weeklyAvgPoint = new ArrayList<>();
@@ -261,19 +232,16 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
         switch(item.getItemId()){
             case R.id.nav_home:
                 Intent intent=new Intent(GraphScreen.this,HomeScreen.class);
-            //    intent.putExtra("USERID", USERID);
                 intent.putExtra("SESSIONID",SESSIONID);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(GraphScreen.this,SettingsScreen.class);
-            //    intent2.putExtra("USERID", USERID);
                 intent2.putExtra("SESSIONID",SESSIONID);
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(GraphScreen.this,LogoutHome.class);
-            //    intent3.putExtra("USERID", USERID);
                 intent3.putExtra("SESSOINID",SESSIONID);
                 startActivity(intent3);
                 break;
@@ -305,62 +273,4 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
             }
         });
     }
-
-// don't need this method anymore bc sorting done on API side (but keeping til we're more confident it works)
-
-//    private ArrayList<Weight> formatWeights(List<Weight> weights){
-//        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
-//        ArrayList<Weight> realWeights = new ArrayList<Weight>();
-//        int xCo = 0;
-//        for(int i = 1; i < realWeights.size(); i++){
-//            Date date;
-//
-//            try {
-//                date = format.parse(realWeights.get(i).getDateString());
-//                float weight = realWeights.get(i).getWeight();
-//                if(UNITS.equals("kgs")){
-//                    weight = (float) (weight*0.454);
-//                }
-//                System.out.println(date);
-//                realWeights.add(new Weight(weight, date));
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        //Collections.sort(realWeights, new Weight.WeightComparator());
-//        return realWeights;
-//    }
-
-//    public void getWeightTimes(String time){
-//        IWeightsController weightsService = RetrofitApi.getInstance().getWeightsService();
-//        Call<Weight> weightsCall = weightsService.getAverageWeight(SESSIONID,time);
-//        //default time is 4 months
-//
-//        weightsCall.enqueue(new Callback<Weight>() {
-//            @Override
-//            public void onResponse(Call<Weight> call, Response<Weight> response) {
-//                if (!response.isSuccessful()) {
-//                    //should do something for the error handling
-//                    Log.d("WeightsController", "inside if in onResponse");
-//                    return;
-//
-//                }
-//                Log.d("WeightsController", "outside if in onResponse");
-//                Weight avg = response.body();
-//                weeklyAverage = avg.getWeeklyAverage();
-//
-//
-//                EspressoIdlingResource.decrement();
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Weight> call, Throwable t) {
-//                Log.d("WeightsController", "inside onFailure");
-//                EspressoIdlingResource.decrement();
-//
-//            }
-//        });
-//    }
-
 }

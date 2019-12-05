@@ -28,7 +28,6 @@ import retrofit2.Response;
 public class Goals extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button gainBtn,loseBtn, maintainBtn;
     ImageView bluebuttonm, bluebuttong,bluebuttonl;
-  //  private int USERID;
     private String SESSIONID;
     private String goal;
     private DrawerLayout drawerLayout;
@@ -41,13 +40,11 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    //    USERID = getIntent().getExtras().getInt("USERID");
         SESSIONID=getIntent().getExtras().getString("SESSIONID");
         goal = getIntent().getExtras().getString("selected");
         setContentView(R.layout.activity_goals);
         userService = RetrofitApi.getInstance().getUserService();
 
-        //properly setting them to whatever the person clicked...
         bluebuttonm=findViewById(R.id.bluebuttonm);
         bluebuttonl=findViewById(R.id.bluebuttonl);
         bluebuttong=findViewById(R.id.bluebuttong);
@@ -78,20 +75,16 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
 
             @Override
             public void onClick(View v) {
-               // String userJson = "{'goal': 'gain weight'}";
-               // Gson gson = new Gson();
-               // User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();
 
                 User userToSend = new User("gain weight", null, SESSIONID);
 
                 Call<ResponseBody> gainCall = userService.patchUserGoal(userToSend);
-                //Call<ResponseBody> gainCall = userService.patchUserGoal(SESSIONID, userObject);
                 gainCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if(!response.isSuccessful()) {
-                            //should do something for the error handlign
+                            //should do something for the error handling
                             Log.d("UserController", "inside if in onResponse");
                             return;
 
@@ -109,7 +102,6 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
 
                     }
                 });
-               // selectGain(v);
             }
         });
         loseBtn=findViewById(R.id.loseBtn);
@@ -117,21 +109,15 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
 
             @Override
             public void onClick(View v) {
-//                String userJson = "{'goal': 'lose weight'}";
-//                Gson gson = new Gson();
-//                User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();
                 User userToSend = new User("lose weight", null, SESSIONID);
 
                 Call<ResponseBody> loseCall = userService.patchUserGoal(userToSend);
-
-        //        Call<ResponseBody> loseCall = userService.patchUserGoal(USERID, userObject);
-                //Call<ResponseBody> loseCall = userService.patchUserGoal(SESSIONID, userObject);
                 loseCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if(!response.isSuccessful()) {
-                            //should do something for the error handlign
+                            //should do something for the error handling
                             Log.d("UserController", "inside if in onResponse");
                             return;
 
@@ -145,12 +131,8 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.d("UserController", "inside onFailure");
                         EspressoIdlingResource.decrement();
-
-
                     }
                 });
-                //selectLose(v);
-
             }
         });
 
@@ -159,21 +141,15 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
 
             @Override
             public void onClick(View v) {
-//                String userJson = "{'goal': 'maintain weight'}";
-//                Gson gson = new Gson();
-//                User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();
                 User userToSend = new User("maintain weight", null, SESSIONID);
 
                 Call<ResponseBody> maintainCall = userService.patchUserGoal(userToSend);
-
-        //        Call<ResponseBody> maintainCall = userService.patchUserGoal(USERID, userObject);
-                //Call<ResponseBody> maintainCall = userService.patchUserGoal(SESSIONID, userObject);
                 maintainCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if(!response.isSuccessful()) {
-                            //should do something for the error handlign
+                            //should do something for the error handling
                             Log.d("UserController", "inside if in onResponse");
                             return;
 
@@ -191,7 +167,6 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
 
                     }
                 });
-                //selectMaintain(v);
             }
         });
 
@@ -230,21 +205,18 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
             case R.id.nav_home:
                 System.out.println("here");
                 Intent intent=new Intent(Goals.this,HomeScreen.class);
-            //    intent.putExtra("USERID", USERID);
                 intent.putExtra("SESSIONID", SESSIONID);
 
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(Goals.this,SettingsScreen.class);
-            //    intent2.putExtra("USERID", USERID);
                 intent2.putExtra("SESSIONID", SESSIONID);
 
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(Goals.this,LogoutHome.class);
-            //    intent3.putExtra("USERID", USERID);
                 intent3.putExtra("SESSIONID", SESSIONID);
 
                 startActivity(intent3);

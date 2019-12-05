@@ -24,7 +24,6 @@ import retrofit2.Response;
 public class ChangeUnits extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     Button lbsBtn, kgsBtn;
     ImageView bluebuttonlb, bluebuttonkg;
-   // private int USERID;
     private String SESSIONID;
     private String UNITS;
 
@@ -40,11 +39,9 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
         setContentView(R.layout.activity_change_units);
         bluebuttonlb=findViewById(R.id.bluebuttonlb);
         bluebuttonkg=findViewById(R.id.bluebuttonkg);
-        //bluebuttonkg.setVisibility(View.INVISIBLE);
 
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null) {
-        //    USERID = bundle.getInt("USERID");
             SESSIONID=bundle.getString("SESSIONID");
             UNITS = bundle.getString("selected");
         }
@@ -81,33 +78,18 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
 
             @Override
             public void onClick(View v) {
-               // Intent intent =new Intent(ChangeUnits.this, ChangeUnitsKgs.class);
-               // ChangeUnits.this.startActivity(intent);
-
-//                String userJson = "{'units': 'kgs'}";
-//                Gson gson = new Gson();
-//                User userObject = gson.fromJson(userJson, User.class);
                 EspressoIdlingResource.increment();
                 User userToSend = new User(null, "kgs", SESSIONID);
 
                 Call<ResponseBody> changeToKgsCall = userService.patchUserUnits(userToSend);
-         //       Call<ResponseBody> changeToKgsCall = userService.patchUserUnits(USERID, userObject);
-                //Call<ResponseBody> changeToKgsCall = userService.patchUserUnits(SESSIONID, userObject);
                 changeToKgsCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if(!response.isSuccessful()){
-                            //should do something for the error handlign
                             Log.d("UserController", "inside if in onResponse");
                             return;
 
                         }
-                        //System.out.println(response);
-                        //System.out.println(response.body());
-                        //ResponseBody jsonResponse = response.body();
-                        //User user = response.body();
-                        //String unit = user.getUnit();
-                        //System.out.println(response.body());
                         bluebuttonlb.setVisibility(View.INVISIBLE);
                         bluebuttonkg.setVisibility(View.VISIBLE);
                         EspressoIdlingResource.decrement();
@@ -136,14 +118,12 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
                 User userToSend = new User(null, "lbs", SESSIONID);
 
                 Call<ResponseBody> changeToLbsCall = userService.patchUserUnits(userToSend);
-        //        Call<ResponseBody> changeToLbsCall = userService.patchUserUnits(USERID, userObject);
-                //Call<ResponseBody> changeToLbsCall = userService.patchUserUnits(SESSIONID, userObject);
 
                 changeToLbsCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if(!response.isSuccessful()) {
-                            //should do something for the error handlign
+                            //should do something for the error handling
                             Log.d("UserController", "inside if in onResponse");
                             return;
 
@@ -186,19 +166,16 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
             case R.id.nav_home:
                 System.out.println("here");
                 Intent intent=new Intent(ChangeUnits.this,HomeScreen.class);
-            //    intent.putExtra("USERID", USERID);
                 intent.putExtra("SESSIONID", SESSIONID);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(ChangeUnits.this,SettingsScreen.class);
-            //    intent2.putExtra("USERID", USERID);
                 intent2.putExtra("SESSIONID", SESSIONID);
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(ChangeUnits.this,LogoutHome.class);
-            //    intent3.putExtra("USERID", USERID);
                 intent3.putExtra("SESSIONID", SESSIONID);
                 startActivity(intent3);
                 break;

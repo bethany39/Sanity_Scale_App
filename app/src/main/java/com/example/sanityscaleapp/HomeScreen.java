@@ -55,7 +55,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null) {
             SESSIONID=bundle.getString("SESSIONID");
-          //  UNITS=bundle.getString("UNITS");
         }
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://sanity-scale-api.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create(
@@ -86,7 +85,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(!response.isSuccessful()){
-                    //should do something for the error handlign
+                    //should do something for the error handling
                     Log.d("IUserController", "inside if in onResponse");
                     return;
 
@@ -112,9 +111,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         navigationView.setNavigationItemSelectedListener(this);
 
         avgError=findViewById(R.id.errorMessage);
-
-        //avgError=findViewById(R.id.error);
-
         userService=RetrofitApi.getInstance().getUserService();
         Call<User> unitsCall=userService.getUserUnits(SESSIONID);
 
@@ -124,7 +120,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(!response.isSuccessful()){
-                    //should do something for the error handlign
+                    //should do something for the error handling
                     Log.d("IUserController", "inside if in onResponse");
                     return;
 
@@ -148,9 +144,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
 
 
-
-
-
         userService=RetrofitApi.getInstance().getUserService();
         Call<User> numTimesCall=userService.getNumTimesWeighed(SESSIONID);
 
@@ -160,7 +153,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(!response.isSuccessful()){
-                    //should do something for the error handlign
+                    //should do something for the error handling
                     Log.d("IUserController", "inside if in onResponse");
                     return;
 
@@ -189,39 +182,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
             }
         });
-//
-//
-//        Call<User> weeklyAvgActiveCall =userService.canSeeWeight(SESSIONID);
-//        EspressoIdlingResource.increment();
-//
-//        weeklyAvgActiveCall.enqueue(new Callback<User>() {
-//            @Override
-//            public void onResponse(Call<User> call, Response<User> response) {
-//                if(!response.isSuccessful()){
-//                    //should do something for the error handlign
-//                    return;
-//
-//                }
-//                User user = response.body();
-//                averageIsVisible = user.getCanSeeWeight();
-//                if(averageIsVisible){
-//                    setWeeklyAverageActive();
-//                }else {
-//                    setWeeklyAverageInactive();
-//                }
-//
-//                EspressoIdlingResource.decrement();
-//
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<User> call, Throwable t) {
-//                EspressoIdlingResource.decrement();
-//
-//            }
-//        });
-
     }
 
 
@@ -240,42 +200,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     public void onStart(){
         super.onStart();
         userService=RetrofitApi.getInstance().getUserService();
-//        Call<User> numTimesCall=userService.getNumTimesWeighed(SESSIONID);
-//
-//        EspressoIdlingResource.increment();
-//        numTimesCall.enqueue(new Callback<User>() {
-//            @Override
-//            public void onResponse(Call<User> call, Response<User> response) {
-//                if(!response.isSuccessful()){
-//                    //should do something for the error handlign
-//                    Log.d("IUserController", "inside if in onResponse");
-//                    return;
-//
-//                }
-//                Log.d("IUserController", "outside if in onResponse");
-//                User user = response.body();
-//                numTimes = user.getTimesWeighed();
-//                TextView numTimesWeighedTextView = findViewById(R.id.numberTextView);
-//                numTimesWeighedTextView.setText(Integer.toString(numTimes));
-//                TextView timesTextView=findViewById(R.id.text2);
-//                if(numTimes==1){
-//                    timesTextView.append("time this week");
-//                }
-//                else {
-//                    timesTextView.append("times this week");
-//                }
-//                EspressoIdlingResource.decrement();
-//
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<User> call, Throwable t) {
-//                Log.d("IUserController", "inside onFailure");
-//                EspressoIdlingResource.decrement();
-//
-//            }
-//        });
 
         Call<User> weeklyAvgActiveCall =userService.canSeeWeight(SESSIONID);
         EspressoIdlingResource.increment();
@@ -284,9 +208,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(!response.isSuccessful()){
-                    //should do something for the error handlign
+                    //should do something for the error handling
                     return;
-
                 }
                 User user = response.body();
                 averageIsVisible = user.getCanSeeWeight();
@@ -297,8 +220,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                 }
 
                 EspressoIdlingResource.decrement();
-
-
             }
 
             @Override
@@ -374,7 +295,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                 EspressoIdlingResource.increment();
                 IWeightsController weightsService = RetrofitApi.getInstance().getWeightsService();
                 Call<Weight> weightsCall = weightsService.getAverageWeight(SESSIONID);
-                //default time is 4 months
+                //default time is all time
 
                 weightsCall.enqueue(new Callback<Weight>() {
                     @Override

@@ -36,9 +36,7 @@ public class SignUpGoals extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-               // Intent intent = new Intent(SignUpGoals.this, SignUpMessage.class);
                 createUser(email,password,name,"maintain weight", units);
-               // SignUpGoals.this.startActivity(intent);
             }
         });
 
@@ -47,9 +45,7 @@ public class SignUpGoals extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-               // Intent intent = new Intent(SignUpGoals.this, SignUpMessage.class);
                 createUser(email,password,name,"lose weight", units);
-                //SignUpGoals.this.startActivity(intent);
             }
         });
 
@@ -58,10 +54,7 @@ public class SignUpGoals extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-               // Intent intent = new Intent(SignUpGoals.this, SignUpMessage.class);
                 createUser(email,password,name,"gain weight", units);
-
-               // SignUpGoals.this.startActivity(intent);
             }
         });
 

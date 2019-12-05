@@ -63,7 +63,6 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
         noBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //put in sessionid
                 Intent intent=new Intent(LogoutHome.this, HomeScreen.class);
                 intent.putExtra("SESSIONID", SESSIONID);
                 LogoutHome.this.startActivity(intent);
@@ -104,15 +103,13 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
     public void logout(){
         EspressoIdlingResource.increment();
         IUserController userService = RetrofitApi.getInstance().getUserService();
-        //SessionId sid = new SessionId(SESSIONID);
-        //Call<ResponseBody> logout = userService.deleteSid(sid);
         Call<ResponseBody> logout = userService.deleteSid(SESSIONID);
 
         logout.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (!response.isSuccessful()) {
-                    //should do something for the error handlign
+                    //should do something for the error handling
                     Log.d("UserController", "inside if in onResponse");
                     EspressoIdlingResource.decrement();
                     return;
@@ -133,7 +130,5 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
 
             }
         });
-
-
     }
 }

@@ -58,10 +58,7 @@ public class SignUpHome extends AppCompatActivity {
                     System.out.println("Correctly checks for empty boxes");
                     errorMessage4.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
                 }
-                //if(email!=null && name!=null && password!=null) {
                 else{
-
-
                     IUserController userService = RetrofitApi.getInstance().getUserService();
 
                     Call<BooleanAPIResponse> call = userService.getEmail(email.getText().toString());
@@ -71,7 +68,7 @@ public class SignUpHome extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<BooleanAPIResponse> call, Response<BooleanAPIResponse> response) {
                             if (!response.isSuccessful()) {
-                                //should do something for the error handlign
+                                //should do something for the error handling
                                 Log.d("UserController", "inside if in onResponse");
                                 System.out.println("the response is" + response);
                                 EspressoIdlingResource.decrement();
@@ -116,32 +113,8 @@ public class SignUpHome extends AppCompatActivity {
                             Log.d("UserController", "inside onFailure");
                         }
                     });
-
-
-                 /*   else {
-                        if (!email.getText().toString().equals(email2.getText().toString()) && !password.getText().toString().equals(password2.getText().toString())) {
-                            System.out.println("email and pass don't match");
-                            errorMessage3.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
-                        } else if (!email.getText().toString().equals(email2.getText().toString())) {
-                            System.out.println("emails don't match");
-                            errorMessage.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
-                        } else if (!password.getText().toString().equals(password2.getText().toString())) {
-                            System.out.println("passwords don't match");
-                            errorMessage2.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
-                        }
-
-
-                        if (email.getText().toString().equals(email2.getText().toString()) && password.getText().toString().equals(password2.getText().toString())) {
-                            System.out.println("everything works, yay");
-                            SignUpHome.this.startActivity(intent);
-                        }
-                    }*/
                 }
-
-
             }
         });
-
-
     }
 }

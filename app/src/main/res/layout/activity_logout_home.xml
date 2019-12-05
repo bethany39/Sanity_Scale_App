@@ -19,13 +19,13 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="242dp"
-            android:layout_marginLeft="242dp"
-            android:layout_marginTop="307dp"
+            android:layout_marginStart="241dp"
+            android:layout_marginLeft="241dp"
+            android:layout_marginTop="268dp"
             android:background="#65B1D2"
             android:text="No"
-            android:textColor="#FFFFFF"
             android:textAllCaps="false"
+            android:textColor="#FFFFFF"
             android:textSize="24sp" />
 
         <Button
@@ -37,11 +37,11 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="91dp"
             android:layout_marginLeft="91dp"
-            android:layout_marginTop="307dp"
+            android:layout_marginTop="269dp"
             android:background="#65B1D2"
             android:text="Yes"
-            android:textColor="#FFFFFF"
             android:textAllCaps="false"
+            android:textColor="#FFFFFF"
             android:textSize="24sp" />
 
         <TextView
@@ -51,9 +51,10 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="67dp"
-            android:layout_marginLeft="67dp"
-            android:layout_marginTop="168dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginLeft="56dp"
+            android:layout_marginTop="118dp"
+            android:gravity="center_horizontal"
             android:text="Do you really want to logout?"
             android:textColor="#000000"
             android:textSize="36sp" />

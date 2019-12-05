@@ -42,7 +42,6 @@ public class LogInScreen extends AppCompatActivity {
                 IUserController userService = RetrofitApi.getInstance().getUserService();
 
                     User userToSend = new User(email.getText().toString().toLowerCase(), password.getText().toString());
-                    //User userToSend = new User("david@gmail.com", "davidmayes");
 
                     Call<User> call = userService.getUser(userToSend);
 
@@ -99,6 +98,4 @@ public class LogInScreen extends AppCompatActivity {
     public CountingIdlingResource getEspressoIdlingResourceForMainActivity() {
         return IdlingResource;
     }
-
-
 }
