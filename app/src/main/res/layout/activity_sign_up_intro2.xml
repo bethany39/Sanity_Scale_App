@@ -5,21 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradientbackground"
-    tools:context=".SignUpIntro">
-
-
-    <TextView
-        android:id="@+id/introMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="126dp"
-        android:gravity="center_horizontal"
-        android:text="Here's how it works: Step on your Sanity Scale and wait for either the blue check to appear or until you hear the scale emit a calm tone to indicate that it has measured your body weight."
-        android:textColor="#FFFFFF"
-        android:textSize="40sp"
-        android:layout_alignParentLeft="true" />
+    tools:context=".SignUpIntro2">
 
     <Button
         android:id="@+id/nextBtn"
@@ -34,4 +20,20 @@
         android:background="@drawable/next"
         tools:layout_editor_absoluteX="288dp"
         tools:layout_editor_absoluteY="655dp" />
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="334dp"
+        android:layout_height="429dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="51dp"
+        android:layout_marginLeft="51dp"
+        android:layout_marginTop="189dp"
+        android:gravity="center_horizontal"
+        android:text="Once you hear the tone or see the check on the scale, step off the scale and go live your life."
+        android:textColor="#FFFFFF"
+        android:textSize="36sp" />
+
 </RelativeLayout>

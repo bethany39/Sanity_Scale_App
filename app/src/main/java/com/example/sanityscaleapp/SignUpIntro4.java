@@ -6,16 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
-public class SignUpIntro extends AppCompatActivity {
+public class SignUpIntro4 extends AppCompatActivity {
     Button nextBtn;
     String name,email,password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_intro);
+        setContentView(R.layout.activity_sign_up_intro4);
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null) {
             name=bundle.getString("name");
@@ -29,14 +28,13 @@ public class SignUpIntro extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignUpIntro.this, SignUpIntro2.class);
+                Intent intent = new Intent(SignUpIntro4.this, SignUpUnits.class);
                 intent.putExtra("name",name);
                 intent.putExtra("email",email);
                 intent.putExtra("password",password);
-                SignUpIntro.this.startActivity(intent);
+                SignUpIntro4.this.startActivity(intent);
 
             }
         });
-
     }
 }

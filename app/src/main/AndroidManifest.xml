@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignUpIntro1"></activity>
+        <activity android:name=".SignUpIntro4"></activity>
+        <activity android:name=".SignUpIntro3" />
+        <activity android:name=".SignUpIntro2" />
+        <activity android:name=".SignUpIntro1" />
         <activity android:name=".SignUpMessage" />
         <activity android:name=".SignUpGoals" />
         <activity android:name=".SignUpUnits" />
