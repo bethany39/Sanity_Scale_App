@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.content.Intent;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -28,6 +29,8 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
     private NavigationView navigation;
     Button yesBtn,noBtn;
     private String SESSIONID;
+    private TextView nav_user;
+    private String firstname;
 
 
     @Override
@@ -38,6 +41,7 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null) {
             SESSIONID=bundle.getString("SESSIONID");
+            firstname=bundle.getString("firstname");
         }
 
         drawerLayout = findViewById(R.id.logoutScreen);
@@ -49,6 +53,10 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view4);
+        View hView=navigationView.getHeaderView(0);
+        nav_user=(TextView) hView.findViewById(R.id.nameTxt);
+        nav_user.setText(firstname);
+
         navigationView.setNavigationItemSelectedListener(this);
 
         yesBtn=findViewById(R.id.yesBtn);
@@ -65,6 +73,7 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
             public void onClick(View v) {
                 Intent intent=new Intent(LogoutHome.this, HomeScreen.class);
                 intent.putExtra("SESSIONID", SESSIONID);
+                intent.putExtra("firstname",firstname);
                 LogoutHome.this.startActivity(intent);
             }
         });
@@ -86,14 +95,17 @@ public class LogoutHome extends AppCompatActivity implements NavigationView.OnNa
         switch (item.getItemId()) {
             case R.id.nav_home:
                 Intent intent = new Intent(LogoutHome.this, HomeScreen.class);
+                intent.putExtra("firstname",firstname);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2 = new Intent(LogoutHome.this, SettingsScreen.class);
+                intent2.putExtra("firstname",firstname);
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3 = new Intent(LogoutHome.this, LogoutHome.class);
+                intent3.putExtra("firstname",firstname);
                 startActivity(intent3);
                 break;
         }

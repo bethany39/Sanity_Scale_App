@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.View;
 import android.content.Intent;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -33,6 +34,8 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigation;
+    private TextView nav_user;
+    private String firstname;
 
     IUserController userService;
 
@@ -41,6 +44,7 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SESSIONID=getIntent().getExtras().getString("SESSIONID");
+        firstname=getIntent().getExtras().getString("firstname");
         goal = getIntent().getExtras().getString("selected");
         setContentView(R.layout.activity_goals);
         userService = RetrofitApi.getInstance().getUserService();
@@ -68,6 +72,9 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view5);
+        View hView=navigationView.getHeaderView(0);
+        nav_user=(TextView) hView.findViewById(R.id.nameTxt);
+        nav_user.setText(firstname);
         navigationView.setNavigationItemSelectedListener(this);
 
         gainBtn=findViewById(R.id.gainBtn);
@@ -206,18 +213,21 @@ public class Goals extends AppCompatActivity implements NavigationView.OnNavigat
                 System.out.println("here");
                 Intent intent=new Intent(Goals.this,HomeScreen.class);
                 intent.putExtra("SESSIONID", SESSIONID);
+                intent.putExtra("firstname",firstname);
 
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(Goals.this,SettingsScreen.class);
                 intent2.putExtra("SESSIONID", SESSIONID);
+                intent2.putExtra("firstname",firstname);
 
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(Goals.this,LogoutHome.class);
                 intent3.putExtra("SESSIONID", SESSIONID);
+                intent3.putExtra("firstname",firstname);
 
                 startActivity(intent3);
                 break;

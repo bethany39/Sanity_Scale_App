@@ -19,6 +19,7 @@ import retrofit2.Response;
 public class LogInScreen extends AppCompatActivity {
     Button nextBtn, backBtn;
     TextView errorMessage;
+    TextView error2;
     private String SESSIONID;
     CountingIdlingResource IdlingResource = new CountingIdlingResource("LOGIN");
 
@@ -51,7 +52,6 @@ public class LogInScreen extends AppCompatActivity {
                         public void onResponse(Call<User> call, Response<User> response) {
                             if (!response.isSuccessful()) {
                                 Log.d("UserController", "inside if in onResponse");
-                                System.out.println("the response is" + response);
                                 errorMessage.setVisibility(findViewById(R.id.logInScreen).VISIBLE);
                                 EspressoIdlingResource.decrement();
                                 return;

@@ -94,7 +94,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                 User user = response.body();
                 firstName = user.getFirstName();
                 nav_user.setText(firstName);
-                System.out.println("first name is "+firstName);
                 EspressoIdlingResource.decrement();
 
             }
@@ -236,17 +235,20 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             case R.id.nav_home:
                 Intent intent=new Intent(HomeScreen.this,HomeScreen.class);
                 intent.putExtra("SESSIONID", SESSIONID);
+                intent.putExtra("firstname", firstName);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(HomeScreen.this,SettingsScreen.class);
                 intent2.putExtra("SESSIONID", SESSIONID);
+                intent2.putExtra("firstname", firstName);
 
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(HomeScreen.this,LogoutHome.class);
                 intent3.putExtra("SESSIONID", SESSIONID);
+                intent3.putExtra("firstname", firstName);
 
                 startActivity(intent3);
                 break;
@@ -314,6 +316,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                         intent.putExtra("weeklyavg", weeklyAverage);
                         intent.putExtra("UNITS",UNITS);
                         intent.putExtra("SESSIONID", SESSIONID);
+                        intent.putExtra("firstname", firstName);
 
                         HomeScreen.this.startActivity(intent);
                         EspressoIdlingResource.decrement();

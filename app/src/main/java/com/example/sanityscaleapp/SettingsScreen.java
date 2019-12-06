@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.content.Intent;
+import android.widget.TextView;
+
 import androidx.appcompat.app.ActionBar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.GsonBuilder;
@@ -31,7 +33,8 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
-
+    private TextView nav_user;
+    private String firstname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null) {
             SESSIONID=bundle.getString("SESSIONID");
+            firstname=bundle.getString("firstname");
         }
 
         retrofit = new Retrofit.Builder().baseUrl("https://sanity-scale-api.herokuapp.com/")
@@ -59,6 +63,10 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         navigationView=(NavigationView) findViewById(R.id.nav_view2);
+        View hView=navigationView.getHeaderView(0);
+        nav_user=(TextView) hView.findViewById(R.id.nameTxt);
+        nav_user.setText(firstname);
+
         navigationView.setNavigationItemSelectedListener(this);
 
         profileTab=findViewById(R.id.profileBtn);
@@ -86,6 +94,7 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
                         Intent intent;
                         intent =new Intent(SettingsScreen.this, Goals.class);
                         intent.putExtra("SESSIONID",SESSIONID);
+                        intent.putExtra("firstname",firstname);
 
                         switch(goal){
                             case "maintain weight":
@@ -139,10 +148,12 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
                         switch(unit){
                             case "lbs":
                                 intent.putExtra("SESSIONID", SESSIONID);
+                                intent.putExtra("firstname",firstname);
                                 intent.putExtra("selected", "lbs");
                                 break;
                             case "kgs":
                                 intent.putExtra("SESSIONID", SESSIONID);
+                                intent.putExtra("firstname",firstname);
                                 intent.putExtra("selected", "kgs");
                                 break;
                         }
@@ -180,16 +191,19 @@ public class SettingsScreen extends AppCompatActivity implements NavigationView.
             case R.id.nav_home:
                 Intent intent=new Intent(SettingsScreen.this,HomeScreen.class);
                 intent.putExtra("SESSIONID", SESSIONID);
+                intent.putExtra("firstname",firstname);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(SettingsScreen.this,SettingsScreen.class);
                 intent2.putExtra("SESSIONID", SESSIONID);
+                intent2.putExtra("firstname",firstname);
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(SettingsScreen.this,LogoutHome.class);
                 intent3.putExtra("SESSIONID", SESSIONID);
+                intent3.putExtra("firstname",firstname);
 
                 startActivity(intent3);
                 break;

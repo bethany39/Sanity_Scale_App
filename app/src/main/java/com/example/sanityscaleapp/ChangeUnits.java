@@ -12,6 +12,8 @@ import android.view.View.OnClickListener;
 import android.view.View;
 import android.content.Intent;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializer;
@@ -30,6 +32,8 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigation;
+    private TextView nav_user;
+    private String firstname;
 
     IUserController userService;
 
@@ -44,6 +48,7 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
         if(bundle!=null) {
             SESSIONID=bundle.getString("SESSIONID");
             UNITS = bundle.getString("selected");
+            firstname=bundle.getString("firstname");
         }
         userService = RetrofitApi.getInstance().getUserService();
 
@@ -70,6 +75,10 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view6);
+        View hView=navigationView.getHeaderView(0);
+        nav_user=(TextView) hView.findViewById(R.id.nameTxt);
+        nav_user.setText(firstname);
+
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -167,16 +176,19 @@ public class ChangeUnits extends AppCompatActivity implements NavigationView.OnN
                 System.out.println("here");
                 Intent intent=new Intent(ChangeUnits.this,HomeScreen.class);
                 intent.putExtra("SESSIONID", SESSIONID);
+                intent.putExtra("firstname",firstname);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(ChangeUnits.this,SettingsScreen.class);
                 intent2.putExtra("SESSIONID", SESSIONID);
+                intent2.putExtra("firstname",firstname);
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(ChangeUnits.this,LogoutHome.class);
                 intent3.putExtra("SESSIONID", SESSIONID);
+                intent3.putExtra("firstname",firstname);
                 startActivity(intent3);
                 break;
         }

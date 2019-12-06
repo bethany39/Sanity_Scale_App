@@ -60,6 +60,9 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
     private Button onemonthBtn, threemonthsBtn, alltimeBtn;
     private IWeightsController weightsController;
     private List<Weight> weightsDisplayed;
+    private TextView nav_user;
+    private IUserController userService;
+    private String firstname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,8 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
         weeklyAverageInLbs= getIntent().getExtras().getFloat("weeklyavg");
         SESSIONID=getIntent().getExtras().getString("SESSIONID");
         UNITS = getIntent().getExtras().getString("UNITS");
+        firstname=getIntent().getExtras().getString("firstname");
+
 
         mpLineChart = findViewById(R.id.weightGraph);
         TextView avgWeightTextView = findViewById(R.id.AvgWeightTextView);
@@ -92,6 +97,11 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view3);
+        View hView=navigationView.getHeaderView(0);
+        nav_user=(TextView) hView.findViewById(R.id.nameTxt);
+        nav_user.setText(firstname);
+
+
         navigationView.setNavigationItemSelectedListener(this);
 
         /*
@@ -233,16 +243,19 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
             case R.id.nav_home:
                 Intent intent=new Intent(GraphScreen.this,HomeScreen.class);
                 intent.putExtra("SESSIONID",SESSIONID);
+                intent.putExtra("firstname",firstname);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(GraphScreen.this,SettingsScreen.class);
                 intent2.putExtra("SESSIONID",SESSIONID);
+                intent2.putExtra("firstname",firstname);
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(GraphScreen.this,LogoutHome.class);
                 intent3.putExtra("SESSOINID",SESSIONID);
+                intent3.putExtra("firstname",firstname);
                 startActivity(intent3);
                 break;
         }
