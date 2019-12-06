@@ -31,8 +31,9 @@
         android:layout_marginStart="51dp"
         android:layout_marginLeft="51dp"
         android:layout_marginTop="115dp"
+        android:gravity="center_horizontal"
         android:text="Welcome to Sanity Scale, the smartphone scale + app that lets you track your weight without losing your mind!"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="36sp" />
 
 </RelativeLayout>

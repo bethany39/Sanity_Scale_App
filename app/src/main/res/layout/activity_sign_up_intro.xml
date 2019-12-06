@@ -32,7 +32,7 @@ Once you hear the tone or see the check on the scale, step off the scale and go 
 
 
                         For best results, step on the scale once per day and high-five yourself for tracking your weight without losing your mind!"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="40sp" />
     </ScrollView>
 
