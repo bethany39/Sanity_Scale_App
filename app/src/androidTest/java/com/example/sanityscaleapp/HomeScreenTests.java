@@ -62,7 +62,7 @@ public class HomeScreenTests {
     public void unregisterIdlingResource() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
-    @Test
+    @Test //no longer works--session id not user id
     public void weeklyAvgBtnGoesToGraphScreen() {
         //IdlingRegistry.getInstance().register(mainActivityIdlingResource);
         onView(withId(R.id.weeklyAvgBtn)).check(matches(isDisplayed())).perform(click());
