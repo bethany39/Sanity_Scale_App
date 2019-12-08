@@ -164,10 +164,10 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                 numTimesWeighedTextView.setText(Integer.toString(numTimes));
                 TextView timesTextView=findViewById(R.id.text2);
                 if(numTimes==1){
-                    timesTextView.append("time this week");
+                    timesTextView.setText("time this week");
                 }
                 else {
-                    timesTextView.append("times this week");
+                    timesTextView.setText("times this week");
                 }
                 EspressoIdlingResource.decrement();
 

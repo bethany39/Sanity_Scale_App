@@ -63,7 +63,7 @@ public class SignUpHome extends AppCompatActivity {
 
                     Call<BooleanAPIResponse> call = userService.getEmail(email.getText().toString());
 
-
+                    EspressoIdlingResource.increment();
                     call.enqueue(new Callback<BooleanAPIResponse>() {
                         @Override
                         public void onResponse(Call<BooleanAPIResponse> call, Response<BooleanAPIResponse> response) {
@@ -106,6 +106,7 @@ public class SignUpHome extends AppCompatActivity {
                                 }
 
                             }
+                            EspressoIdlingResource.decrement();
                         }
 
                         @Override

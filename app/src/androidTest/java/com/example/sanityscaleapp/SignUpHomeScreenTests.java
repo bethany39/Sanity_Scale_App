@@ -45,7 +45,9 @@ public class SignUpHomeScreenTests{
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 
-    @Test   //this test doesn't pass :(
+
+
+    @Test   //test passes!
     public void showsErrorOnSignupWithIncorrectEmails() {
         onView(withId(R.id.nameBox)).check(matches(isDisplayed()));
         onView(withId(R.id.nameBox)).perform(typeText("Davey"), closeSoftKeyboard());
@@ -55,13 +57,13 @@ public class SignUpHomeScreenTests{
 
         onView(withId(R.id.passwordbox_signup)).check(matches(isDisplayed()));
         onView(withId(R.id.passwordbox_signup)).perform(typeText("daveyjones"), closeSoftKeyboard());
-        onView(withId(R.id.confirmpassword)).perform(typeText("davieyjones"),closeSoftKeyboard());
+        onView(withId(R.id.confirmpassword)).perform(typeText("daveyjones"),closeSoftKeyboard());
 
         onView(withId(R.id.nextBtn)).check(matches(isDisplayed())).perform(click());
         onView(withId(R.id.emailError)).check(matches(isDisplayed()));
     }
 
-    @Test //this one doesn't pass either :(
+    @Test //passes
     public void showsErrorOnSignupWithIncorrectPasswords() {
         onView(withId(R.id.nameBox)).check(matches(isDisplayed()));
         onView(withId(R.id.nameBox)).perform(typeText("Davey"), closeSoftKeyboard());
@@ -77,7 +79,7 @@ public class SignUpHomeScreenTests{
         onView(withId(R.id.passwordError)).check(matches(isDisplayed()));
     }
 
-    @Test //this one doesn't pass either :(
+    @Test //passes
     public void showsSignUpHomeWorks() {
         onView(withId(R.id.nameBox)).check(matches(isDisplayed()));
         onView(withId(R.id.nameBox)).perform(typeText("Davey"), closeSoftKeyboard());
@@ -93,7 +95,7 @@ public class SignUpHomeScreenTests{
         onView(withId(R.id.intro1)).check(matches(isDisplayed()));
     }
 
-    @Test //this one doesn't pass either (I see the message pop up on the screen though) :(
+    @Test //passes
     public void showsSignUpHomeEmailExistsError() {
         onView(withId(R.id.nameBox)).check(matches(isDisplayed()));
         onView(withId(R.id.nameBox)).perform(typeText("Davey"), closeSoftKeyboard());
@@ -106,10 +108,15 @@ public class SignUpHomeScreenTests{
         onView(withId(R.id.confirmpassword)).perform(typeText("daveyjones"),closeSoftKeyboard());
 
         onView(withId(R.id.nextBtn)).check(matches(isDisplayed())).perform(click());
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.emailexistsError)).check(matches(isDisplayed()));
     }
 
-    @Test //this one doesn't pass either (I see the message pop up on the screen though) :(
+    @Test //passes
     public void showsSignUpHomeEmailAndPWError() {
         onView(withId(R.id.nameBox)).check(matches(isDisplayed()));
         onView(withId(R.id.nameBox)).perform(typeText("Davey"), closeSoftKeyboard());

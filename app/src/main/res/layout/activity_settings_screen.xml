@@ -13,72 +13,135 @@
         android:layout_height="match_parent">
 
 
+        <Button
+            android:id="@+id/changeUnitsBtn"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="79dp"
+            android:layout_marginStart="-1dp"
+            android:layout_marginLeft="-1dp"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/btnborder"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#262626"
+            android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/changeUnitsBtn"
-        android:layout_width="match_parent"
-        android:layout_height="79dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="151dp"
-        android:background="@drawable/changeunits"
-        android:gravity="start"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#262626"
-        android:textSize="24sp" />
+        <ImageView
+            android:id="@+id/nextImg6"
+            android:layout_width="97dp"
+            android:layout_height="49dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="137dp"
+            android:layout_marginEnd="-15dp"
+            android:layout_marginRight="-15dp"
+            app:srcCompat="@drawable/nextarrow" />
 
-    <Button
-        android:id="@+id/profileBtn"
-        android:layout_width="412dp"
-        android:layout_height="79dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="305dp"
-        android:layout_marginEnd="-1dp"
-        android:layout_marginRight="-1dp"
-        android:background="@drawable/profile"
-        android:gravity="start"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#262626"
-        android:textSize="24sp" />
+        <Button
+            android:id="@+id/profileBtn"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="79dp"
+            android:layout_marginStart="-1dp"
+            android:layout_marginLeft="-1dp"
+            android:layout_marginTop="278dp"
+            android:layout_marginEnd="-3dp"
+            android:layout_marginRight="-3dp"
+            android:background="@drawable/btnborder"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#262626"
+            android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/goalsBtn"
-        android:layout_width="match_parent"
-        android:layout_height="77dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="230dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:background="@drawable/goals"
-        android:gravity="start"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#262626"
-        android:textSize="24sp" />
+        <Button
+            android:id="@+id/goalsBtn"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="79dp"
+            android:layout_marginStart="-1dp"
+            android:layout_marginLeft="-1dp"
+            android:layout_marginTop="199dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="-1dp"
+            android:background="@drawable/btnborder"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#262626"
+            android:textSize="24sp" />
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/nextImg8"
+            android:layout_width="97dp"
+            android:layout_height="49dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="215dp"
+            android:layout_marginEnd="-15dp"
+            android:layout_marginRight="-15dp"
+            app:srcCompat="@drawable/nextarrow" />
+
+        <ImageView
+            android:id="@+id/nextImg9"
+            android:layout_width="97dp"
+            android:layout_height="49dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="296dp"
+            android:layout_marginEnd="-16dp"
+            android:layout_marginRight="-16dp"
+            app:srcCompat="@drawable/nextarrow" />
+
+        <TextView
+            android:id="@+id/changeUnitsTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="146dp"
+            android:layout_marginEnd="276dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="276dp"
+            android:text="Change Units"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/goalsTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="225dp"
+            android:text="Goals"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/profileTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="303dp"
+            android:text="Profile"
+            android:textColor="#000000" />
+
+    </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
