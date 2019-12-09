@@ -53,6 +53,11 @@ public class SignUpHome extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                errorMessage.setVisibility(View.INVISIBLE);
+                errorMessage2.setVisibility(View.INVISIBLE);
+                errorMessage3.setVisibility(View.INVISIBLE);
+                errorMessage4.setVisibility(View.INVISIBLE);
+                errorMessage5.setVisibility(View.INVISIBLE);
 
                 if (email.getText().toString().equals("") || name.getText().toString().equals("") || password.getText().toString().equals("") || email2.getText().toString().equals("") || password2.getText().toString().equals("")) {
                     System.out.println("Correctly checks for empty boxes");
