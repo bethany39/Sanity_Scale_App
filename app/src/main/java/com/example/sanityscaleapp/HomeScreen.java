@@ -74,7 +74,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
         NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view);
         View hView=navigationView.getHeaderView(0);
-         nav_user=(TextView) hView.findViewById(R.id.nameTxt);
+        nav_user=(TextView) hView.findViewById(R.id.nameTxt);
 
         userService=RetrofitApi.getInstance().getUserService();
         Call<User> firstNameCall=userService.getFirstName(SESSIONID);
@@ -87,6 +87,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                 if(!response.isSuccessful()){
                     //should do something for the error handling
                     Log.d("IUserController", "inside if in onResponse");
+                    EspressoIdlingResource.decrement();
                     return;
 
                 }
@@ -121,6 +122,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                 if(!response.isSuccessful()){
                     //should do something for the error handling
                     Log.d("IUserController", "inside if in onResponse");
+                    EspressoIdlingResource.decrement();
                     return;
 
                 }
@@ -143,44 +145,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
 
 
-        userService=RetrofitApi.getInstance().getUserService();
-        Call<User> numTimesCall=userService.getNumTimesWeighed(SESSIONID);
 
-        EspressoIdlingResource.increment();
-
-        numTimesCall.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if(!response.isSuccessful()){
-                    //should do something for the error handling
-                    Log.d("IUserController", "inside if in onResponse");
-                    return;
-
-                }
-                Log.d("IUserController", "outside if in onResponse");
-                User user = response.body();
-                numTimes = user.getTimesWeighed();
-                TextView numTimesWeighedTextView = findViewById(R.id.numberTextView);
-                numTimesWeighedTextView.setText(Integer.toString(numTimes));
-                TextView timesTextView=findViewById(R.id.text2);
-                if(numTimes==1){
-                    timesTextView.setText("time this week");
-                }
-                else {
-                    timesTextView.setText("times this week");
-                }
-                EspressoIdlingResource.decrement();
-
-
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Log.d("IUserController", "inside onFailure");
-                EspressoIdlingResource.decrement();
-
-            }
-        });
     }
 
 
@@ -208,6 +173,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             public void onResponse(Call<User> call, Response<User> response) {
                 if(!response.isSuccessful()){
                     //should do something for the error handling
+                    EspressoIdlingResource.decrement();
                     return;
                 }
                 User user = response.body();
@@ -223,6 +189,45 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+                EspressoIdlingResource.decrement();
+
+            }
+        });
+        userService=RetrofitApi.getInstance().getUserService();
+        Call<User> numTimesCall=userService.getNumTimesWeighed(SESSIONID);
+
+        EspressoIdlingResource.increment();
+
+        numTimesCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(!response.isSuccessful()){
+                    //should do something for the error handling
+                    Log.d("IUserController", "inside if in onResponse");
+                    EspressoIdlingResource.decrement();
+                    return;
+
+                }
+                Log.d("IUserController", "outside if in onResponse");
+                User user = response.body();
+                numTimes = user.getTimesWeighed();
+                TextView numTimesWeighedTextView = findViewById(R.id.numberTextView);
+                numTimesWeighedTextView.setText(Integer.toString(numTimes));
+                TextView timesTextView=findViewById(R.id.text2);
+                if(numTimes==1){
+                    timesTextView.setText("time this week");
+                }
+                else {
+                    timesTextView.setText("times this week");
+                }
+                EspressoIdlingResource.decrement();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.d("IUserController", "inside onFailure");
                 EspressoIdlingResource.decrement();
 
             }
@@ -279,6 +284,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                         if (!response.isSuccessful()) {
                             //should do something for the error handling
                             Log.d("WeightsController", "inside if in onResponse");
+                            EspressoIdlingResource.decrement();
                             return;
 
                         }
@@ -305,6 +311,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                         if (!response.isSuccessful()) {
                             //should do something for the error handling
                             Log.d("WeightsController", "inside if in onResponse");
+                            EspressoIdlingResource.decrement();
                             return;
 
                         }

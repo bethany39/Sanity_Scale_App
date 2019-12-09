@@ -69,15 +69,15 @@ public class MainActivityTests {
         onView(withId(R.id.yesBtn)).perform(click());
         onView(withId(R.id.logInBtn)).check(matches(isDisplayed()));
         onView(withId(R.id.signUpBtn)).check(matches(isDisplayed()));
-        boolean exceptionThrown = false;
-        try{
-            Espresso.pressBackUnconditionally();
-            onView(withId(R.id.logInScreen)).check(doesNotExist());
-        } catch(NoActivityResumedException e){
-            //this is expected
-            exceptionThrown=true;
-        }
-        assertTrue("NoActivityResumedException thrown, directs back to homescreen", exceptionThrown);
+//        boolean exceptionThrown = false;
+//        try{
+//            Espresso.pressBackUnconditionally();
+//            onView(withId(R.id.logInScreen)).check(doesNotExist());
+//        } catch(NoActivityResumedException e){
+//            //this is expected
+//            exceptionThrown=true;
+//        }
+//        assertTrue("NoActivityResumedException thrown, directs back to homescreen", exceptionThrown);
 
         //or just pressback() if different method chosen
     }

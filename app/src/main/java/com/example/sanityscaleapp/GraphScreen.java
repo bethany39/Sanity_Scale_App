@@ -23,6 +23,8 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.navigation.NavigationView;
 
@@ -34,18 +36,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
+import java.util.Calendar;
 
-import java.time.temporal.ChronoUnit;
-import java.time.LocalDate;
-
+import java.math.BigDecimal;
 
 public class GraphScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -60,9 +56,11 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
     private Button onemonthBtn, threemonthsBtn, alltimeBtn;
     private IWeightsController weightsController;
     private List<Weight> weightsDisplayed;
+    private String graphTimeRange;
     private TextView nav_user;
     private IUserController userService;
-    private String firstname;
+    private String firstName;
+    private TextView avgWeightTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,22 +69,11 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
         weeklyAverageInLbs= getIntent().getExtras().getFloat("weeklyavg");
         SESSIONID=getIntent().getExtras().getString("SESSIONID");
         UNITS = getIntent().getExtras().getString("UNITS");
-        firstname=getIntent().getExtras().getString("firstname");
+        firstName=getIntent().getExtras().getString("firstname");
 
 
         mpLineChart = findViewById(R.id.weightGraph);
-        TextView avgWeightTextView = findViewById(R.id.AvgWeightTextView);
-        if(UNITS.equals("kgs")){
-            weeklyAverageInKgs=(float)(weeklyAverageInLbs*0.454);
-            avgWeightTextView.append(Float.toString(weeklyAverageInKgs));
-
-        } else {
-            avgWeightTextView.append(Float.toString(weeklyAverageInLbs));
-        }
-        avgWeightTextView.append(" "+UNITS);
-
-
-
+        avgWeightTextView = findViewById(R.id.AvgWeightTextView);
 
         drawerLayout= findViewById(R.id.graphScreen);
         toggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
@@ -99,31 +86,17 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
         NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view3);
         View hView=navigationView.getHeaderView(0);
         nav_user=(TextView) hView.findViewById(R.id.nameTxt);
-        nav_user.setText(firstname);
+        nav_user.setText(firstName);
 
 
         navigationView.setNavigationItemSelectedListener(this);
-
-        /*
-            will have this call to set it with "default" range, and then for the various time buttons,
-            the on click listeners will have later calls to setdata with new parameters based on their time range.
-
-            Both this call and the button listeners will need to have api calls attached to get the correct data from the db.
-
-            Before calling setData with the data, the Entries must be in sorted order by the X column (date) or the graph could have unexpected behavior.
-
-            In order to plot the weekly average on the graph, it will likely have to be in a different LineDataSet so that it can be differentiated
-            and have different styles applied than the regular plotted points.
-         */
-
-        String defaultTimeRange = "alltime";
-        getWeights(defaultTimeRange);
 
         onemonthBtn=findViewById(R.id.onemonthBtn);
         onemonthBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                graphTimeRange="1month";
                 getWeights("1month");
             }
 
@@ -134,6 +107,7 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
 
             @Override
             public void onClick(View v) {
+                graphTimeRange="3month";
                 getWeights("3months");
             }
 
@@ -144,16 +118,26 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
 
             @Override
             public void onClick(View v) {
+                graphTimeRange="alltime";
                 getWeights("alltime");
             }
 
         });
 
+    }
 
-        getWeights("1month");
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mpLineChart.getXAxis().setDrawLabels(true);
+
+        graphTimeRange = "1month";
+        getWeights(graphTimeRange);
 
         XAxis xAxis = mpLineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setLabelRotationAngle(-45);
         YAxis yAxis = mpLineChart.getAxisLeft();
         mpLineChart.setDrawGridBackground(false);
         xAxis.disableGridDashedLine();
@@ -165,18 +149,21 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
         mpLineChart.getDescription().setEnabled(false);
         mpLineChart.getLegend().setTextSize(14f);
 
+        getUnits();
+
+
 
     }
-
 
     private void setData(List<Weight> weightsToDisplay) {
         ArrayList<Entry> values = new ArrayList<>();
         ArrayList<Entry> weeklyAvgPoint = new ArrayList<>();
 
-        long difference;
-        float daysBetween;
+        long difference = 0;
+        float daysBetween = 0;
         SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
         Date laterDate;
+        int[] xVals = new int[weightsToDisplay.size()];
 
         for(int i = 0; i < weightsToDisplay.size(); i++){
             try {
@@ -185,27 +172,59 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
                 laterDate = format.parse(currentWeight.getDateString());
                 difference = laterDate.getTime() - date0.getTime();
                 daysBetween = (difference / (1000*60*60*24));
+                xVals[i]=(int) daysBetween;
                 float weight = currentWeight.getWeight();
-
                 if(UNITS.equals("kgs")){
                     weight = (float) (weight*0.454);
                 }
-
                 values.add(new Entry(daysBetween, weight));
-                //this will need to change/be dynamic
-                if(i == weightsToDisplay.size()-1){
-                    if(UNITS.equals("kgs")){
-                        weeklyAvgPoint.add(new Entry(i-3, weeklyAverageInKgs));
-                    } else {
-                        weeklyAvgPoint.add(new Entry(i-3, weeklyAverageInLbs));
-                    }
-                }
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
         }
 
+        XAxisLabelFormatter xAxisFormatter = new XAxisLabelFormatter(weightsToDisplay.get(0).getDateString());
+        //String[] dateStrings = new String[(int)daysBetween+1];
+        String[] labels = new String[(int) daysBetween+1];
+        //String[] labels = new String[values.size()];
+        int xValsIndex = 0;
+        for(int i = 0; i <= daysBetween; i++, xValsIndex++) {
+            if(xVals[xValsIndex]==i){
+                String label = xAxisFormatter.getFormattedValue(weightsToDisplay.get(xValsIndex).getDateString());
+                labels[i] = label;
+            } else {
+                //get previous dateString, add one to it, getformattedvalue on that
+                String dayBefore = labels[i-1];
+                Calendar c = Calendar.getInstance();
+                try{
+                    //Setting the date to the given date
+                    c.setTime(format.parse(dayBefore));
+                }catch(ParseException e){
+                    e.printStackTrace();
+                }
+                c.add(Calendar.DAY_OF_MONTH, 1);
+                String dayAfter = format.format(c.getTime());
+                labels[i]=dayAfter;
+                xValsIndex--;
+            }
+
+        }
+        //mpLineChart.getXAxis().setAvoidFirstLastClipping(true);
+
+        mpLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+
+        //mpLineChart.getXAxis().setLabelCount(6, true);
+        //mpLineChart.getXAxis().setGranularity(3);
+//        mpLineChart.getXAxis().setAxisMinimum(0);
+//        mpLineChart.getXAxis().setAxisMaximum(daysBetween);
+        if(UNITS.equals("kgs")){
+                weeklyAvgPoint.add(new Entry(daysBetween-3, weeklyAverageInKgs));
+        } else {
+                weeklyAvgPoint.add(new Entry(daysBetween-3, weeklyAverageInLbs));
+        }
+        //}
 
         LineDataSet weightsDataSet = new LineDataSet(values, "weights");
         LineDataSet weeklyAvgSet = new LineDataSet(weeklyAvgPoint, "weeklyAverage");
@@ -243,19 +262,19 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
             case R.id.nav_home:
                 Intent intent=new Intent(GraphScreen.this,HomeScreen.class);
                 intent.putExtra("SESSIONID",SESSIONID);
-                intent.putExtra("firstname",firstname);
+                intent.putExtra("firstname",firstName);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
                 Intent intent2=new Intent(GraphScreen.this,SettingsScreen.class);
                 intent2.putExtra("SESSIONID",SESSIONID);
-                intent2.putExtra("firstname",firstname);
+                intent2.putExtra("firstname",firstName);
                 startActivity(intent2);
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(GraphScreen.this,LogoutHome.class);
                 intent3.putExtra("SESSOINID",SESSIONID);
-                intent3.putExtra("firstname",firstname);
+                intent3.putExtra("firstname",firstName);
                 startActivity(intent3);
                 break;
         }
@@ -285,5 +304,51 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
                 EspressoIdlingResource.decrement();
             }
         });
+    }
+
+    private void getUnits(){
+        userService=RetrofitApi.getInstance().getUserService();
+        Call<User> unitsCall=userService.getUserUnits(SESSIONID);
+
+        EspressoIdlingResource.increment();
+
+        unitsCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(!response.isSuccessful()){
+                    //should do something for the error handling
+                    Log.d("IUserController", "inside if in onResponse");
+                    return;
+
+                }
+                Log.d("IUserController", "outside if in onResponse");
+                User user = response.body();
+                UNITS = user.getUnit();
+                firstName = user.getFirstName();
+                nav_user.setText(firstName);
+                avgWeightTextView.setText("Weekly Average Weight: ");
+
+                if(UNITS.equals("kgs")){
+                    weeklyAverageInKgs=(float)(weeklyAverageInLbs*0.454);
+                    avgWeightTextView.append(String.format("%.1f", weeklyAverageInKgs));
+                } else {
+                    //avgWeightTextView.append(Float.toString(weeklyAverageInLbs));
+                    String mystr = String.format("%.1f", weeklyAverageInLbs);
+                    avgWeightTextView.append(String.format("%.1f", weeklyAverageInLbs));
+
+                }
+                avgWeightTextView.append(" "+UNITS);
+                EspressoIdlingResource.decrement();
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.d("IUserController", "inside onFailure");
+                EspressoIdlingResource.decrement();
+
+            }
+        });
+
     }
 }

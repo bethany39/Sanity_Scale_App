@@ -45,7 +45,7 @@ public class SignUpMessageTests {
         onView(withId(R.id.loginBtn)).check(matches(isDisplayed()));
     }
 
-    @Test  //does not pass...for some reason it clicks on the lose btn!
+    @Test
     public void showsNextScreen(){
         onView(withId(R.id.loginBtn)).perform(click());
         onView(withId(R.id.logInScreen)).check(matches(isDisplayed()));

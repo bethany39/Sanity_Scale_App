@@ -31,7 +31,7 @@ public class SignUpGoals extends AppCompatActivity {
             units=bundle.getString("units");
         }
 
-        maintainBtn = findViewById(R.id.maintainBtn);
+        maintainBtn = findViewById(R.id.signupMaintainBtn);
         maintainBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -40,7 +40,7 @@ public class SignUpGoals extends AppCompatActivity {
             }
         });
 
-        loseBtn = findViewById(R.id.loseBtn);
+        loseBtn = findViewById(R.id.signupLoseBtn);
         loseBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -49,7 +49,7 @@ public class SignUpGoals extends AppCompatActivity {
             }
         });
 
-        gainBtn = findViewById(R.id.gainBtn);
+        gainBtn = findViewById(R.id.signupGainBtn);
         gainBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -65,24 +65,29 @@ public class SignUpGoals extends AppCompatActivity {
         IUserController userService=RetrofitApi.getInstance().getUserService();
         User newUser=new User(email,password,firstname,goal,units);
         Call<ResponseBody> call =userService.createUser(newUser);
+        EspressoIdlingResource.increment();
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
                 if(!response.isSuccessful()){
                     Log.d("UserController","inside if in onResponse");
-                 //   EspressoIdlingResource.decrement();
+                    EspressoIdlingResource.decrement();
                     return;
                 }
                 Log.d("UserController","outside if in onResponse");
                 ResponseBody user=response.body();
                 Intent intent = new Intent(SignUpGoals.this, SignUpMessage.class);
                 SignUpGoals.this.startActivity(intent);
+                EspressoIdlingResource.decrement();
+
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t){
                 Log.d("UserController","inside on Failure");
+                EspressoIdlingResource.decrement();
+
             }
         });
 

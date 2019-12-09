@@ -49,14 +49,14 @@ public class Weight {
 
     public Date getDate() {return FormattedDate; }
 
-    static class WeightComparator implements Comparator<Weight> {
-
-        @Override
-        public int compare(Weight w1, Weight w2) {
-            if (w1.getDate() == null || w2.getDate() == null)
-                return 0;
-            return w1.getDate().compareTo(w2.getDate());
-        }
-
-    }
+//    static class WeightComparator implements Comparator<Weight> {
+//
+//        @Override
+//        public int compare(Weight w1, Weight w2) {
+//            if (w1.getDate() == null || w2.getDate() == null)
+//                return 0;
+//            return w1.getDate().compareTo(w2.getDate());
+//        }
+//
+//    }
 }

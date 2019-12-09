@@ -32,14 +32,14 @@ public class SettingsScreenTests {
 
     @Rule
     public ActivityTestRule<HomeScreen> activityActivityTestRule = new IntentsTestRule<HomeScreen>(HomeScreen.class){
-        @Override
-        protected Intent getActivityIntent() {
-            Context targetContext = InstrumentationRegistry.getInstrumentation()
-                    .getTargetContext();
-            Intent result = new Intent(targetContext, HomeScreen.class);
-            result.putExtra("USERID", 1);
-            return result;
-        }
+//        @Override
+//        protected Intent getActivityIntent() {
+//            Context targetContext = InstrumentationRegistry.getInstrumentation()
+//                    .getTargetContext();
+//            Intent result = new Intent(targetContext, HomeScreen.class);
+//            result.putExtra("USERID", 1);
+//            return result;
+//        }
     };
 
     @Before
@@ -63,49 +63,7 @@ public class SettingsScreenTests {
         onView(withId(R.id.profileBtn)).check(matches(isDisplayed()));
     }
 
-    @Test
-    public void changesSelectedUnits() {
-//        onView(withId(R.id.nav_view)).check(matches(isDisplayed())).perform(click());
-//        onView(withId(R.id.nav_settings)).check(matches(isDisplayed())).perform(click());
 
-        onView(withId(R.id.homeScreen)).perform(DrawerActions.open());
-        onView(withId(R.id.homeScreen)).check(matches(isOpen()));
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings));
-        onView(withId(R.id.changeUnitsBtn)).check(matches(isDisplayed())).perform(click());
-
-        onView(withId(R.id.kgsBtn)).check(matches(isDisplayed())).perform(click());
-        onView(withId(R.id.bluebuttonkg)).check(matches(isDisplayed()));
-
-        onView(withId(R.id.lbsBtn)).check(matches(isDisplayed())).perform(click());
-        onView(withId(R.id.bluebuttonlb)).check(matches(isDisplayed()));
-        //doing the kgs a second time in case it was already selected the first time
-        onView(withId(R.id.kgsBtn)).check(matches(isDisplayed())).perform(click());
-        onView(withId(R.id.bluebuttonkg)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void changesSelectedGoal(){
-//        onView(withId(R.id.nav_view)).check(matches(isDisplayed())).perform(click());
-//        onView(withId(R.id.nav_settings)).check(matches(isDisplayed())).perform(click());
-
-        onView(withId(R.id.homeScreen)).perform(DrawerActions.open());
-        onView(withId(R.id.homeScreen)).check(matches(isOpen()));
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings));
-        onView(withId(R.id.goalsBtn)).check(matches(isDisplayed())).perform(click());
-
-        onView(withId(R.id.maintainBtn)).check(matches(isDisplayed())).perform(click());
-        onView(withId(R.id.bluebuttonm)).check(matches(isDisplayed()));
-
-        onView(withId(R.id.loseBtn)).check(matches(isDisplayed())).perform(click());
-        onView(withId(R.id.bluebuttonl)).check(matches(isDisplayed()));
-
-        onView(withId(R.id.gainBtn)).check(matches(isDisplayed())).perform(click());
-        onView(withId(R.id.bluebuttong)).check(matches(isDisplayed()));
-        //repeating this for same reason as units
-        onView(withId(R.id.maintainBtn)).check(matches(isDisplayed())).perform(click());
-        onView(withId(R.id.bluebuttonm)).check(matches(isDisplayed()));
-
-    }
 
 
 }
