@@ -8,6 +8,11 @@ You will need to download Android Studio (works on Mac or Windows) and follow th
 
 Next you'll need to open up a new project on Android Studio and pull our code from GitHub. To import the project into Android Studio, navigate in Android Studio to VCS→Checkout from Version Control→ Git. In the URL input box, paste the url gotten from cloning the project in Github, and then click clone. To build the project, just click the green Play button on the top bar of Android Studio, or navigate to Run→ Run App.
 
+The app is run on the Pixel 2 API 29 emulator.  To install this emulator, navigate to Tools → AVD Manager → + Create Virtual Device...
+Install the Google Pixel 2 XL device with API 29 (Android 10.0).  Once it has installed, click the green triangular-shaped play button on the row just below the top.  This should start the emulator.  You may need to press the power button on the right-hand side of the emulator to turn the phone on, but then it should run the Sanity Scale app.  In order to log in and view functionality, you may use the credentials:
+email: david@gmail.com
+password: davidmayes
+
 ### Testing
 Our project currently has two test suites: one using the Espresso test framework for the frontend Java code, and one using Pytest for the API endpoints.
 
