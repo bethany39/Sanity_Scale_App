@@ -324,8 +324,8 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
                 Log.d("IUserController", "outside if in onResponse");
                 User user = response.body();
                 UNITS = user.getUnit();
-                firstName = user.getFirstName();
-                nav_user.setText(firstName);
+//                firstName = user.getFirstName();
+//                nav_user.setText(firstName);
                 avgWeightTextView.setText("Weekly Average Weight: ");
 
                 if(UNITS.equals("kgs")){
