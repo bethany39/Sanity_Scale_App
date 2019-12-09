@@ -273,7 +273,7 @@ public class GraphScreen extends AppCompatActivity implements NavigationView.OnN
                 break;
             case R.id.nav_logout:
                 Intent intent3=new Intent(GraphScreen.this,LogoutHome.class);
-                intent3.putExtra("SESSOINID",SESSIONID);
+                intent3.putExtra("SESSIONID",SESSIONID);
                 intent3.putExtra("firstname",firstName);
                 startActivity(intent3);
                 break;
